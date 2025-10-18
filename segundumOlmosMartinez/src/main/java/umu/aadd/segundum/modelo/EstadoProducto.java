@@ -1,4 +1,4 @@
-package segundum.modelo;
+package umu.aadd.segundum.modelo;
 
 /**
  * Enum que modela los posibles estados de un producto.

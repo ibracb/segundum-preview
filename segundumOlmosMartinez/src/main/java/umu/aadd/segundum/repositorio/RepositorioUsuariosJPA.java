@@ -1,7 +1,7 @@
-package segundum.repositorio;
+package umu.aadd.segundum.repositorio;
 
 import repositorio.RepositorioJPA;
-import segundum.modelo.Usuario;
+import umu.aadd.segundum.modelo.Usuario;
 
 /**
  * Repositorio JPA para la entidad Usuario.
@@ -17,8 +17,7 @@ public class RepositorioUsuariosJPA extends RepositorioJPA<Usuario> {
 	 */
 	@Override
 	public Class<Usuario> getClase() {
-		// TODO Auto-generated method stub
-		return null;
+		return Usuario.class;
 	}
 
 }

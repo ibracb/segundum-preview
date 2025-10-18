@@ -1,4 +1,4 @@
-package segundum.modelo;
+package umu.aadd.segundum.modelo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

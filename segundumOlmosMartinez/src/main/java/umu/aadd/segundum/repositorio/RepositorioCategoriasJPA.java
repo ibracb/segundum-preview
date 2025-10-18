@@ -1,7 +1,7 @@
-package segundum.repositorio;
+package umu.aadd.segundum.repositorio;
 
 import repositorio.RepositorioJPA;
-import segundum.modelo.Categoria;
+import umu.aadd.segundum.modelo.Categoria;
 
 /**
  * Repositorio JPA para la entidad Categoria.

@@ -1,10 +1,10 @@
-package segundum.servicio;
+package umu.aadd.segundum.servicio;
 
 import java.time.Month;
 import java.util.Map;
 
-import segundum.modelo.EstadoProducto;
-import segundum.modelo.Producto;
+import umu.aadd.segundum.modelo.EstadoProducto;
+import umu.aadd.segundum.modelo.Producto;
 
 /**
  * Interfaz del servicio de gestión de productos.

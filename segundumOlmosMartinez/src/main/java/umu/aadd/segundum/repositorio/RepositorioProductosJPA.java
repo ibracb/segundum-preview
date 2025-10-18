@@ -1,7 +1,7 @@
-package segundum.repositorio;
+package umu.aadd.segundum.repositorio;
 
 import repositorio.RepositorioJPA;
-import segundum.modelo.Producto;
+import umu.aadd.segundum.modelo.Producto;
 
 /**
  * Repositorio JPA para la entidad Producto.

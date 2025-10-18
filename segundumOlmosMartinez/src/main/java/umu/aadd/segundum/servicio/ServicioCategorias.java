@@ -1,8 +1,8 @@
-package segundum.servicio;
+package umu.aadd.segundum.servicio;
 
 import java.util.Set;
 
-import segundum.modelo.Categoria;
+import umu.aadd.segundum.modelo.Categoria;
 
 /**
  * Implementación del servicio de categorías.

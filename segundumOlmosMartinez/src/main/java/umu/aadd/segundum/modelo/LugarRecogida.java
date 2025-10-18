@@ -1,4 +1,4 @@
-package segundum.modelo;
+package umu.aadd.segundum.modelo;
 
 /**
  * Clase que modela un lugar de recogida de un producto en SegundUM.

@@ -1,4 +1,4 @@
-package segundum.modelo;
+package umu.aadd.segundum.modelo;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,29 +8,29 @@ import javax.persistence.Id;
 import repositorio.Identificable;
 
 /**
- * Clase que modela un usuario de SegundUM.
+ * Clase que modela un producto de SegundUM.
  */
 @Entity
-public class Usuario implements Identificable {
+public class Producto implements Identificable {
 	
 	/**
-	 * Identificador único del usuario.
+	 * Identificador único del producto.
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
-	
+
 	/**
-	 * Recupera el identificador del usuario.
+	 * Recupera el identificador del producto.
 	 */
 	@Override
 	public String getId() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
-	 * Establece el identificador del usuario.
+	 * Establece el identificador del producto.
 	 */
 	@Override
 	public void setId(String id) {

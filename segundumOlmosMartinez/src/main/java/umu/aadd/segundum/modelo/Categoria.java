@@ -1,8 +1,7 @@
 package umu.aadd.segundum.modelo;
 
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +31,7 @@ public class Categoria implements Identificable {
 	private LinkedList<Categoria> subcategorias;
 
 	/**
-	 * Construye un usuario con los datos especificados, sin teléfono.
+	 * Construye una categoria.
 	 * @param ruta          Ruta del fichero xml.
 	 */
 	public Categoria(String ruta) {
@@ -40,7 +39,7 @@ public class Categoria implements Identificable {
 	}
 
 	/**
-	 * Constructor vacío de la clase Usuario, requerido por JPA.
+	 * Constructor vacío de la clase Categoria, requerido por JPA.
 	 */
 	protected Categoria() {
 	}
@@ -85,15 +84,15 @@ public class Categoria implements Identificable {
 	/**
 	 * Recupera la subcategoria de la categoría.
 	 */
-	public String getSubcategoria() {
-		return descripcion;
+	public List<Categoria> getSubcategoria() {
+		return subcategorias;
 	}
 
 	/**
 	 * Establece la subcategoria de la categoria.
 	 */
-	public void setSubcategoria(Categoria subcategorias) {
-		this.subcategorias = subcategorias;
+	public void setSubcategoria(List<Categoria> subcategorias) {
+		this.subcategorias = (LinkedList<Categoria>) subcategorias;
 	}
 
 }

@@ -1,7 +1,11 @@
 package umu.aadd.segundum.servicio;
 
-import java.util.Set;
+import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
+import repositorio.EntidadNoEncontrada;
+import repositorio.RepositorioException;
 import umu.aadd.segundum.modelo.Categoria;
 
 public interface IServicioCategorias {
@@ -11,22 +15,22 @@ public interface IServicioCategorias {
 	 * 
 	 * @param ruta Ruta del fichero XML que contiene la jerarquía de categorías.
 	 */
-	public void cargarJerarquiaCategorias(String ruta);
+	public void cargarJerarquiaCategorias(String ruta) throws JAXBException, RepositorioException;
 	
 	/**
 	 * Modifica el texto de una categoría existente.
 	 * 
 	 * @param idCategoria Identificador de la categoría a modificar.
-	 * @param textoNuevo  Nuevo texto para la categoría.
+	 * @param descripcionNueva  Nueva descripción para la categoría.
 	 */
-	public void modificarCategoria(String idCategoria, String textoNuevo);
+	public void modificarCategoria(String idCategoria, String descripcionNueva) throws RepositorioException, EntidadNoEncontrada;
 	
 	/**
 	 * Recupera el conjunto de categorías raíz (sin categoría padre).
 	 * 
 	 * @return Conjunto de categorías raíz.
 	 */
-	public Set<Categoria> recuperarCategoriasRaiz();
+	public List<Categoria> recuperarCategoriasRaiz();
 	
 	/**
 	 * Recupera los descendientes de una categoría específica.
@@ -34,7 +38,7 @@ public interface IServicioCategorias {
 	 * @param idCategoria Identificador de la categoría.
 	 * @return Conjunto de categorías descendientes.
 	 */
-	public Set<Categoria> recuperarDescendientesCategoria(String idCategoria);
+	public List<Categoria> recuperarDescendientesCategoria(String idCategoria);
 	
 	
 }

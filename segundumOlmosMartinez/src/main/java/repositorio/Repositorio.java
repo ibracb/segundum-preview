@@ -1,6 +1,6 @@
 package repositorio;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  *  Repositorio para entidades gestionadas con identificador.
@@ -47,13 +47,13 @@ public interface Repositorio<T, K> {
 	 * @return Una lista con todas las entidades.
 	 * @throws RepositorioException Si ocurre un error al recuperar las entidades.
 	 */
-	Set<T> getAll() throws RepositorioException;
+	List<T> getAll() throws RepositorioException;
 
 	/**
 	 * Recupera una los identificadores de todas las entidades en el repositorio.
 	 * @return Todos los identificadores.
 	 * @throws RepositorioException Si ocurre un error al recuperar los identificadores.
 	 */
-	Set<K> getIds() throws RepositorioException;
+	List<K> getIds() throws RepositorioException;
 
 }

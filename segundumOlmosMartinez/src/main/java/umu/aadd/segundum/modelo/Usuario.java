@@ -2,10 +2,8 @@ package umu.aadd.segundum.modelo;
 
 import java.time.LocalDate;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +29,6 @@ public class Usuario implements Identificable {
 	 * Email del usuario.
 	 */
 	@Column(name = "email", nullable = false, unique = true, updatable = false)
-	@Basic(fetch = FetchType.LAZY)
 	private String email;
 
 	/**

@@ -1,42 +1,63 @@
 package umu.aadd.segundum.modelo;
 
-import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import repositorio.Identificable;
 
+@XmlRootElement
 @Entity
+@Table(name = "categorias")
 public class Categoria implements Identificable {
-
+	
+	/**
+	 * Identificador único de la categoría.
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
 
-	@Column(name = "nombre", nullable = false)
+	/**
+	 * Nombre de la categoría.
+	 */
+	@Column(name = "nombre", nullable = false, updatable = false)
 	private String nombre;
-
+	
+	/**
+	 * Descripción de la categoría.
+	 */
+	@Lob
+	@Basic(fetch = FetchType.LAZY)
 	@Column(name = "descripcion", nullable = true)
 	private String descripcion;
 
-	@Column(name = "ruta", nullable = false)
-	private String ruta;
-
-	@Column(name = "subcategoria", nullable = true)
-	private LinkedList<Categoria> subcategorias;
-
 	/**
-	 * Construye una categoria.
-	 * @param ruta          Ruta del fichero xml.
+	 * Ruta de la categoría.
 	 */
-	public Categoria(String ruta) {
-		this.ruta = ruta;
-	}
+	@Column(name = "ruta", nullable = false, unique = true, updatable = false)
+	private String ruta;
+	
+	/**
+	 * Subcategorías de la categoría.
+	 */
+	@OneToMany(cascade = CascadeType.PERSIST)	//preguntar: ¿si elimino un padre, debería eliminar los hijos? si sí, cambiar a ALL
+	@JoinColumn(name = "categoria_padre_id")
+	private List<Categoria> subcategorias;
 
 	/**
 	 * Constructor vacío de la clase Categoria, requerido por JPA.
@@ -48,6 +69,7 @@ public class Categoria implements Identificable {
 	 * Recupera el identificador de la categoría.
 	 */
 	@Override
+	@XmlAttribute
 	public String getId() {
 		return id;
 	}
@@ -59,16 +81,30 @@ public class Categoria implements Identificable {
 	public void setId(String id) {
 		this.id = id;
 	}
+	
+	/**
+	 * Recupera el nombre de la categoría.
+	 * 
+	 * @return Nombre de la categoría.
+	 */
+	public String getNombre() {
+		return nombre;
+	}
 
 	/**
-	 * Recupera la descripcion de la categoría.
+	 * Recupera la descripción de la categoría.
+	 * 
+	 * @return Descripción de la categoría.
 	 */
+	@XmlTransient
 	public String getDescripcion() {
 		return descripcion;
 	}
 
 	/**
 	 * Establece la descripcion de la categoria.
+	 * 
+	 * @param descripcion Descripción de la categoria.
 	 */
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
@@ -76,23 +112,31 @@ public class Categoria implements Identificable {
 
 	/**
 	 * Recupera la ruta de la categoría.
+	 * 
+	 * @return Ruta de la categoría.
 	 */
+	@XmlAttribute
 	public String getRuta() {
 		return ruta;
 	}
 
 	/**
-	 * Recupera la subcategoria de la categoría.
+	 * Recupera las subcategorías de la categoría.
+	 * 
+	 * @return Subcategorías de la categoría.
 	 */
-	public List<Categoria> getSubcategoria() {
+	@XmlAttribute(name = "categoria")
+	public List<Categoria> getSubcategorias() {
 		return subcategorias;
 	}
 
 	/**
-	 * Establece la subcategoria de la categoria.
+	 * Establece la subcategorías de la categoria.
+	 * 
+	 * @param subcategorias Subcategorías de la categoría.
 	 */
-	public void setSubcategoria(List<Categoria> subcategorias) {
-		this.subcategorias = (LinkedList<Categoria>) subcategorias;
+	public void setSubcategorias(List<Categoria> subcategorias) {
+		this.subcategorias = subcategorias;
 	}
 
 }

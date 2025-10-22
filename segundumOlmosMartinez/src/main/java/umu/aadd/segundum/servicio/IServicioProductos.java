@@ -29,11 +29,11 @@ public interface IServicioProductos {
 	 * Asigna un lugar de recogida para un producto.
 	 * 
 	 * @param idProducto  Identificador del producto.
-	 * @param latitud     Latitud del lugar de recogida.
 	 * @param longitud    Longitud del lugar de recogida.
+	 * @param latitud     Latitud del lugar de recogida.
 	 * @param descripcion Descripción del lugar de recogida.
 	 */
-	public void asignarLugarRecogida(String idProducto, double latitud, double longitud, String descripcion);
+	public void asignarLugarRecogida(String idProducto, double longitud, double latitud, String descripcion);
 	
 	/**
 	 * Modifica los datos de un producto existente.

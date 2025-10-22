@@ -1,6 +1,6 @@
 package repositorio;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -110,16 +110,16 @@ public abstract class RepositorioJPA<T extends Identificable> implements Reposit
 			EntityManagerHelper.closeEntityManager();
 		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Set<T> getAll() throws RepositorioException {
+	public List<T> getAll() throws RepositorioException {
 		try {
 			EntityManager em = EntityManagerHelper.getEntityManager();
 			final String queryString = " SELECT t from " + getClase().getSimpleName() + " t ";
 			Query query = em.createQuery(queryString);
 			query.setHint(QueryHints.REFRESH, HintValues.TRUE);
-			return (Set<T>) query.getResultList();
+			return query.getResultList();
 		}
 		catch (RuntimeException e) {
 			throw new RepositorioException("Error buscando todas las entidades de " + getClase().getSimpleName(), e);
@@ -128,16 +128,16 @@ public abstract class RepositorioJPA<T extends Identificable> implements Reposit
 			EntityManagerHelper.closeEntityManager();
 		}
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Set<String> getIds() throws RepositorioException {
+	public List<String> getIds() throws RepositorioException {
 		EntityManager em = EntityManagerHelper.getEntityManager();
 		try {
 			final String queryString = " SELECT t.id from " + getClase().getSimpleName() + " t ";
 			Query query = em.createQuery(queryString);
 			query.setHint(QueryHints.REFRESH, HintValues.TRUE);
-			return (Set<String>) query.getResultList();
+			return query.getResultList();
 		} catch (RuntimeException e) {
 			throw new RepositorioException("Error buscando todos los ids de " + getClase().getSimpleName(), e);
 		}

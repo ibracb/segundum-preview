@@ -17,8 +17,7 @@ public class RepositorioCategoriasJPA extends RepositorioJPA<Categoria> {
 	 */
 	@Override
 	public Class<Categoria> getClase() {
-		// TODO Auto-generated method stub
-		return null;
+		return Categoria.class;
 	}
 
 }

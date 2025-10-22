@@ -1,20 +1,26 @@
 package umu.aadd.segundum.modelo;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
+import javax.persistence.Embeddable;
 
 /**
  * Clase que modela un lugar de recogida de un producto en SegundUM.
  */
+@Embeddable
 public class LugarRecogida {
-	@Column(name = "descripcion", nullable = false)
+	
+	/**
+	 * Descripcion del lugar de recogida.
+	 */
 	private String descripcion;
-
-	@Column(name = "longitud", nullable = false)
+	
+	/**
+	 * Longitud del lugar de recogida.
+	 */
 	private double longitud;
-
-	@Column(name = "latitud", nullable = false)
+	
+	/**
+	 * Latitud del lugar de recogida.
+	 */
 	private double latitud;
 
 	/**
@@ -38,13 +44,17 @@ public class LugarRecogida {
 
 	/**
 	 * Recupera la descripcion del lugar de recogida.
+	 * 
+	 * @return Descripcion del lugar de recogida.
 	 */
 	public String getDescripcion() {
 		return descripcion;
 	}
 
 	/**
-	 * Recupera la longitud del lugar de recogida.
+	 * Recupera la longitud del lugar de recogida
+	 * 
+	 * @return Longitud del lugar de recogida.
 	 */
 	public double getLongitud() {
 		return longitud;
@@ -52,6 +62,8 @@ public class LugarRecogida {
 
 	/**
 	 * Recupera la longitud del lugar de recogida.
+	 * 
+	 * @return Latitud del lugar de recogida.
 	 */
 	public double getLatitud() {
 		return latitud;

@@ -17,8 +17,7 @@ public class RepositorioProductosJPA extends RepositorioJPA<Producto> {
 	 */
 	@Override
 	public Class<Producto> getClase() {
-		// TODO Auto-generated method stub
-		return null;
+		return Producto.class;
 	}
 
 }

@@ -19,7 +19,7 @@ public class ServicioProductos implements IServicioProductos {
 	}
 
 	@Override
-	public void asignarLugarRecogida(String idProducto, double latitud, double longitud, String descripcion) {
+	public void asignarLugarRecogida(String idProducto, double longitud, double latitud, String descripcion) {
 		// TODO Auto-generated method stub
 		
 	}

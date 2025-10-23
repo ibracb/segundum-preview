@@ -49,5 +49,10 @@ public class ServicioCategorias implements IServicioCategorias {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Categoria getById(String idCategoria) throws RepositorioException, EntidadNoEncontrada {
+		return repoCategorias.getById(idCategoria);
+	}
 
 }

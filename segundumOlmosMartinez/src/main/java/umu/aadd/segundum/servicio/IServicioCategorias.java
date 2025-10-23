@@ -40,5 +40,7 @@ public interface IServicioCategorias {
 	 */
 	public List<Categoria> recuperarDescendientesCategoria(String idCategoria);
 	
+	public Categoria getById(String idCategoria) throws RepositorioException, EntidadNoEncontrada;
+	
 	
 }

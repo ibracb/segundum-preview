@@ -46,4 +46,6 @@ public interface IServicioUsuarios {
 	 */
 	public Usuario recuperarUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
 	
+	public Usuario getById(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
+	
 }

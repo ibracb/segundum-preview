@@ -19,17 +19,17 @@ import umu.aadd.segundum.modelo.Usuario;
  */
 public class ServicioProductos implements IServicioProductos {
 
-	private Repositorio<Categoria, String> repoCategorias = FactoriaRepositorios.getRepositorio(Categoria.class);
 	private Repositorio<Producto, String> repoProductos = FactoriaRepositorios.getRepositorio(Producto.class);
-	private Repositorio<Usuario, String> repoUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
+	private ServicioCategorias servicioCategorias = new ServicioCategorias();
+	private ServicioUsuarios servicioUsuarios = new ServicioUsuarios();
 
 	@Override
 	public String altaProducto(String titulo, String descripcion, double precio, EstadoProducto estado,
 			String idCategoria, boolean envioDisponible, String idUsuarioVendedor)
 			throws RepositorioException, EntidadNoEncontrada {
 
-		Categoria categoria = repoCategorias.getById(idCategoria);
-		Usuario usuario = repoUsuarios.getById(idUsuarioVendedor);
+		Categoria categoria = servicioCategorias.getById(idCategoria);
+		Usuario usuario = servicioUsuarios.getById(idUsuarioVendedor);
 
 		Producto producto = new Producto(titulo, descripcion, precio, estado, categoria, envioDisponible, usuario);
 		repoProductos.add(producto);

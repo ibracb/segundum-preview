@@ -6,6 +6,7 @@ import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
+import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.Usuario;
 import utils.StringUtilidades;
 
@@ -54,6 +55,11 @@ public class ServicioUsuarios implements IServicioUsuarios {
 
 	@Override
 	public Usuario recuperarUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada {
+		return repoUsuarios.getById(idUsuario);
+	}
+	
+	@Override
+	public Usuario getById(String idUsuario) throws RepositorioException, EntidadNoEncontrada {
 		return repoUsuarios.getById(idUsuario);
 	}
 	

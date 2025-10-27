@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -23,6 +24,16 @@ import repositorio.Identificable;
 @XmlRootElement
 @Entity
 @Table(name = "categorias")
+@NamedNativeQuery(
+		name="Categoria.getRaices",
+		query="SELECT c FROM categorias c WHERE c.ruta REGEXP '\\\\|[1-9][0-9]*\\\\|'",
+		resultClass = Categoria.class
+)
+@NamedNativeQuery(
+		name="Categoria.getDescendientes",
+		query="SELECT c FROM categorias c WHERE c.ruta REGEXP '(\\\\|[1-9][0-9]*\\\\|){2,}' AND c.id=:id",
+		resultClass = Categoria.class
+)
 public class Categoria implements Identificable {
 	
 	/**
@@ -55,7 +66,7 @@ public class Categoria implements Identificable {
 	/**
 	 * Subcategorías de la categoría.
 	 */
-	@OneToMany(cascade = CascadeType.PERSIST)	//preguntar: ¿si elimino un padre, debería eliminar los hijos? si sí, cambiar a ALL
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "categoria_padre_id")
 	private List<Categoria> subcategorias;
 

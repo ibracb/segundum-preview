@@ -19,6 +19,7 @@ public interface IServicioUsuarios {
 	 * @param fechaNacimiento Fecha de nacimiento del usuario.
 	 * @param telefono        Teléfono de contacto del usuario.
 	 * @return Identificador único del usuario creado.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
 	public String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento, String telefono) throws RepositorioException;
 	
@@ -45,7 +46,5 @@ public interface IServicioUsuarios {
 	 * @throws EntidadNoEncontrada     Si el usuario con el identificador especificado no existe.
 	 */
 	public Usuario recuperarUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
-	
-	public Usuario getById(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
-	
+		
 }

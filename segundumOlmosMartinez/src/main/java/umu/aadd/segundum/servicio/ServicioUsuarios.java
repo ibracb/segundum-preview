@@ -6,7 +6,6 @@ import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
-import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.Usuario;
 import utils.StringUtilidades;
 
@@ -15,11 +14,12 @@ import utils.StringUtilidades;
  */
 public class ServicioUsuarios implements IServicioUsuarios {
 	
-	private Repositorio<Usuario, String> repoUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
+	private Repositorio<Usuario, String> repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
 	
 	@Override
 	public String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento, String telefono) throws RepositorioException {
-		if(StringUtilidades.fechaParseada(fechaNacimiento) == null) {
+		if(!StringUtilidades.isDatoValido(nombre) || !StringUtilidades.isDatoValido(apellidos) || !StringUtilidades.isEmailValido(email)
+				|| !StringUtilidades.isDatoValido(clave) || StringUtilidades.fechaParseada(fechaNacimiento) == null) {
 			return null;
 		}
 		Usuario usuario;
@@ -29,39 +29,37 @@ public class ServicioUsuarios implements IServicioUsuarios {
 		else {
 			usuario = new Usuario(email, nombre, apellidos, clave, LocalDate.parse(fechaNacimiento));
 		}
-		return repoUsuarios.add(usuario);
+		return repositorioUsuarios.add(usuario);
 	}
 
 	@Override
 	public void modificarUsuario(String idUsuario, String nombre, String apellidos, String clave, String fechaNacimiento, String telefono) throws RepositorioException, EntidadNoEncontrada {
-		Usuario usuario = repoUsuarios.getById(idUsuario);
+		Usuario usuario = repositorioUsuarios.getById(idUsuario);
 		if(usuario != null && StringUtilidades.isDatoValido(nombre)) {
 			usuario.setNombre(nombre);
+			repositorioUsuarios.update(usuario);
 		}
 		if(usuario != null && StringUtilidades.isDatoValido(apellidos)) {
 			usuario.setApellidos(apellidos);
+			repositorioUsuarios.update(usuario);
 		}
 		if(usuario != null && StringUtilidades.isDatoValido(clave)) {
 			usuario.setClave(clave);
+			repositorioUsuarios.update(usuario);
 		}
 		if(usuario != null && StringUtilidades.fechaParseada(fechaNacimiento) != null) {
 			usuario.setFechaNacimiento(LocalDate.parse(fechaNacimiento));
+			repositorioUsuarios.update(usuario);
 		}
 		if(usuario != null && StringUtilidades.isDatoValido(telefono)) {
 			usuario.setTelefono(telefono);
+			repositorioUsuarios.update(usuario);
 		}
-		repoUsuarios.update(usuario);
 	}
 
 	@Override
 	public Usuario recuperarUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada {
-		return repoUsuarios.getById(idUsuario);
+		return repositorioUsuarios.getById(idUsuario);
 	}
-	
-	@Override
-	public Usuario getById(String idUsuario) throws RepositorioException, EntidadNoEncontrada {
-		return repoUsuarios.getById(idUsuario);
-	}
-	
 	
 }

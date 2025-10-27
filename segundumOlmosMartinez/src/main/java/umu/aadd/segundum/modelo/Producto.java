@@ -28,6 +28,16 @@ import repositorio.Identificable;
 public class Producto implements Identificable {
 	
 	/**
+	 * Constante de precio gratuito para un producto.
+	 */
+	public static final double PRECIO_GRATUITO = 0.0;
+	
+	/**
+	 * Constante que indica cero visualizaciones de un producto.
+	 */
+	private static final int CERO_VISUALIZACIONES = 0;
+	
+	/**
 	 * Identificador único del producto.
 	 */
 	@Id
@@ -119,7 +129,7 @@ public class Producto implements Identificable {
 		this.estado = estado;
 		this.fechaPublicacion = LocalDateTime.now();
 		this.categoria = categoria;
-		this.visualizaciones = 0;
+		this.visualizaciones = CERO_VISUALIZACIONES;
 		this.envioDisponible = envioDisponible;
 		this.vendedor = vendedor;
 	}

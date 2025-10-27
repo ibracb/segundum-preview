@@ -11,9 +11,9 @@ import umu.aadd.segundum.modelo.Categoria;
 public interface IServicioCategorias {
 	
 	/**
-	 * Carga la jerarquía de categorías desde un fichero XML en la ruta especificada.
+	 * Carga la jerarquía de categorías a partir de la ruta especificada.
 	 * 
-	 * @param ruta Ruta del fichero XML que contiene la jerarquía de categorías.
+	 * @param ruta Ruta a partir de la cual se recupera la jerarquía de categorías.
 	 */
 	public void cargarJerarquiaCategorias(String ruta) throws JAXBException, RepositorioException;
 	
@@ -22,6 +22,8 @@ public interface IServicioCategorias {
 	 * 
 	 * @param idCategoria Identificador de la categoría a modificar.
 	 * @param descripcionNueva  Nueva descripción para la categoría.
+	 * @throws RepositorioException Si ocurre un error en el repositorio.
+	 * @throws EntidadNoEncontrada Si no se encuentra la categoría con el identificador proporcionado.
 	 */
 	public void modificarCategoria(String idCategoria, String descripcionNueva) throws RepositorioException, EntidadNoEncontrada;
 	
@@ -40,7 +42,14 @@ public interface IServicioCategorias {
 	 */
 	public List<Categoria> recuperarDescendientesCategoria(String idCategoria);
 	
-	public Categoria getById(String idCategoria) throws RepositorioException, EntidadNoEncontrada;
-	
+	/**
+	 * Recupera una categoría por su identificador.
+	 * 
+	 * @param idCategoria Identificador de la categoría.
+	 * @return La categoría correspondiente al identificador proporcionado.
+	 * @throws RepositorioException Si ocurre un error en el repositorio.
+	 * @throws EntidadNoEncontrada Si no se encuentra la categoría con el identificador proporcionado.
+	 */
+	public Categoria recuperarCategoria(String idCategoria) throws RepositorioException, EntidadNoEncontrada;
 	
 }

@@ -11,7 +11,12 @@ public class StringUtilidades {
 	/**
 	 * Expresión regular para validar un número de teléfono de nueve dígitos
 	 */
-	private static final String NUEVE_DIGITOS = "\\d{9}"; 
+	private static final String NUEVE_DIGITOS = "\\d{9}";
+	
+	/**
+	 * Expresión regular para validar una dirección de correo electrónico.
+	 */
+	private static final String EMAIL = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,63}$";
 	
 	/**
 	 * Constructor privado para evitar la creación de instancias de la clase StringUtilidades.
@@ -53,6 +58,13 @@ public class StringUtilidades {
 			return false;
 		}
 		return telefono.matches(NUEVE_DIGITOS);
+	}
+	
+	public static boolean isEmailValido(String email) {
+		if(email == null) {
+			return false;
+		}
+		return email.matches(EMAIL);
 	}
 	
 }

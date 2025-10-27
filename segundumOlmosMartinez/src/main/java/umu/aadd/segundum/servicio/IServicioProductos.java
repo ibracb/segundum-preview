@@ -26,6 +26,8 @@ public interface IServicioProductos {
 	 * @param envioDisponible   Indica si el envío está disponible para el producto.
 	 * @param idUsuarioVendedor Identificador del usuario vendedor.
 	 * @return Identificador único del producto creado.
+	 * @throws RepositorioException    Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada     Si no se encuentra la categoría o el usuario vendedor.
 	 */
 	public String altaProducto(String titulo, String descripcion, double precio, EstadoProducto estado,
 			String idCategoria, boolean envioDisponible, String idUsuarioVendedor)
@@ -38,6 +40,8 @@ public interface IServicioProductos {
 	 * @param longitud    Longitud del lugar de recogida.
 	 * @param latitud     Latitud del lugar de recogida.
 	 * @param descripcion Descripción del lugar de recogida.
+	 * @throws RepositorioException    Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada     Si no se encuentra el producto.
 	 */
 	public void asignarLugarRecogida(String idProducto, double longitud, double latitud, String descripcion)
 			throws RepositorioException, EntidadNoEncontrada;
@@ -48,6 +52,8 @@ public interface IServicioProductos {
 	 * @param idProducto  Identificador del producto a modificar.
 	 * @param descripcion Nueva descripción del producto.
 	 * @param precio      Nuevo precio del producto.
+	 * @throws RepositorioException    Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada     Si no se encuentra el producto.
 	 */
 	public void modificarDatosProducto(String idProducto, String descripcion, double precio)
 			throws RepositorioException, EntidadNoEncontrada;
@@ -56,6 +62,8 @@ public interface IServicioProductos {
 	 * Añade una visualización al contador del producto.
 	 * 
 	 * @param idProducto Identificador del producto.
+	 * @throws RepositorioException    Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada     Si no se encuentra el producto.
 	 */
 	public void anadirVisualizacion(String idProducto) throws RepositorioException, EntidadNoEncontrada;
 
@@ -79,7 +87,19 @@ public interface IServicioProductos {
 	 * @param precio      Precio del producto.
 	 * @return Lista con los productos ordenados que cumplen con los requisitos
 	 *         especificados.
+	 * @throws RepositorioException    Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada     Si no se encuentra alguna entidad relacionada.
 	 */
 	public List<Producto> getProductosVenta(Categoria categoria, String descripcion, EstadoProducto estado,
 			double precio) throws RepositorioException, EntidadNoEncontrada;
+	
+	/**
+	 * Recupera un usuario por su identificador.
+	 * 
+	 * @param idProducto Identificador del producto a recuperar.
+	 * @return Producto correspondiente al identificador especificado.
+	 * @throws RepositorioException    Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada     Si el producto con el identificador especificado no existe.
+	 */
+	public Producto recuperarProducto(String idProducto) throws RepositorioException, EntidadNoEncontrada;
 }

@@ -9,9 +9,9 @@ import javax.xml.bind.Unmarshaller;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
-import repositorio.Repositorio;
 import repositorio.RepositorioException;
 import umu.aadd.segundum.modelo.Categoria;
+import umu.aadd.segundum.repositorio.RepositorioCategoriasAdHoc;
 import utils.StringUtilidades;
 
 /**
@@ -22,7 +22,7 @@ public class ServicioCategorias implements IServicioCategorias {
 	/**
 	 * Repositorio de categorías.
 	 */
-	private Repositorio<Categoria, String> repositorioCategorias = FactoriaRepositorios.getRepositorio(Categoria.class);
+	private RepositorioCategoriasAdHoc repositorioCategorias = FactoriaRepositorios.getRepositorio(Categoria.class);
 	
 	/**
 	 * {@inheritDoc}
@@ -49,15 +49,13 @@ public class ServicioCategorias implements IServicioCategorias {
 	}
 
 	@Override
-	public List<Categoria> recuperarCategoriasRaiz() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Categoria> recuperarCategoriasRaiz() throws RepositorioException {
+		return repositorioCategorias.getRaices();
 	}
 
 	@Override
-	public List<Categoria> recuperarDescendientesCategoria(String idCategoria) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Categoria> recuperarDescendientesCategoria(String idCategoria) throws RepositorioException {
+		return repositorioCategorias.getDescendientes(idCategoria);
 	}
 	
 	@Override

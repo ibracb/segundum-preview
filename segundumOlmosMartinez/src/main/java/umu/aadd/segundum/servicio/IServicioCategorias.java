@@ -32,7 +32,7 @@ public interface IServicioCategorias {
 	 * 
 	 * @return Conjunto de categorías raíz.
 	 */
-	public List<Categoria> recuperarCategoriasRaiz();
+	public List<Categoria> recuperarCategoriasRaiz() throws RepositorioException;
 	
 	/**
 	 * Recupera los descendientes de una categoría específica.
@@ -40,7 +40,7 @@ public interface IServicioCategorias {
 	 * @param idCategoria Identificador de la categoría.
 	 * @return Conjunto de categorías descendientes.
 	 */
-	public List<Categoria> recuperarDescendientesCategoria(String idCategoria);
+	public List<Categoria> recuperarDescendientesCategoria(String idCategoria) throws RepositorioException;
 	
 	/**
 	 * Recupera una categoría por su identificador.

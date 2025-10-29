@@ -26,17 +26,17 @@ import repositorio.Identificable;
 @Entity
 @Table(name = "productos")
 public class Producto implements Identificable {
-	
+
 	/**
 	 * Constante de precio gratuito para un producto.
 	 */
 	public static final double PRECIO_GRATUITO = 0.0;
-	
+
 	/**
 	 * Constante que indica cero visualizaciones de un producto.
 	 */
 	private static final int CERO_VISUALIZACIONES = 0;
-	
+
 	/**
 	 * Identificador único del producto.
 	 */
@@ -49,7 +49,7 @@ public class Producto implements Identificable {
 	 */
 	@Column(name = "titulo", nullable = false, updatable = false)
 	private String titulo;
-	
+
 	/**
 	 * Descripción del producto.
 	 */
@@ -113,13 +113,13 @@ public class Producto implements Identificable {
 	/**
 	 * Construye un producto.
 	 * 
-	 * @param titulo 			Titulo del producto.
-	 * @param descripcion 		Descripcion del producto.
-	 * @param precio			Precio del producto.
-	 * @param estado			Estado del producto.
-	 * @param categoria			Categoria del producto.
-	 * @param envioDisponible	Si el envio del producto esta disponible o no.
-	 * @param vendedor			Vendedor del producto.
+	 * @param titulo          Titulo del producto.
+	 * @param descripcion     Descripcion del producto.
+	 * @param precio          Precio del producto.
+	 * @param estado          Estado del producto.
+	 * @param categoria       Categoria del producto.
+	 * @param envioDisponible Si el envio del producto esta disponible o no.
+	 * @param vendedor        Vendedor del producto.
 	 */
 	public Producto(String titulo, String descripcion, double precio, EstadoProducto estado, Categoria categoria,
 			boolean envioDisponible, Usuario vendedor) {

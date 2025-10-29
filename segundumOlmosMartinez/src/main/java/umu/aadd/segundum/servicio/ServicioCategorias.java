@@ -18,20 +18,21 @@ import utils.StringUtilidades;
  * Implementación del servicio de categorías.
  */
 public class ServicioCategorias implements IServicioCategorias {
-	
+
 	/**
 	 * Repositorio de categorías.
 	 */
 	private Repositorio<Categoria, String> repositorioCategorias = FactoriaRepositorios.getRepositorio(Categoria.class);
-	
+
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * La jerarquía de categorías se carga desde un fichero XML ubicado en la ruta especificada.
+	 * La jerarquía de categorías se carga desde un fichero XML ubicado en la ruta
+	 * especificada.
 	 */
 	@Override
 	public void cargarJerarquiaCategorias(String ruta) throws JAXBException, RepositorioException {
-		if(ruta != null) {
+		if (ruta != null) {
 			JAXBContext contexto = JAXBContext.newInstance(Categoria.class);
 			Unmarshaller unmarshaller = contexto.createUnmarshaller();
 			Categoria categoria = (Categoria) unmarshaller.unmarshal(new File(ruta));
@@ -40,9 +41,10 @@ public class ServicioCategorias implements IServicioCategorias {
 	}
 
 	@Override
-	public void modificarCategoria(String idCategoria, String descripcionNueva) throws RepositorioException, EntidadNoEncontrada {
+	public void modificarCategoria(String idCategoria, String descripcionNueva)
+			throws RepositorioException, EntidadNoEncontrada {
 		Categoria categoria = repositorioCategorias.getById(idCategoria);
-		if(categoria != null && StringUtilidades.isDatoValido(descripcionNueva)) {
+		if (categoria != null && StringUtilidades.isDatoValido(descripcionNueva)) {
 			categoria.setDescripcion(descripcionNueva);
 			repositorioCategorias.update(categoria);
 		}
@@ -59,7 +61,7 @@ public class ServicioCategorias implements IServicioCategorias {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public Categoria recuperarCategoria(String idCategoria) throws RepositorioException, EntidadNoEncontrada {
 		return repositorioCategorias.getById(idCategoria);

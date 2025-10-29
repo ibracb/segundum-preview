@@ -6,7 +6,6 @@ import java.util.Map;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
-import repositorio.Repositorio;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
 import umu.aadd.segundum.modelo.Categoria;
@@ -14,23 +13,25 @@ import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.LugarRecogida;
 import umu.aadd.segundum.modelo.Producto;
 import umu.aadd.segundum.modelo.Usuario;
+import umu.aadd.segundum.repositorio.RepositorioProductosAdHoc;
 import utils.StringUtilidades;
 
 /**
  * Implementación del servicio de productos.
  */
 public class ServicioProductos implements IServicioProductos {
-	
+
 	/**
-	 * Repositorio de productos.
+	 * Repositorio AdHoc de productos.
 	 */
-	private Repositorio<Producto, String> repositorioProductos = FactoriaRepositorios.getRepositorio(Producto.class);
-	
+	private RepositorioProductosAdHoc repositorioProductos = FactoriaRepositorios.getRepositorio(Producto.class);
+
 	/**
 	 * Servicio de categorías.
 	 */
-	private IServicioCategorias servicioCategorias = (IServicioCategorias) FactoriaServicios.getServicio(Categoria.class);
-	
+	private IServicioCategorias servicioCategorias = (IServicioCategorias) FactoriaServicios
+			.getServicio(Categoria.class);
+
 	/**
 	 * Servicio de usuarios.
 	 */
@@ -43,12 +44,12 @@ public class ServicioProductos implements IServicioProductos {
 
 		Categoria categoria = servicioCategorias.recuperarCategoria(idCategoria);
 		Usuario usuario = servicioUsuarios.recuperarUsuario(idUsuarioVendedor);
-		
-		if(!StringUtilidades.isDatoValido(titulo) || precio < Producto.PRECIO_GRATUITO || estado == null
+
+		if (!StringUtilidades.isDatoValido(titulo) || precio < Producto.PRECIO_GRATUITO || estado == null
 				|| categoria == null || usuario == null) {
 			return null;
 		}
-		
+
 		Producto producto = new Producto(titulo, descripcion, precio, estado, categoria, envioDisponible, usuario);
 		repositorioProductos.add(producto);
 
@@ -60,8 +61,8 @@ public class ServicioProductos implements IServicioProductos {
 			throws RepositorioException, EntidadNoEncontrada {
 
 		Producto producto = repositorioProductos.getById(idProducto);
-		
-		if(producto != null && longitud >= LugarRecogida.LONGITUD_MINIMA && longitud <= LugarRecogida.LONGITUD_MAXIMA
+
+		if (producto != null && longitud >= LugarRecogida.LONGITUD_MINIMA && longitud <= LugarRecogida.LONGITUD_MAXIMA
 				&& latitud >= LugarRecogida.LATITUD_MINIMA && latitud <= LugarRecogida.LATITUD_MAXIMA
 				&& StringUtilidades.isDatoValido(descripcion)) {
 			LugarRecogida recogida = new LugarRecogida(descripcion, longitud, latitud);
@@ -76,14 +77,14 @@ public class ServicioProductos implements IServicioProductos {
 			throws RepositorioException, EntidadNoEncontrada {
 
 		Producto producto = repositorioProductos.getById(idProducto);
-		
-		if(producto != null) {
+
+		if (producto != null) {
 			producto.setDescripcion(descripcion);
-			
-			if(precio < Producto.PRECIO_GRATUITO) {
+
+			if (precio < Producto.PRECIO_GRATUITO) {
 				producto.setPrecio(precio);
 			}
-			
+
 			repositorioProductos.update(producto);
 		}
 
@@ -93,8 +94,8 @@ public class ServicioProductos implements IServicioProductos {
 	public void anadirVisualizacion(String idProducto) throws RepositorioException, EntidadNoEncontrada {
 
 		Producto producto = repositorioProductos.getById(idProducto);
-		
-		if(producto != null) {
+
+		if (producto != null) {
 			producto.setVisualizaciones(producto.getVisualizaciones() + 1);
 			repositorioProductos.update(producto);
 		}
@@ -103,17 +104,18 @@ public class ServicioProductos implements IServicioProductos {
 
 	@Override
 	public Map<Producto, String> getHistorial(Month mes, int anio) throws RepositorioException, EntidadNoEncontrada {
-		
-		/*repositorio = repoProductos.getAll();
-		 * SELECT p FROM repositorio WHERE p.getFechaPublicacion.getMonth.isBefore(mes) AND p.getFechaPublicacion.getAnio.isBefore(anio);
-		 * */
-		
+
+		repositorioProductos.recuperarHistorial(mes, anio);
+
 		return null;
 	}
 
 	@Override
 	public List<Producto> getProductosVenta(Categoria categoria, String descripcion, EstadoProducto estado,
 			double precio) throws RepositorioException, EntidadNoEncontrada {
+
+		repositorioProductos.recuperarProductosVenta(categoria, descripcion, estado, precio);
+
 		return null;
 	}
 

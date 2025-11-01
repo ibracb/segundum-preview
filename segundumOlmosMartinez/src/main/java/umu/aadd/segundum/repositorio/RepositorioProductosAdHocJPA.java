@@ -15,8 +15,14 @@ import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.Producto;
 
+/**
+ * Implementación JPA del repositorio ad-hoc para productos.
+ */
 public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implements RepositorioProductosAdHoc {
 
+	/**
+	 * EntityManager para interactuar con la base de datos.
+	 */
 	@PersistenceContext
 	private EntityManager em;
 

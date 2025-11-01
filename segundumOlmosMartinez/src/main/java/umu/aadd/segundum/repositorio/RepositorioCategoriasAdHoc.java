@@ -6,6 +6,9 @@ import repositorio.RepositorioException;
 import repositorio.RepositorioString;
 import umu.aadd.segundum.modelo.Categoria;
 
+/**
+ * Repositorio ad-hoc para categorías.
+ */
 public interface RepositorioCategoriasAdHoc extends RepositorioString<Categoria> {
 	
 	/**

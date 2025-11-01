@@ -7,8 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -16,6 +14,7 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -40,7 +39,6 @@ public class Categoria implements Identificable {
 	 * Identificador único de la categoría.
 	 */
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private String id;
 
 	/**
@@ -98,6 +96,7 @@ public class Categoria implements Identificable {
 	 * 
 	 * @return Nombre de la categoría.
 	 */
+	@XmlElement
 	public String getNombre() {
 		return nombre;
 	}
@@ -136,7 +135,7 @@ public class Categoria implements Identificable {
 	 * 
 	 * @return Subcategorías de la categoría.
 	 */
-	@XmlAttribute(name = "categoria")
+	@XmlElement(name = "categoria")
 	public List<Categoria> getSubcategorias() {
 		return subcategorias;
 	}

@@ -31,6 +31,7 @@ public interface IServicioCategorias {
 	 * Recupera el conjunto de categorías raíz (sin categoría padre).
 	 * 
 	 * @return Conjunto de categorías raíz.
+	 * @throws RepositorioException Si ocurre un error en el repositorio.
 	 */
 	public List<Categoria> recuperarCategoriasRaiz() throws RepositorioException;
 	
@@ -39,6 +40,7 @@ public interface IServicioCategorias {
 	 * 
 	 * @param idCategoria Identificador de la categoría.
 	 * @return Conjunto de categorías descendientes.
+	 * @throws RepositorioException Si ocurre un error en el repositorio.
 	 */
 	public List<Categoria> recuperarDescendientesCategoria(String idCategoria) throws RepositorioException;
 	
@@ -51,5 +53,13 @@ public interface IServicioCategorias {
 	 * @throws EntidadNoEncontrada Si no se encuentra la categoría con el identificador proporcionado.
 	 */
 	public Categoria recuperarCategoria(String idCategoria) throws RepositorioException, EntidadNoEncontrada;
+	
+	/**
+	 * Recupera todas las categorías disponibles.
+	 * 
+	 * @return Lista de todas las categorías.
+	 * @throws RepositorioException Si ocurre un error en el repositorio.
+	 */
+	public List<Categoria> recuperarTodasCategorias() throws RepositorioException;
 	
 }

@@ -1,9 +1,12 @@
 package umu.aadd.segundum.servicio.test;
 
+import javax.xml.bind.JAXBException;
+
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
 import umu.aadd.segundum.modelo.Usuario;
+import umu.aadd.segundum.servicio.IServicioCategorias;
 import umu.aadd.segundum.servicio.IServicioUsuarios;
 
 /**
@@ -15,8 +18,33 @@ public class Programa {
 	/**
 	 * Método principal que inicia la ejecución del programa.
 	 * @param args Argumentos de línea de comandos (no se usan).
+	 * @throws RepositorioException si ocurre un error en el repositorio.
+	 * @throws EntidadNoEncontrada si no se encuentra una entidad.
+	 * @throws JAXBException si ocurre un error al procesar XML.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws RepositorioException, EntidadNoEncontrada, JAXBException {
+		
+		/**
+		 * Prueba categorías
+		 */
+		
+		//Se obtiene servicio de categorías con FactoriaServicios
+		IServicioCategorias servicioCategorias = FactoriaServicios.getServicio(IServicioCategorias.class);
+		
+		//Probamos a cargar una jerarquía de categorías a partir de un fichero XML (Multimedia.xml)
+		servicioCategorias.cargarJerarquiaCategorias("categoriasXML/Multimedia.xml");
+		
+		//Tratamos de imprimir por consola información de todas las categorías cargadas
+		System.out.println("TODAS LAS CATEGORÍAS:\n");
+		servicioCategorias.recuperarTodasCategorias().forEach(categoria -> {
+			System.out.println("Id: " + categoria.getId());
+			System.out.println("Nombre: " + categoria.getNombre());
+			System.out.println("Ruta: " + categoria.getRuta() + "\n");
+		});
+		
+		/**
+		 * Prueba usuarios
+		 */
 		
 		//Se obtiene servicio de usuarios con FactoriaServicios
 		IServicioUsuarios servicioUsuarios = FactoriaServicios.getServicio(IServicioUsuarios.class);
@@ -29,37 +57,24 @@ public class Programa {
 		String fechaNacimiento = "2003-12-06";
 		
 		//Vamos a dar de alta al usuario
-		String idUsuario = null;
-		try {
-			idUsuario = servicioUsuarios.altaUsuario(nombre, apellidos, email, clave, fechaNacimiento, null);
-			Usuario usuario = servicioUsuarios.recuperarUsuario(idUsuario);
-			System.out.println("Usuario creado, con id " + idUsuario + ", y email " + email);
-			System.out.println("Nombre: " + usuario.getNombre());
-			System.out.println("Apellidos: " + usuario.getApellidos());
-			System.out.println("Clave: " + usuario.getClave());
-			System.out.println("Fecha de nacimiento: " + usuario.getFechaNacimiento().toString());
-			System.out.println("Teléfono: " + usuario.getTelefono() + "\n\n");
-		}
-		catch (RepositorioException | EntidadNoEncontrada e) {
-			e.printStackTrace();
-		}
-		
+		String idUsuario = servicioUsuarios.altaUsuario(nombre, apellidos, email, clave, fechaNacimiento, null);
+		Usuario usuario = servicioUsuarios.recuperarUsuario(idUsuario);
+		System.out.println("Usuario creado, con id " + idUsuario + ", y email " + email);
+		System.out.println("Nombre: " + usuario.getNombre());
+		System.out.println("Apellidos: " + usuario.getApellidos());
+		System.out.println("Clave: " + usuario.getClave());
+		System.out.println("Fecha de nacimiento: " + usuario.getFechaNacimiento().toString());
+		System.out.println("Teléfono: " + usuario.getTelefono() + "\n\n");
 		
 		//Vamos a modificar los datos del usuario (le meteremos un teléfono además)
-		try {
-			servicioUsuarios.modificarUsuario(idUsuario, "Lucía", "Olmos Martínez", "l.o.m", "2004-01-01", "444444444");
-			Usuario usuario = servicioUsuarios.recuperarUsuario(idUsuario);
-			System.out.println("Usuario con id " + usuario.getId() + ", y email " + usuario.getEmail() + " actualizado!");
-			System.out.println("Nombre: " + usuario.getNombre());
-			System.out.println("Apellidos: " + usuario.getApellidos());
-			System.out.println("Clave: " + usuario.getClave());
-			System.out.println("Fecha de nacimiento: " + usuario.getFechaNacimiento().toString());
-			System.out.println("Teléfono: " + usuario.getTelefono());
-		}
-		catch (RepositorioException | EntidadNoEncontrada e) {
-			e.printStackTrace();
-		}
-		
+		servicioUsuarios.modificarUsuario(idUsuario, "Lucía", "Olmos Martínez", "l.o.m", "2004-01-01", "444444444");
+		usuario = servicioUsuarios.recuperarUsuario(idUsuario);
+		System.out.println("Usuario con id " + usuario.getId() + ", y email " + usuario.getEmail() + " actualizado!");
+		System.out.println("Nombre: " + usuario.getNombre());
+		System.out.println("Apellidos: " + usuario.getApellidos());
+		System.out.println("Clave: " + usuario.getClave());
+		System.out.println("Fecha de nacimiento: " + usuario.getFechaNacimiento().toString());
+		System.out.println("Teléfono: " + usuario.getTelefono());
 		
 	}
 

@@ -65,4 +65,9 @@ public class ServicioCategorias implements IServicioCategorias {
 		return repositorioCategorias.getById(idCategoria);
 	}
 
+	@Override
+	public List<Categoria> recuperarTodasCategorias() throws RepositorioException {
+		return repositorioCategorias.getAll();
+	}
+
 }

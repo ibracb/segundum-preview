@@ -10,9 +10,31 @@ import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.Producto;
 
+/**
+ * Repositorio ad-hoc para productos.
+ */
 public interface RepositorioProductosAdHoc extends RepositorioString<Producto> {
+	
+	/**
+	 * Recupera el historial de productos publicados en un mes y año específicos.
+	 * 
+	 * @param mes  Mes de publicación.
+	 * @param anio Año de publicación.
+	 * @return Mapa con los productos y su información en formato String.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 */
 	public Map<Producto, String> recuperarHistorial(Month mes, int anio) throws RepositorioException;
 
+	/**
+	 * Recupera productos en venta que coinciden con los criterios especificados.
+	 * 
+	 * @param categoria   Categoría del producto.
+	 * @param descripcion Descripción del producto.
+	 * @param estado      Estado del producto.
+	 * @param precio      Precio máximo del producto.
+	 * @return Lista de productos que cumplen con los criterios.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 */
 	public List<Producto> recuperarProductosVenta(Categoria categoria, String descripcion, EstadoProducto estado,
 			double precio) throws RepositorioException;
 }

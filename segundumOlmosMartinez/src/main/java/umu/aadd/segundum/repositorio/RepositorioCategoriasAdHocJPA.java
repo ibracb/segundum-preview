@@ -12,6 +12,9 @@ import repositorio.RepositorioException;
 import umu.aadd.segundum.modelo.Categoria;
 import utils.EntityManagerHelper;
 
+/**
+ * Repositorio ad-hoc para categorías utilizando JPA.
+ */
 public class RepositorioCategoriasAdHocJPA extends RepositorioCategoriasJPA implements RepositorioCategoriasAdHoc {
 
 	@SuppressWarnings("unchecked")

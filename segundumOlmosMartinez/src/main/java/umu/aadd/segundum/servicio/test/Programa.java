@@ -25,24 +25,6 @@ public class Programa {
 	public static void main(String[] args) throws RepositorioException, EntidadNoEncontrada, JAXBException {
 		
 		/**
-		 * Prueba categorías
-		 */
-		
-		//Se obtiene servicio de categorías con FactoriaServicios
-		IServicioCategorias servicioCategorias = FactoriaServicios.getServicio(IServicioCategorias.class);
-		
-		//Probamos a cargar una jerarquía de categorías a partir de un fichero XML (Multimedia.xml)
-		servicioCategorias.cargarJerarquiaCategorias("categoriasXML/Multimedia.xml");
-		
-		//Tratamos de imprimir por consola información de todas las categorías cargadas
-		System.out.println("TODAS LAS CATEGORÍAS:\n");
-		servicioCategorias.recuperarTodasCategorias().forEach(categoria -> {
-			System.out.println("Id: " + categoria.getId());
-			System.out.println("Nombre: " + categoria.getNombre());
-			System.out.println("Ruta: " + categoria.getRuta() + "\n");
-		});
-		
-		/**
 		 * Prueba usuarios
 		 */
 		
@@ -75,6 +57,35 @@ public class Programa {
 		System.out.println("Clave: " + usuario.getClave());
 		System.out.println("Fecha de nacimiento: " + usuario.getFechaNacimiento().toString());
 		System.out.println("Teléfono: " + usuario.getTelefono());
+		
+		
+		
+		/**
+		 * Prueba categorías
+		 */
+		
+		//Se obtiene servicio de categorías con FactoriaServicios
+		IServicioCategorias servicioCategorias = FactoriaServicios.getServicio(IServicioCategorias.class);
+		
+		//Probamos a cargar algunas jerarquías de categorías a partir de un fichero XML (Multimedia.xml)
+		servicioCategorias.cargarJerarquiaCategorias("categoriasXML/Multimedia.xml");
+		
+		//Tratamos de imprimir por consola información de todas las categorías raíz
+		System.out.println("\n\n\n\nTODAS LAS CATEGORÍAS RAÍZ:\n");
+		servicioCategorias.recuperarCategoriasRaiz().forEach(categoria -> {
+			System.out.println("Id: " + categoria.getId());
+			System.out.println("Nombre: " + categoria.getNombre());
+			System.out.println("Ruta: " + categoria.getRuta() + "\n\n");
+		});
+		
+		//Tratamos de imprimir por consola información de todas las categorías descendientes de la raíz (id=783) en Multimedia.xml
+		System.out.println("TODAS LAS CATEGORÍAS DESCENDIENTES DE LA RAÍZ DE MULTIMEDIA:\n");
+		servicioCategorias.recuperarDescendientesCategoria("783").forEach(categoria -> {
+			System.out.println("Id: " + categoria.getId());
+			System.out.println("Nombre: " + categoria.getNombre());
+			System.out.println("Ruta: " + categoria.getRuta() + "\n\n");
+		});
+		
 		
 	}
 

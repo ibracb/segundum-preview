@@ -116,14 +116,6 @@ public class Usuario implements Identificable {
 	}
 
 	/**
-	 * Establece el identificador del usuario.
-	 */
-	@Override
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	/**
 	 * Recupera el email del usuario.
 	 * 
 	 * @return Email del usuario.

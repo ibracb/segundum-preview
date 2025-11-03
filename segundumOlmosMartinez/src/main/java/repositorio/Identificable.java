@@ -11,9 +11,4 @@ public interface Identificable {
 	 */
 	String getId();
 	
-	/**
-	 * Establece el identificador único de la entidad.
-	 * @param id El identificador único a establecer.
-	 */
-	void setId(String id);
 }

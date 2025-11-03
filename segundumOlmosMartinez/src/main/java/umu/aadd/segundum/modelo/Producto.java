@@ -149,14 +149,6 @@ public class Producto implements Identificable {
 	}
 
 	/**
-	 * Establece el identificador del producto.
-	 */
-	@Override
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	/**
 	 * Recupera el título del producto.
 	 * 
 	 * @return Título del producto.

@@ -1,5 +1,6 @@
 package umu.aadd.segundum.modelo;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Basic;
@@ -13,6 +14,8 @@ import javax.persistence.Lob;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -20,17 +23,18 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import repositorio.Identificable;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 @Entity
 @Table(name = "categorias")
 @NamedNativeQuery(
-		name="Categoria.getRaices",
-		query="SELECT c FROM categorias c WHERE c.ruta REGEXP '\\\\|[1-9][0-9]*\\\\|'",
+		name = "Categoria.getRaices",
+		query = "SELECT * FROM categorias WHERE padre_id IS NULL",
 		resultClass = Categoria.class
 )
 @NamedNativeQuery(
-		name="Categoria.getDescendientes",
-		query="SELECT c FROM categorias c WHERE c.ruta REGEXP '(\\\\|[1-9][0-9]*\\\\|){2,}' AND c.id=:id",
+		name = "Categoria.getDescendientes",
+		query = "SELECT * FROM categorias WHERE padre_id = ?",
 		resultClass = Categoria.class
 )
 public class Categoria implements Identificable {
@@ -38,18 +42,21 @@ public class Categoria implements Identificable {
 	/**
 	 * Identificador único de la categoría.
 	 */
+	@XmlAttribute
 	@Id
 	private String id;
 
 	/**
 	 * Nombre de la categoría.
 	 */
+	@XmlElement
 	@Column(name = "nombre", nullable = false, updatable = false)
 	private String nombre;
 	
 	/**
 	 * Descripción de la categoría.
 	 */
+	@XmlTransient
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(name = "descripcion", nullable = true)
@@ -58,14 +65,16 @@ public class Categoria implements Identificable {
 	/**
 	 * Ruta de la categoría.
 	 */
+	@XmlAttribute
 	@Column(name = "ruta", nullable = false, unique = true, updatable = false)
 	private String ruta;
 	
 	/**
 	 * Subcategorías de la categoría.
 	 */
+	@XmlElement(name = "categoria")
 	@OneToMany(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "categoria_padre_id")
+	@JoinColumn(name = "padre_id")
 	private List<Categoria> subcategorias;
 
 	/**
@@ -78,17 +87,8 @@ public class Categoria implements Identificable {
 	 * Recupera el identificador de la categoría.
 	 */
 	@Override
-	@XmlAttribute
 	public String getId() {
 		return id;
-	}
-
-	/**
-	 * Establece el identificador de la categoria.
-	 */
-	@Override
-	public void setId(String id) {
-		this.id = id;
 	}
 	
 	/**
@@ -96,7 +96,6 @@ public class Categoria implements Identificable {
 	 * 
 	 * @return Nombre de la categoría.
 	 */
-	@XmlElement
 	public String getNombre() {
 		return nombre;
 	}
@@ -106,7 +105,6 @@ public class Categoria implements Identificable {
 	 * 
 	 * @return Descripción de la categoría.
 	 */
-	@XmlTransient
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -125,7 +123,6 @@ public class Categoria implements Identificable {
 	 * 
 	 * @return Ruta de la categoría.
 	 */
-	@XmlAttribute
 	public String getRuta() {
 		return ruta;
 	}
@@ -135,18 +132,8 @@ public class Categoria implements Identificable {
 	 * 
 	 * @return Subcategorías de la categoría.
 	 */
-	@XmlElement(name = "categoria")
 	public List<Categoria> getSubcategorias() {
-		return subcategorias;
-	}
-
-	/**
-	 * Establece la subcategorías de la categoria.
-	 * 
-	 * @param subcategorias Subcategorías de la categoría.
-	 */
-	public void setSubcategorias(List<Categoria> subcategorias) {
-		this.subcategorias = subcategorias;
+		return Collections.unmodifiableList(subcategorias);
 	}
 
 }

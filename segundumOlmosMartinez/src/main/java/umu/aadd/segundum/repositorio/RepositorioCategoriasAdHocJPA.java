@@ -22,7 +22,7 @@ public class RepositorioCategoriasAdHocJPA extends RepositorioCategoriasJPA impl
 	public List<Categoria> getRaices() throws RepositorioException {
 		try {
 			EntityManager em = EntityManagerHelper.getEntityManager();
-			Query query = em.createNativeQuery("Categoria.getRaices", Categoria.class);
+			Query query = em.createNamedQuery("Categoria.getRaices");
 			query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 			return query.getResultList();
 		}
@@ -39,9 +39,9 @@ public class RepositorioCategoriasAdHocJPA extends RepositorioCategoriasJPA impl
 	public List<Categoria> getDescendientes(String idCategoria) throws RepositorioException {
 		try {
 			EntityManager em = EntityManagerHelper.getEntityManager();
-			Query query = em.createNativeQuery("Categoria.getDescendientes", Categoria.class);
+			Query query = em.createNamedQuery("Categoria.getDescendientes");
 			query.setHint(QueryHints.REFRESH, HintValues.TRUE);
-			query.setParameter("id", idCategoria);
+			query.setParameter(1, idCategoria);
 			return query.getResultList();
 		}
 		catch (RuntimeException e) {

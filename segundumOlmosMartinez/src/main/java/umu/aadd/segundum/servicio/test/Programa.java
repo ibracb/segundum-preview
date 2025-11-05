@@ -1,12 +1,21 @@
 package umu.aadd.segundum.servicio.test;
 
+import java.time.Month;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.xml.bind.JAXBException;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
+import umu.aadd.segundum.modelo.Categoria;
+import umu.aadd.segundum.modelo.EstadoProducto;
+import umu.aadd.segundum.modelo.Producto;
 import umu.aadd.segundum.modelo.Usuario;
 import umu.aadd.segundum.servicio.IServicioCategorias;
+import umu.aadd.segundum.servicio.IServicioProductos;
 import umu.aadd.segundum.servicio.IServicioUsuarios;
 
 /**
@@ -87,6 +96,49 @@ public class Programa {
 		});
 		
 		
+		/**
+		 * Prueba productos
+		 */
+		
+		//Se obtiene servicio de categorías con FactoriaServicios
+		IServicioProductos servicioProductos = FactoriaServicios.getServicio(IServicioProductos.class);
+		
+		
+		//Probamos a cargar algunas jerarquías de categorías a partir de un fichero XML (Multimedia.xml)
+		servicioCategorias.cargarJerarquiaCategorias("categoriasXML/Mobiliario.xml");
+		
+		//Probamos a crear un producto, con categoria "Sillas para salón comedor y cocina", id: 5886
+		String prodSillaId = servicioProductos.altaProducto("Silla", "Silla de madera resistente", 30.50, EstadoProducto.NUEVO, "5886", true, idUsuario);
+		
+		
+		//Recuperar producto a través del ID
+		Producto prodSilla = servicioProductos.recuperarProducto(prodSillaId);
+		
+		//Imprimimos sus propiedades
+		System.out.println(prodSilla.toString());
+		
+		//Tratamos de modificar e imprimir las diferentes propiedades (añadir visualización también)
+		servicioProductos.anadirVisualizacion(prodSillaId);
+		System.out.println(prodSilla.toString());
+		
+		//Creamos otro producto
+		servicioCategorias.cargarJerarquiaCategorias("categoriasXML/Equipamiento_deportivo.xml");
+		String prodSillaId2 = servicioProductos.altaProducto("Tabla de surf", "Tabla de surf para niños", 100.0, EstadoProducto.BUEN_ESTADO, "3320", true, idUsuario);
+		String prodSillaId3 = servicioProductos.altaProducto("Guantes", "Guantes de golf históricos", 100.0, EstadoProducto.COMO_NUEVO, "4466", true, idUsuario);
+		
+		//Tratamos de recuperar el historial
+		Map<Producto,String> historial = servicioProductos.getHistorial(Month.NOVEMBER, 2025);
+		for(Producto p : historial.keySet()) {
+			System.out.println(historial.get(p));
+		}
+		
+		//Recuperar los productos a la venta
+		Categoria categoria = servicioCategorias.recuperarCategoria("988");
+		List<Producto> venta = servicioProductos.getProductosVenta(categoria, "", EstadoProducto.COMO_NUEVO, 0.0);
+		System.out.println("Los productos a la venta con categoria " + categoria.getNombre() + " y estado: como nuevo son: ");
+		for(Producto p : venta) { //DEBE HABER DEVUELTO EL PRODUCTO GUANTE, QUE PERTENECE A LA SUBCATEGORÍA 4466 CON CATEGORÍA PADRE 988
+			System.out.println(p.toString());
+		}
 	}
 
 }

@@ -29,13 +29,13 @@ public class ServicioProductos implements IServicioProductos {
 	/**
 	 * Servicio de categorías.
 	 */
-	private IServicioCategorias servicioCategorias = (IServicioCategorias) FactoriaServicios
-			.getServicio(Categoria.class);
+	private IServicioCategorias servicioCategorias = FactoriaServicios
+			.getServicio(IServicioCategorias.class);
 
 	/**
 	 * Servicio de usuarios.
 	 */
-	private IServicioUsuarios servicioUsuarios = (IServicioUsuarios) FactoriaServicios.getServicio(Usuario.class);
+	private IServicioUsuarios servicioUsuarios = FactoriaServicios.getServicio(IServicioUsuarios.class);
 
 	@Override
 	public String altaProducto(String titulo, String descripcion, double precio, EstadoProducto estado,
@@ -105,18 +105,14 @@ public class ServicioProductos implements IServicioProductos {
 	@Override
 	public Map<Producto, String> getHistorial(Month mes, int anio) throws RepositorioException, EntidadNoEncontrada {
 
-		repositorioProductos.recuperarHistorial(mes, anio);
-
-		return null;
+		return repositorioProductos.recuperarHistorial(mes, anio);
 	}
 
 	@Override
 	public List<Producto> getProductosVenta(Categoria categoria, String descripcion, EstadoProducto estado,
 			double precio) throws RepositorioException, EntidadNoEncontrada {
 
-		repositorioProductos.recuperarProductosVenta(categoria, descripcion, estado, precio);
-
-		return null;
+		return repositorioProductos.recuperarProductosVenta(categoria, descripcion, estado, precio);
 	}
 
 	@Override

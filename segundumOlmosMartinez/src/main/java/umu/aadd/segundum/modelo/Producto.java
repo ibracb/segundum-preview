@@ -273,4 +273,13 @@ public class Producto implements Identificable {
 	public Usuario getVendedor() {
 		return vendedor;
 	}
+
+	@Override
+	public String toString() {
+		return "Producto [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", precio=" + precio
+				+ ", estado=" + estado + ", fechaPublicacion=" + fechaPublicacion + ", categoria=" + categoria.getNombre()
+				+ ", visualizaciones=" + visualizaciones + ", envioDisponible=" + envioDisponible + ", recogida="
+				+ recogida + ", vendedor=" + vendedor.getNombre() + " " + vendedor.getApellidos() + "]";
+	}
+	
 }

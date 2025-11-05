@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import repositorio.RepositorioException;
@@ -24,18 +26,18 @@ public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implem
 	 * EntityManager para interactuar con la base de datos.
 	 */
 	@PersistenceContext
-	private EntityManager em;
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory("segundum");
+	EntityManager em = emf.createEntityManager();
 
 	@Override
 	public Map<Producto, String> recuperarHistorial(Month mes, int anio) throws RepositorioException {
 		Map<Producto, String> historial = new LinkedHashMap<>();
 		try {
 			List<Producto> productos = em.createQuery(
-					"SELECT p FROM Producto p WHERE FUNCTION('MONTH', p.fechaPublicacion) = :mes) AND FUNCTION('YEAR', p.fechaPublicacion) = :anio)",
+					"SELECT p FROM Producto p WHERE FUNCTION('MONTH', p.fechaPublicacion) = :mes AND FUNCTION('YEAR', p.fechaPublicacion) = :anio",
 					Producto.class).setParameter("mes", mes.getValue()).setParameter("anio", anio).getResultList();
 			for (Producto p : productos) {
-				String texto = p.getId() + "," + p.getPrecio() + "," + p.getFechaPublicacion() + ","
-						+ p.getCategoria().getNombre() + "," + p.getVisualizaciones();
+				String texto = "ID: " + p.getId() + ", precio: " + p.getPrecio() + ", fecha: " + p.getFechaPublicacion().getDayOfMonth() + "/" + p.getFechaPublicacion().getMonth() + "/" + p.getFechaPublicacion().getYear() + ", categoría: " + p.getCategoria().getNombre() + ", número de visualizaciones: " + p.getVisualizaciones();
 				historial.put(p, texto);
 			}
 		} catch (Exception e) {
@@ -50,32 +52,44 @@ public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implem
 		Map<String, Object> params = new HashMap<>();
 		List<Categoria> categorias = new ArrayList<>();
 
-		String textoQuery = "SELECT p FROM Producto p WHERE ";
+		String textoQuery = "SELECT p FROM Producto p WHERE 1=1";
 
 		if (categoria != null) {
-			textoQuery += "p.categoria IN :categorias ";
+			System.out.println("HAY CATEGORIA");
+			textoQuery += " AND p.categoria IN :categorias";
 			categorias.add(categoria);
 			categorias.addAll(categoria.getSubcategorias());
-			params.put("categoria", categorias);
+			for(Categoria c : categorias) {
+				System.out.println(c.getNombre());
+			}
+			params.put("categorias", categorias);
 		}
-		if (descripcion != null && !descripcion.isEmpty()) {
-			textoQuery += "p.descripcion LIKE :descripcion AND ";
+		if ((descripcion != null && !descripcion.isEmpty()) || descripcion.equals(" ")) {
+			System.out.println("HAY DESCRIPCION");
+			textoQuery += " AND p.descripcion LIKE :descripcion";
 			params.put("descripcion", "%" + descripcion + "%");
 		}
 		if (estado != null) {
-			textoQuery += "p.estado = :estado AND ";
+			System.out.println("HAY ESTADO");
+			textoQuery += " AND p.estado = :estado";
 			params.put("estado", estado);
 		}
-		if (precio > 0) {
-			textoQuery += "p.precio = :precio";
-			params.put("descripcion", precio);
+		if (precio > 0.0) {
+			System.out.println("HAY PRECIO");
+			textoQuery += " AND p.precio = :precio";
+			params.put("precio", precio);
 		}
-		TypedQuery<Producto> query = em.createQuery(textoQuery, Producto.class);
-		for (Map.Entry<String, Object> entry : params.entrySet()) {
-			query.setParameter(entry.getKey(), entry.getValue());
-		}
-
-		return query.getResultList();
+		try {
+			TypedQuery<Producto> query = em.createQuery(textoQuery, Producto.class);
+			for (Map.Entry<String, Object> entry : params.entrySet()) {
+				query.setParameter(entry.getKey(), entry.getValue());
+			}
+			return query.getResultList();
+		} catch (Exception e) {
+	        throw new RepositorioException("Error al recuperar los productos en venta", e);
+	    }
+		
+		
 	}
 
 }

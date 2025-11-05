@@ -23,14 +23,15 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import repositorio.Identificable;
 
-
-@NamedNativeQuery(name = "Categoria.getRaices", query = "SELECT * FROM categorias WHERE padre_id IS NULL", resultClass = Categoria.class)
-
-
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 @Entity
 @Table(name = "categorias")
+@NamedNativeQuery(
+		name = "Categoria.getRaices",
+		query = "SELECT * FROM categorias WHERE padre_id IS NULL",
+		resultClass = Categoria.class
+)
 public class Categoria implements Identificable {
 
 	/**

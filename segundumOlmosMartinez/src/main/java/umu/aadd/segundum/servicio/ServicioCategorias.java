@@ -9,8 +9,10 @@ import javax.xml.bind.Unmarshaller;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
+import repositorio.Repositorio;
 import repositorio.RepositorioException;
 import umu.aadd.segundum.modelo.Categoria;
+import umu.aadd.segundum.modelo.Usuario;
 import umu.aadd.segundum.repositorio.RepositorioCategoriasAdHoc;
 import utils.StringUtilidades;
 
@@ -23,16 +25,19 @@ public class ServicioCategorias implements IServicioCategorias {
 	 * Repositorio de categorías.
 	 */
 	private RepositorioCategoriasAdHoc repositorioCategorias = FactoriaRepositorios.getRepositorio(Categoria.class);
-
+	
+	private Repositorio<Usuario, String> repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
+	
 	/**
 	 * {@inheritDoc}
 	 * 
 	 * La jerarquía de categorías se carga desde un fichero XML ubicado en la ruta
 	 * especificada.
+	 * @throws EntidadNoEncontrada 
 	 */
 	@Override
-	public void cargarJerarquiaCategorias(String ruta) throws JAXBException, RepositorioException {
-		if (ruta != null) {
+	public void cargarJerarquiaCategorias(String idUsuario, String ruta) throws JAXBException, RepositorioException, EntidadNoEncontrada {
+		if (repositorioUsuarios.getById(idUsuario) == null || !repositorioUsuarios.getById(idUsuario).isAdministrador() || ruta != null) {
 			JAXBContext contexto = JAXBContext.newInstance(Categoria.class);
 			Unmarshaller unmarshaller = contexto.createUnmarshaller();
 			Categoria categoria = (Categoria) unmarshaller.unmarshal(new File(ruta));
@@ -41,11 +46,14 @@ public class ServicioCategorias implements IServicioCategorias {
 	}
 
 	@Override
-	public void modificarCategoria(String idCategoria, String descripcionNueva)
+	public void modificarCategoria(String idUsuario, String idCategoria, String descripcion)
 			throws RepositorioException, EntidadNoEncontrada {
+		if (repositorioUsuarios.getById(idUsuario) == null || !repositorioUsuarios.getById(idUsuario).isAdministrador()) {
+			return;
+		}
 		Categoria categoria = repositorioCategorias.getById(idCategoria);
-		if (categoria != null && StringUtilidades.isDatoValido(descripcionNueva)) {
-			categoria.setDescripcion(descripcionNueva);
+		if (categoria != null && StringUtilidades.isDatoValido(descripcion)) {
+			categoria.setDescripcion(descripcion);
 			repositorioCategorias.update(categoria);
 		}
 	}

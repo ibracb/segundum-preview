@@ -32,10 +32,11 @@ public interface IServicioUsuarios {
 	 * @param clave           Nueva clave de acceso del usuario.
 	 * @param fechaNacimiento Nueva fecha de nacimiento del usuario.
 	 * @param telefono        Nuevo teléfono de contacto del usuario.
+	 * @param administrador   Nuevo estado de administrador del usuario.
 	 * @throws RepositorioException    Si ocurre un error al acceder al repositorio.
 	 * @throws EntidadNoEncontrada     Si el usuario con el identificador especificado no existe.
 	 */
-	public void modificarUsuario(String idUsuario, String nombre, String apellidos, String clave, String fechaNacimiento, String telefono) throws RepositorioException, EntidadNoEncontrada;
+	public void modificarUsuario(String idUsuario, String nombre, String apellidos, String clave, String fechaNacimiento, String telefono, Boolean administrador) throws RepositorioException, EntidadNoEncontrada;
 	
 	/**
 	 * Recupera un usuario por su identificador.

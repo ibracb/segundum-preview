@@ -33,7 +33,7 @@ public class ServicioUsuarios implements IServicioUsuarios {
 	}
 
 	@Override
-	public void modificarUsuario(String idUsuario, String nombre, String apellidos, String clave, String fechaNacimiento, String telefono) throws RepositorioException, EntidadNoEncontrada {
+	public void modificarUsuario(String idUsuario, String nombre, String apellidos, String clave, String fechaNacimiento, String telefono, Boolean administrador) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorioUsuarios.getById(idUsuario);
 		if(usuario != null && StringUtilidades.isDatoValido(nombre)) {
 			usuario.setNombre(nombre);
@@ -53,6 +53,10 @@ public class ServicioUsuarios implements IServicioUsuarios {
 		}
 		if(usuario != null && StringUtilidades.isDatoValido(telefono)) {
 			usuario.setTelefono(telefono);
+			repositorioUsuarios.update(usuario);
+		}
+		if(usuario != null && administrador != null) {
+			usuario.setAdministrador(administrador);
 			repositorioUsuarios.update(usuario);
 		}
 	}

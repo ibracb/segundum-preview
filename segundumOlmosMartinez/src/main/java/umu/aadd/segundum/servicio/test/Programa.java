@@ -56,7 +56,7 @@ public class Programa {
 		System.out.println("Teléfono: " + usuario.getTelefono() + "\n\n");
 		
 		//Vamos a modificar los datos del usuario (le meteremos un teléfono además)
-		servicioUsuarios.modificarUsuario(idUsuario, "Lucía", "Olmos Martínez", "l.o.m", "2004-01-01", "444444444");
+		servicioUsuarios.modificarUsuario(idUsuario, "Lucía", "Olmos Martínez", "l.o.m", "2004-01-01", "444444444", true);
 		usuario = servicioUsuarios.recuperarUsuario(idUsuario);
 		System.out.println("Usuario con id " + usuario.getId() + ", y email " + usuario.getEmail() + " actualizado!");
 		System.out.println("Nombre: " + usuario.getNombre());
@@ -75,7 +75,7 @@ public class Programa {
 		IServicioCategorias servicioCategorias = FactoriaServicios.getServicio(IServicioCategorias.class);
 		
 		//Probamos a cargar algunas jerarquías de categorías a partir de un fichero XML (Multimedia.xml)
-		servicioCategorias.cargarJerarquiaCategorias("categoriasXML/Multimedia.xml");
+		servicioCategorias.cargarJerarquiaCategorias(idUsuario, "categoriasXML/Multimedia.xml");
 		
 		//Tratamos de imprimir por consola información de todas las categorías raíz
 		System.out.println("\n\n\n\nTODAS LAS CATEGORÍAS RAÍZ:\n");
@@ -103,7 +103,7 @@ public class Programa {
 		
 		
 		//Probamos a cargar algunas jerarquías de categorías a partir de un fichero XML (Multimedia.xml)
-		servicioCategorias.cargarJerarquiaCategorias("categoriasXML/Mobiliario.xml");
+		servicioCategorias.cargarJerarquiaCategorias(idUsuario, "categoriasXML/Mobiliario.xml");
 		
 		//Probamos a crear un producto, con categoria "Sillas para salón comedor y cocina", id: 5886
 		String prodSillaId = servicioProductos.altaProducto("Silla", "Silla de madera resistente", 30.50, EstadoProducto.NUEVO, "5886", true, idUsuario);
@@ -120,7 +120,7 @@ public class Programa {
 		System.out.println(prodSilla.toString());
 		
 		//Creamos otro producto
-		servicioCategorias.cargarJerarquiaCategorias("categoriasXML/Equipamiento_deportivo.xml");
+		servicioCategorias.cargarJerarquiaCategorias(idUsuario, "categoriasXML/Equipamiento_deportivo.xml");
 		String prodSillaId2 = servicioProductos.altaProducto("Tabla de surf", "Tabla de surf para niños", 100.0, EstadoProducto.BUEN_ESTADO, "3320", true, idUsuario);
 		String prodSillaId3 = servicioProductos.altaProducto("Guantes", "Guantes de golf históricos", 100.0, EstadoProducto.COMO_NUEVO, "4466", true, idUsuario);
 		

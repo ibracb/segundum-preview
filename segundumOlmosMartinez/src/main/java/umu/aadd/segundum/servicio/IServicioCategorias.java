@@ -13,19 +13,21 @@ public interface IServicioCategorias {
 	/**
 	 * Carga la jerarquía de categorías a partir de la ruta especificada.
 	 * 
+	 * @param idUsuario Identificador del usuario que realiza la operación.
 	 * @param ruta Ruta a partir de la cual se recupera la jerarquía de categorías.
+	 * @throws EntidadNoEncontrada Si no se encuentra el usuario con el identificador proporcionado.
 	 */
-	public void cargarJerarquiaCategorias(String ruta) throws JAXBException, RepositorioException;
+	public void cargarJerarquiaCategorias(String idUsuario, String ruta) throws JAXBException, RepositorioException, EntidadNoEncontrada;
 	
 	/**
 	 * Modifica el texto de una categoría existente.
 	 * 
 	 * @param idCategoria Identificador de la categoría a modificar.
-	 * @param descripcionNueva  Nueva descripción para la categoría.
+	 * @param descripcion  Nueva descripción para la categoría.
 	 * @throws RepositorioException Si ocurre un error en el repositorio.
 	 * @throws EntidadNoEncontrada Si no se encuentra la categoría con el identificador proporcionado.
 	 */
-	public void modificarCategoria(String idCategoria, String descripcionNueva) throws RepositorioException, EntidadNoEncontrada;
+	public void modificarCategoria(String idUsuario, String idCategoria, String descripcion) throws RepositorioException, EntidadNoEncontrada;
 	
 	/**
 	 * Recupera el conjunto de categorías raíz (sin categoría padre).

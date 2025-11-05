@@ -13,6 +13,7 @@ import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.LugarRecogida;
 import umu.aadd.segundum.modelo.Producto;
 import umu.aadd.segundum.modelo.Usuario;
+import umu.aadd.segundum.repositorio.RepositorioCategoriasAdHoc;
 import umu.aadd.segundum.repositorio.RepositorioProductosAdHoc;
 import utils.StringUtilidades;
 
@@ -25,12 +26,11 @@ public class ServicioProductos implements IServicioProductos {
 	 * Repositorio AdHoc de productos.
 	 */
 	private RepositorioProductosAdHoc repositorioProductos = FactoriaRepositorios.getRepositorio(Producto.class);
-
+	
 	/**
-	 * Servicio de categorías.
+	 * Repositorio AdHoc de categorias.
 	 */
-	private IServicioCategorias servicioCategorias = FactoriaServicios
-			.getServicio(IServicioCategorias.class);
+	private RepositorioCategoriasAdHoc repositorioCategorias = FactoriaRepositorios.getRepositorio(Categoria.class);
 
 	/**
 	 * Servicio de usuarios.
@@ -42,7 +42,7 @@ public class ServicioProductos implements IServicioProductos {
 			String idCategoria, boolean envioDisponible, String idUsuarioVendedor)
 			throws RepositorioException, EntidadNoEncontrada {
 
-		Categoria categoria = servicioCategorias.recuperarCategoria(idCategoria);
+		Categoria categoria = repositorioCategorias.getById(idCategoria);
 		Usuario usuario = servicioUsuarios.recuperarUsuario(idUsuarioVendedor);
 
 		if (!StringUtilidades.isDatoValido(titulo) || precio < Producto.PRECIO_GRATUITO || estado == null
@@ -109,10 +109,10 @@ public class ServicioProductos implements IServicioProductos {
 	}
 
 	@Override
-	public List<Producto> getProductosVenta(Categoria categoria, String descripcion, EstadoProducto estado,
+	public List<Producto> getProductosVenta(String categoriaId, String descripcion, EstadoProducto estado,
 			double precio) throws RepositorioException, EntidadNoEncontrada {
-
-		return repositorioProductos.recuperarProductosVenta(categoria, descripcion, estado, precio);
+		List<Categoria> categorias = repositorioCategorias.getDescendientes(categoriaId);
+		return repositorioProductos.recuperarProductosVenta(categorias, descripcion, estado, precio);
 	}
 
 	@Override

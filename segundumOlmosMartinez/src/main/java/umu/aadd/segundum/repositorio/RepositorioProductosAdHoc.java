@@ -35,6 +35,6 @@ public interface RepositorioProductosAdHoc extends RepositorioString<Producto> {
 	 * @return Lista de productos que cumplen con los criterios.
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
-	public List<Producto> recuperarProductosVenta(Categoria categoria, String descripcion, EstadoProducto estado,
+	public List<Producto> recuperarProductosVenta(List<Categoria> categorias, String descripcion, EstadoProducto estado,
 			double precio) throws RepositorioException;
 }

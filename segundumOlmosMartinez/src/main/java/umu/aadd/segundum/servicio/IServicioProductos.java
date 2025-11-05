@@ -6,7 +6,6 @@ import java.util.Map;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
-import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.Producto;
 
@@ -90,7 +89,7 @@ public interface IServicioProductos {
 	 * @throws RepositorioException    Si ocurre un error al acceder al repositorio.
 	 * @throws EntidadNoEncontrada     Si no se encuentra alguna entidad relacionada.
 	 */
-	public List<Producto> getProductosVenta(Categoria categoria, String descripcion, EstadoProducto estado,
+	public List<Producto> getProductosVenta(String categoriaId, String descripcion, EstadoProducto estado,
 			double precio) throws RepositorioException, EntidadNoEncontrada;
 	
 	/**

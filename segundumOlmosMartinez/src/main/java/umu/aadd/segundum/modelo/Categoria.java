@@ -23,22 +23,16 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import repositorio.Identificable;
 
+
+@NamedNativeQuery(name = "Categoria.getRaices", query = "SELECT * FROM categorias WHERE padre_id IS NULL", resultClass = Categoria.class)
+
+
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 @Entity
 @Table(name = "categorias")
-@NamedNativeQuery(
-		name = "Categoria.getRaices",
-		query = "SELECT * FROM categorias WHERE padre_id IS NULL",
-		resultClass = Categoria.class
-)
-@NamedNativeQuery(
-		name = "Categoria.getDescendientes",
-		query = "SELECT * FROM categorias WHERE padre_id = ?",
-		resultClass = Categoria.class
-)
 public class Categoria implements Identificable {
-	
+
 	/**
 	 * Identificador único de la categoría.
 	 */
@@ -52,7 +46,7 @@ public class Categoria implements Identificable {
 	@XmlElement
 	@Column(name = "nombre", nullable = false, updatable = false)
 	private String nombre;
-	
+
 	/**
 	 * Descripción de la categoría.
 	 */
@@ -68,7 +62,7 @@ public class Categoria implements Identificable {
 	@XmlAttribute
 	@Column(name = "ruta", nullable = false, unique = true, updatable = false)
 	private String ruta;
-	
+
 	/**
 	 * Subcategorías de la categoría.
 	 */
@@ -90,7 +84,7 @@ public class Categoria implements Identificable {
 	public String getId() {
 		return id;
 	}
-	
+
 	/**
 	 * Recupera el nombre de la categoría.
 	 * 

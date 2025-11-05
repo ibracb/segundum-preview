@@ -1,7 +1,6 @@
 package umu.aadd.segundum.servicio.test;
 
 import java.time.Month;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,6 @@ import javax.xml.bind.JAXBException;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
-import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.Producto;
 import umu.aadd.segundum.modelo.Usuario;
@@ -133,9 +131,8 @@ public class Programa {
 		}
 		
 		//Recuperar los productos a la venta
-		Categoria categoria = servicioCategorias.recuperarCategoria("988");
-		List<Producto> venta = servicioProductos.getProductosVenta(categoria, "", EstadoProducto.COMO_NUEVO, 0.0);
-		System.out.println("Los productos a la venta con categoria " + categoria.getNombre() + " y estado: como nuevo son: ");
+		List<Producto> venta = servicioProductos.getProductosVenta("988", "", null, 0.0);
+		//System.out.println("Los productos a la venta con categoria " + categoria.getNombre() + " y estado: como nuevo son: ");
 		for(Producto p : venta) { //DEBE HABER DEVUELTO EL PRODUCTO GUANTE, QUE PERTENECE A LA SUBCATEGORÍA 4466 CON CATEGORÍA PADRE 988
 			System.out.println(p.toString());
 		}

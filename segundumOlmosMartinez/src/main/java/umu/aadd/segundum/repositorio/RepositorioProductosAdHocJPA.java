@@ -1,7 +1,6 @@
 package umu.aadd.segundum.repositorio;
 
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -47,24 +46,21 @@ public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implem
 	}
 
 	@Override
-	public List<Producto> recuperarProductosVenta(Categoria categoria, String descripcion, EstadoProducto estado,
+	public List<Producto> recuperarProductosVenta(List<Categoria> categorias, String descripcion, EstadoProducto estado,
 			double precio) throws RepositorioException {
 		Map<String, Object> params = new HashMap<>();
-		List<Categoria> categorias = new ArrayList<>();
 
 		String textoQuery = "SELECT p FROM Producto p WHERE 1=1";
 
-		if (categoria != null) {
+		if (categorias != null && !categorias.isEmpty()) {
 			System.out.println("HAY CATEGORIA");
 			textoQuery += " AND p.categoria IN :categorias";
-			categorias.add(categoria);
-			categorias.addAll(categoria.getSubcategorias());
 			for(Categoria c : categorias) {
 				System.out.println(c.getNombre());
 			}
 			params.put("categorias", categorias);
 		}
-		if ((descripcion != null && !descripcion.isEmpty()) || descripcion.equals(" ")) {
+		if ((descripcion != null && !descripcion.isEmpty()) || (descripcion != null && descripcion.equals(" "))) {
 			System.out.println("HAY DESCRIPCION");
 			textoQuery += " AND p.descripcion LIKE :descripcion";
 			params.put("descripcion", "%" + descripcion + "%");

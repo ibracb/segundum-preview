@@ -32,8 +32,7 @@ public class RepositorioCategoriasAdHocJPA extends RepositorioCategoriasJPA impl
 			EntityManagerHelper.closeEntityManager();
 		}
 	}
-
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public List<Categoria> getDescendientes(String idCategoria) throws RepositorioException {
 		try {

@@ -101,6 +101,8 @@ public class Producto implements Identificable {
 	 */
 	@Embedded
 	@AttributeOverride(name = "descripcion", column = @Column(name = "descripcion_lugar_recogida"))
+	@AttributeOverride(name = "longitud", column = @Column(name = "longitud"))
+	@AttributeOverride(name = "latitud", column = @Column(name = "latitud"))
 	private LugarRecogida recogida;
 
 	/**

@@ -81,7 +81,7 @@ public class ServicioProductos implements IServicioProductos {
 		if (producto != null) {
 			producto.setDescripcion(descripcion);
 
-			if (precio < Producto.PRECIO_GRATUITO) {
+			if (precio >= Producto.PRECIO_GRATUITO) {
 				producto.setPrecio(precio);
 			}
 

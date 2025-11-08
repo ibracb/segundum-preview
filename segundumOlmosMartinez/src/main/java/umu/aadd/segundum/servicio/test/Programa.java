@@ -119,10 +119,17 @@ public class Programa {
 		servicioProductos.anadirVisualizacion(prodSillaId);
 		System.out.println(prodSilla.toString());
 		
-		//Creamos otro producto
+		//Creamos otros productos
 		servicioCategorias.cargarJerarquiaCategorias(idUsuario, "categoriasXML/Equipamiento_deportivo.xml");
 		String prodSillaId2 = servicioProductos.altaProducto("Tabla de surf", "Tabla de surf para niños", 100.0, EstadoProducto.BUEN_ESTADO, "3320", true, idUsuario);
 		String prodSillaId3 = servicioProductos.altaProducto("Guantes", "Guantes de golf históricos", 100.0, EstadoProducto.COMO_NUEVO, "4466", true, idUsuario);
+		
+		//Vamos a asignar lugares de recogida a los dos últimos productos creados
+		servicioProductos.asignarLugarRecogida(prodSillaId2, -40.53, 80.11, "Lugar bonito");
+		servicioProductos.asignarLugarRecogida(prodSillaId3, 12.30, -50.64, "Lugar feo");
+		
+		//Vamos a modificar los datos del producto con id prodSillaId2
+		servicioProductos.modificarDatosProducto(prodSillaId2, "Tabla de surf para adultos", 153.82);
 		
 		//Tratamos de recuperar el historial
 		Map<Producto,String> historial = servicioProductos.getHistorial(Month.NOVEMBER, 2025);
@@ -131,8 +138,8 @@ public class Programa {
 		}
 		
 		//Recuperar los productos a la venta
-		List<Producto> venta = servicioProductos.getProductosVenta("988", "", null, 0.0);
-		//System.out.println("Los productos a la venta con categoria " + categoria.getNombre() + " y estado: como nuevo son: ");
+		List<Producto> venta = servicioProductos.getProductosVenta("988", "", EstadoProducto.COMO_NUEVO, 200.0);
+		System.out.println("Los productos a la venta con categoria raíz" + servicioCategorias.recuperarCategoria("988").getNombre() + " y estado como nuevo son: ");
 		for(Producto p : venta) { //DEBE HABER DEVUELTO EL PRODUCTO GUANTE, QUE PERTENECE A LA SUBCATEGORÍA 4466 CON CATEGORÍA PADRE 988
 			System.out.println(p.toString());
 		}

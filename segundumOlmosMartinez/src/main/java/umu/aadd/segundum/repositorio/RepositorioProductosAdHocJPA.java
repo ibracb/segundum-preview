@@ -70,9 +70,9 @@ public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implem
 			textoQuery += " AND p.estado = :estado";
 			params.put("estado", estado);
 		}
-		if (precio > 0.0) {
+		if (precio >= Producto.PRECIO_GRATUITO) {
 			System.out.println("HAY PRECIO");
-			textoQuery += " AND p.precio = :precio";
+			textoQuery += " AND p.precio <= :precio";
 			params.put("precio", precio);
 		}
 		try {

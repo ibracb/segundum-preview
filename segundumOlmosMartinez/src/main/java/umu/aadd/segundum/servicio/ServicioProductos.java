@@ -6,8 +6,8 @@ import java.util.Map;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
+import repositorio.Repositorio;
 import repositorio.RepositorioException;
-import servicio.FactoriaServicios;
 import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.LugarRecogida;
@@ -23,19 +23,19 @@ import utils.StringUtilidades;
 public class ServicioProductos implements IServicioProductos {
 
 	/**
-	 * Repositorio AdHoc de productos.
+	 * Repositorio de productos.
 	 */
 	private RepositorioProductosAdHoc repositorioProductos = FactoriaRepositorios.getRepositorio(Producto.class);
 	
 	/**
-	 * Repositorio AdHoc de categorias.
+	 * Repositorio de categorias.
 	 */
 	private RepositorioCategoriasAdHoc repositorioCategorias = FactoriaRepositorios.getRepositorio(Categoria.class);
 
 	/**
-	 * Servicio de usuarios.
+	 * Repositorio de usuarios.
 	 */
-	private IServicioUsuarios servicioUsuarios = FactoriaServicios.getServicio(IServicioUsuarios.class);
+	private Repositorio<Usuario, String> repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
 
 	@Override
 	public String altaProducto(String titulo, String descripcion, double precio, EstadoProducto estado,
@@ -43,7 +43,7 @@ public class ServicioProductos implements IServicioProductos {
 			throws RepositorioException, EntidadNoEncontrada {
 
 		Categoria categoria = repositorioCategorias.getById(idCategoria);
-		Usuario usuario = servicioUsuarios.recuperarUsuario(idUsuarioVendedor);
+		Usuario usuario = repositorioUsuarios.getById(idUsuarioVendedor);
 
 		if (!StringUtilidades.isDatoValido(titulo) || precio < Producto.PRECIO_GRATUITO || estado == null
 				|| categoria == null || usuario == null) {

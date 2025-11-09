@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBException;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
+import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.Producto;
 import umu.aadd.segundum.modelo.Usuario;
@@ -48,22 +49,14 @@ public class Programa {
 		//Vamos a dar de alta al usuario
 		String idUsuario = servicioUsuarios.altaUsuario(nombre, apellidos, email, clave, fechaNacimiento, null);
 		Usuario usuario = servicioUsuarios.recuperarUsuario(idUsuario);
-		System.out.println("Usuario creado, con id " + idUsuario + ", y email " + email);
-		System.out.println("Nombre: " + usuario.getNombre());
-		System.out.println("Apellidos: " + usuario.getApellidos());
-		System.out.println("Clave: " + usuario.getClave());
-		System.out.println("Fecha de nacimiento: " + usuario.getFechaNacimiento().toString());
-		System.out.println("Teléfono: " + usuario.getTelefono() + "\n\n");
+		System.out.println("Alta usuario:");
+		System.out.println(usuario.toString());
 		
 		//Vamos a modificar los datos del usuario (le meteremos un teléfono además)
 		servicioUsuarios.modificarUsuario(idUsuario, "Lucía", "Olmos Martínez", "l.o.m", "2004-01-01", "444444444", true);
 		usuario = servicioUsuarios.recuperarUsuario(idUsuario);
-		System.out.println("Usuario con id " + usuario.getId() + ", y email " + usuario.getEmail() + " actualizado!");
-		System.out.println("Nombre: " + usuario.getNombre());
-		System.out.println("Apellidos: " + usuario.getApellidos());
-		System.out.println("Clave: " + usuario.getClave());
-		System.out.println("Fecha de nacimiento: " + usuario.getFechaNacimiento().toString());
-		System.out.println("Teléfono: " + usuario.getTelefono());
+		System.out.println("Modificación usuario:");
+		System.out.println(usuario.toString());
 		
 		
 		
@@ -74,24 +67,31 @@ public class Programa {
 		//Se obtiene servicio de categorías con FactoriaServicios
 		IServicioCategorias servicioCategorias = FactoriaServicios.getServicio(IServicioCategorias.class);
 		
-		//Probamos a cargar algunas jerarquías de categorías a partir de un fichero XML (Multimedia.xml)
+		//Probamos a cargar una jerarquía de categorías a partir de un fichero XML (Multimedia.xml)
 		servicioCategorias.cargarJerarquiaCategorias(idUsuario, "categoriasXML/Multimedia.xml");
 		
 		//Tratamos de imprimir por consola información de todas las categorías raíz
 		System.out.println("\n\n\n\nTODAS LAS CATEGORÍAS RAÍZ:\n");
 		servicioCategorias.recuperarCategoriasRaiz().forEach(categoria -> {
-			System.out.println("Id: " + categoria.getId());
-			System.out.println("Nombre: " + categoria.getNombre());
-			System.out.println("Ruta: " + categoria.getRuta() + "\n\n");
+			System.out.println(categoria.toString());
 		});
+		
+		//Recuperamos la raíz con id=783 de Multimedia.xml
+		Categoria categoriaRaizMultimedia = servicioCategorias.recuperarCategoria("783");
 		
 		//Tratamos de imprimir por consola información de todas las categorías descendientes de la raíz (id=783) en Multimedia.xml
 		System.out.println("TODAS LAS CATEGORÍAS DESCENDIENTES DE LA RAÍZ DE MULTIMEDIA:\n");
-		servicioCategorias.recuperarDescendientesCategoria("783").forEach(categoria -> {
-			System.out.println("Id: " + categoria.getId());
-			System.out.println("Nombre: " + categoria.getNombre());
-			System.out.println("Ruta: " + categoria.getRuta() + "\n\n");
+		servicioCategorias.recuperarDescendientesCategoria(categoriaRaizMultimedia.getId()).forEach(categoria -> {
+			System.out.println(categoria.toString());
 		});
+		
+		//Vamos a modificar la descripción de la categoría raíz de Multimedia.xml
+		System.out.println("\nCategoría " + categoriaRaizMultimedia.getNombre() + " sin modificar descripción:");
+		System.out.println(categoriaRaizMultimedia.toString());
+		servicioCategorias.modificarCategoria(idUsuario, categoriaRaizMultimedia.getId(), "Productos multimedia a bajo coste");
+		categoriaRaizMultimedia = servicioCategorias.recuperarCategoria(categoriaRaizMultimedia.getId());
+		System.out.println("Categoría " + categoriaRaizMultimedia.getNombre() + " con descripción modificada:");
+		System.out.println(categoriaRaizMultimedia.toString() + "\n\n");
 		
 		
 		/**
@@ -117,29 +117,40 @@ public class Programa {
 		
 		//Tratamos de modificar e imprimir las diferentes propiedades (añadir visualización también)
 		servicioProductos.anadirVisualizacion(prodSillaId);
+		prodSilla = servicioProductos.recuperarProducto(prodSillaId);
 		System.out.println(prodSilla.toString());
 		
 		//Creamos otros productos
 		servicioCategorias.cargarJerarquiaCategorias(idUsuario, "categoriasXML/Equipamiento_deportivo.xml");
-		String prodSillaId2 = servicioProductos.altaProducto("Tabla de surf", "Tabla de surf para niños", 100.0, EstadoProducto.BUEN_ESTADO, "3320", true, idUsuario);
+		String prodSillaId2 = servicioProductos.altaProducto("Tabla de surf", "Tabla de surf para niños", 100.0, EstadoProducto.ACEPTABLE, "3320", true, idUsuario);
 		String prodSillaId3 = servicioProductos.altaProducto("Guantes", "Guantes de golf históricos", 100.0, EstadoProducto.COMO_NUEVO, "4466", true, idUsuario);
 		
 		//Vamos a asignar lugares de recogida a los dos últimos productos creados
 		servicioProductos.asignarLugarRecogida(prodSillaId2, -40.53, 80.11, "Lugar bonito");
 		servicioProductos.asignarLugarRecogida(prodSillaId3, 12.30, -50.64, "Lugar feo");
 		
+		//3 visualizaciones para el producto con id prodSillaId2
+		servicioProductos.anadirVisualizacion(prodSillaId2);
+		servicioProductos.anadirVisualizacion(prodSillaId2);
+		servicioProductos.anadirVisualizacion(prodSillaId2);
+		
+		//2 visualizaciones para el producto con id prodSillaId3
+		servicioProductos.anadirVisualizacion(prodSillaId3);
+		servicioProductos.anadirVisualizacion(prodSillaId3);
+		
 		//Vamos a modificar los datos del producto con id prodSillaId2
 		servicioProductos.modificarDatosProducto(prodSillaId2, "Tabla de surf para adultos", 153.82);
 		
 		//Tratamos de recuperar el historial
 		Map<Producto,String> historial = servicioProductos.getHistorial(Month.NOVEMBER, 2025);
+		System.out.println("\n\nHISTORIAL:");
 		for(Producto p : historial.keySet()) {
 			System.out.println(historial.get(p));
 		}
 		
 		//Recuperar los productos a la venta
-		List<Producto> venta = servicioProductos.getProductosVenta("988", "", EstadoProducto.COMO_NUEVO, 200.0);
-		System.out.println("Los productos a la venta con categoria raíz" + servicioCategorias.recuperarCategoria("988").getNombre() + " y estado como nuevo son: ");
+		List<Producto> venta = servicioProductos.getProductosVenta("988", "", EstadoProducto.BUEN_ESTADO, 200.0);
+		System.out.println("Los productos a la venta con categoria raíz" + servicioCategorias.recuperarCategoria("988").getNombre() + " y mínimo en buen estado son: ");
 		for(Producto p : venta) { //DEBE HABER DEVUELTO EL PRODUCTO GUANTE, QUE PERTENECE A LA SUBCATEGORÍA 4466 CON CATEGORÍA PADRE 988
 			System.out.println(p.toString());
 		}

@@ -130,5 +130,27 @@ public class Categoria implements Identificable {
 	public List<Categoria> getSubcategorias() {
 		return Collections.unmodifiableList(subcategorias);
 	}
-
+	
+	/**
+	 * Recupera los nombres de las subcategorías de la categoría.
+	 * 
+	 * @return Nombres de las subcategorías de la categoría.
+	 */
+	private String getNombresSubCategorias() {
+		String nombres = "{";
+		for(Categoria subcategoria: subcategorias) {
+			nombres += subcategoria.getNombre();
+			if(!subcategoria.equals(subcategorias.getLast())){
+				nombres += ", ";
+			}
+		}
+		nombres += "}";
+		return nombres;
+	}
+	
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + " [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", ruta=" + ruta
+				+ ", subcategorias=" + getNombresSubCategorias() + "]";
+	}
 }

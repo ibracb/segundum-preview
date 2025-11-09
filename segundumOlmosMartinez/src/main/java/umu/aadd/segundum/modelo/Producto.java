@@ -35,7 +35,7 @@ public class Producto implements Identificable {
 	/**
 	 * Constante que indica cero visualizaciones de un producto.
 	 */
-	private static final int CERO_VISUALIZACIONES = 0;
+	private static final long CERO_VISUALIZACIONES = 0;
 
 	/**
 	 * Identificador único del producto.
@@ -88,7 +88,7 @@ public class Producto implements Identificable {
 	 * Número de visualizaciones del producto.
 	 */
 	@Column(name = "visualizaciones", nullable = false)
-	private int visualizaciones;
+	private long visualizaciones;
 
 	/**
 	 * Disponibilidad de envío del producto.
@@ -227,7 +227,7 @@ public class Producto implements Identificable {
 	 * 
 	 * @return Número de visualizaciones del producto.
 	 */
-	public int getVisualizaciones() {
+	public long getVisualizaciones() {
 		return visualizaciones;
 	}
 
@@ -236,7 +236,7 @@ public class Producto implements Identificable {
 	 * 
 	 * @param visualizaciones Número de visualizaciones del producto.
 	 */
-	public void setVisualizaciones(int visualizaciones) {
+	public void setVisualizaciones(long visualizaciones) {
 		this.visualizaciones = visualizaciones;
 	}
 
@@ -278,10 +278,14 @@ public class Producto implements Identificable {
 
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", precio=" + precio
+		String infoRecogida = "";
+		if(recogida != null) {
+			infoRecogida = ", descripcionLugarRecogida=" + recogida.getDescripcion()
+			+ ", longitud=" + recogida.getLongitud() + ", latitud=" + recogida.getLatitud();
+		}
+		return getClass().getSimpleName() + " [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", precio=" + precio
 				+ ", estado=" + estado + ", fechaPublicacion=" + fechaPublicacion + ", categoria=" + categoria.getNombre()
-				+ ", visualizaciones=" + visualizaciones + ", envioDisponible=" + envioDisponible + ", recogida="
-				+ recogida + ", vendedor=" + vendedor.getNombre() + " " + vendedor.getApellidos() + "]";
+				+ ", visualizaciones=" + visualizaciones + ", envioDisponible=" + envioDisponible + infoRecogida + ", vendedor=" + vendedor.getNombre() + " " + vendedor.getApellidos() + "]";
 	}
 	
 }

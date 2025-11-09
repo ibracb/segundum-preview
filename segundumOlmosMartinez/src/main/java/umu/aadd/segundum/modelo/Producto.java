@@ -283,6 +283,10 @@ public class Producto implements Identificable {
 			infoRecogida = ", descripcionLugarRecogida=" + recogida.getDescripcion()
 			+ ", longitud=" + recogida.getLongitud() + ", latitud=" + recogida.getLatitud();
 		}
+		else {
+			infoRecogida = ", descripcionLugarRecogida=" + null
+			+ ", longitud=" + null + ", latitud=" + null;
+		}
 		return getClass().getSimpleName() + " [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", precio=" + precio
 				+ ", estado=" + estado + ", fechaPublicacion=" + fechaPublicacion + ", categoria=" + categoria.getNombre()
 				+ ", visualizaciones=" + visualizaciones + ", envioDisponible=" + envioDisponible + infoRecogida + ", vendedor=" + vendedor.getNombre() + " " + vendedor.getApellidos() + "]";

@@ -25,19 +25,22 @@ public class ServicioCategorias implements IServicioCategorias {
 	 * Repositorio de categorías.
 	 */
 	private RepositorioCategoriasAdHoc repositorioCategorias = FactoriaRepositorios.getRepositorio(Categoria.class);
-	
+
 	private Repositorio<Usuario, String> repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
-	
+
 	/**
 	 * {@inheritDoc}
 	 * 
 	 * La jerarquía de categorías se carga desde un fichero XML ubicado en la ruta
 	 * especificada.
-	 * @throws EntidadNoEncontrada 
+	 * 
+	 * @throws EntidadNoEncontrada
 	 */
 	@Override
-	public void cargarJerarquiaCategorias(String idUsuario, String ruta) throws JAXBException, RepositorioException, EntidadNoEncontrada {
-		if (repositorioUsuarios.getById(idUsuario) == null || !repositorioUsuarios.getById(idUsuario).isAdministrador() || ruta != null) {
+	public void cargarJerarquiaCategorias(String idUsuario, String ruta)
+			throws JAXBException, RepositorioException, EntidadNoEncontrada {
+		if (repositorioUsuarios.getById(idUsuario) != null && repositorioUsuarios.getById(idUsuario).isAdministrador()
+				&& ruta != null) {
 			JAXBContext contexto = JAXBContext.newInstance(Categoria.class);
 			Unmarshaller unmarshaller = contexto.createUnmarshaller();
 			Categoria categoria = (Categoria) unmarshaller.unmarshal(new File(ruta));
@@ -48,7 +51,8 @@ public class ServicioCategorias implements IServicioCategorias {
 	@Override
 	public void modificarCategoria(String idUsuario, String idCategoria, String descripcion)
 			throws RepositorioException, EntidadNoEncontrada {
-		if (repositorioUsuarios.getById(idUsuario) == null || !repositorioUsuarios.getById(idUsuario).isAdministrador()) {
+		if (repositorioUsuarios.getById(idUsuario) == null
+				|| !repositorioUsuarios.getById(idUsuario).isAdministrador()) {
 			return;
 		}
 		Categoria categoria = repositorioCategorias.getById(idCategoria);
@@ -70,7 +74,16 @@ public class ServicioCategorias implements IServicioCategorias {
 
 	@Override
 	public Categoria recuperarCategoria(String idCategoria) throws RepositorioException, EntidadNoEncontrada {
-		return repositorioCategorias.getById(idCategoria);
+		if (repositorioCategorias.getIds().stream().anyMatch(id -> id.equals(idCategoria))) {
+			Categoria categoria = repositorioCategorias.getById(idCategoria);
+			if (categoria == null) {
+				System.err.println("No se puede recuperar la categoría con id " + idCategoria
+						+ " porque no se encuentra en el repositorio");
+				return null;
+			}
+			return categoria;
+		}
+		return null;
 	}
 
 	@Override

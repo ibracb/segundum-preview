@@ -8,7 +8,7 @@ import umu.aadd.segundum.modelo.Usuario;
  * Interfaz del servicio de gestión de usuarios.
  */
 public interface IServicioUsuarios {
-	
+
 	/**
 	 * Da de alta un nuevo usuario en el sistema.
 	 * 
@@ -21,8 +21,9 @@ public interface IServicioUsuarios {
 	 * @return Identificador único del usuario creado.
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
-	public String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento, String telefono) throws RepositorioException;
-	
+	public String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento,
+			String telefono) throws RepositorioException;
+
 	/**
 	 * Modifica los datos de un usuario existente.
 	 * 
@@ -33,19 +34,23 @@ public interface IServicioUsuarios {
 	 * @param fechaNacimiento Nueva fecha de nacimiento del usuario.
 	 * @param telefono        Nuevo teléfono de contacto del usuario.
 	 * @param administrador   Nuevo estado de administrador del usuario.
-	 * @throws RepositorioException    Si ocurre un error al acceder al repositorio.
-	 * @throws EntidadNoEncontrada     Si el usuario con el identificador especificado no existe.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada  Si el usuario con el identificador especificado
+	 *                              no existe.
 	 */
-	public void modificarUsuario(String idUsuario, String nombre, String apellidos, String clave, String fechaNacimiento, String telefono, Boolean administrador) throws RepositorioException, EntidadNoEncontrada;
-	
+	public void modificarUsuario(String idUsuario, String nombre, String apellidos, String clave,
+			String fechaNacimiento, String telefono, Boolean administrador)
+			throws RepositorioException, EntidadNoEncontrada;
+
 	/**
 	 * Recupera un usuario por su identificador.
 	 * 
 	 * @param idUsuario Identificador del usuario a recuperar.
 	 * @return Usuario correspondiente al identificador especificado.
-	 * @throws RepositorioException    Si ocurre un error al acceder al repositorio.
-	 * @throws EntidadNoEncontrada     Si el usuario con el identificador especificado no existe.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada  Si el usuario con el identificador especificado
+	 *                              no existe.
 	 */
 	public Usuario recuperarUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
-		
+
 }

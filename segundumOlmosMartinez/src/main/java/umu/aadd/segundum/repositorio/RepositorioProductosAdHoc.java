@@ -14,7 +14,7 @@ import umu.aadd.segundum.modelo.Producto;
  * Repositorio ad-hoc para productos.
  */
 public interface RepositorioProductosAdHoc extends RepositorioString<Producto> {
-	
+
 	/**
 	 * Recupera el historial de productos publicados en un mes y año específicos.
 	 * 

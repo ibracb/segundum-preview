@@ -9,26 +9,31 @@ import repositorio.RepositorioException;
 import umu.aadd.segundum.modelo.Categoria;
 
 public interface IServicioCategorias {
-	
+
 	/**
 	 * Carga la jerarquía de categorías a partir de la ruta especificada.
 	 * 
 	 * @param idUsuario Identificador del usuario que realiza la operación.
-	 * @param ruta Ruta a partir de la cual se recupera la jerarquía de categorías.
-	 * @throws EntidadNoEncontrada Si no se encuentra el usuario con el identificador proporcionado.
+	 * @param ruta      Ruta a partir de la cual se recupera la jerarquía de
+	 *                  categorías.
+	 * @throws EntidadNoEncontrada Si no se encuentra el usuario con el
+	 *                             identificador proporcionado.
 	 */
-	public void cargarJerarquiaCategorias(String idUsuario, String ruta) throws JAXBException, RepositorioException, EntidadNoEncontrada;
-	
+	public void cargarJerarquiaCategorias(String idUsuario, String ruta)
+			throws JAXBException, RepositorioException, EntidadNoEncontrada;
+
 	/**
 	 * Modifica el texto de una categoría existente.
 	 * 
 	 * @param idCategoria Identificador de la categoría a modificar.
-	 * @param descripcion  Nueva descripción para la categoría.
+	 * @param descripcion Nueva descripción para la categoría.
 	 * @throws RepositorioException Si ocurre un error en el repositorio.
-	 * @throws EntidadNoEncontrada Si no se encuentra la categoría con el identificador proporcionado.
+	 * @throws EntidadNoEncontrada  Si no se encuentra la categoría con el
+	 *                              identificador proporcionado.
 	 */
-	public void modificarCategoria(String idUsuario, String idCategoria, String descripcion) throws RepositorioException, EntidadNoEncontrada;
-	
+	public void modificarCategoria(String idUsuario, String idCategoria, String descripcion)
+			throws RepositorioException, EntidadNoEncontrada;
+
 	/**
 	 * Recupera el conjunto de categorías raíz (sin categoría padre).
 	 * 
@@ -36,7 +41,7 @@ public interface IServicioCategorias {
 	 * @throws RepositorioException Si ocurre un error en el repositorio.
 	 */
 	public List<Categoria> recuperarCategoriasRaiz() throws RepositorioException;
-	
+
 	/**
 	 * Recupera los descendientes de una categoría específica.
 	 * 
@@ -45,17 +50,18 @@ public interface IServicioCategorias {
 	 * @throws RepositorioException Si ocurre un error en el repositorio.
 	 */
 	public List<Categoria> recuperarDescendientesCategoria(String idCategoria) throws RepositorioException;
-	
+
 	/**
 	 * Recupera una categoría por su identificador.
 	 * 
 	 * @param idCategoria Identificador de la categoría.
 	 * @return La categoría correspondiente al identificador proporcionado.
 	 * @throws RepositorioException Si ocurre un error en el repositorio.
-	 * @throws EntidadNoEncontrada Si no se encuentra la categoría con el identificador proporcionado.
+	 * @throws EntidadNoEncontrada  Si no se encuentra la categoría con el
+	 *                              identificador proporcionado.
 	 */
 	public Categoria recuperarCategoria(String idCategoria) throws RepositorioException, EntidadNoEncontrada;
-	
+
 	/**
 	 * Recupera todas las categorías disponibles.
 	 * 
@@ -63,5 +69,5 @@ public interface IServicioCategorias {
 	 * @throws RepositorioException Si ocurre un error en el repositorio.
 	 */
 	public List<Categoria> recuperarTodasCategorias() throws RepositorioException;
-	
+
 }

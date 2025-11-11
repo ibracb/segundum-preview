@@ -11,9 +11,9 @@ public class EntidadNoEncontrada extends Exception {
 	 * Construye la excepción con un mensaje determinado.
 	 * 
 	 * @param msg Mensaje de la excepción.
-	 */	
+	 */
 	public EntidadNoEncontrada(String msg) {
-		super(msg);		
+		super(msg);
 	}
-	
+
 }

@@ -26,7 +26,7 @@ public class ServicioProductos implements IServicioProductos {
 	 * Repositorio de productos.
 	 */
 	private RepositorioProductosAdHoc repositorioProductos = FactoriaRepositorios.getRepositorio(Producto.class);
-	
+
 	/**
 	 * Repositorio de categorias.
 	 */
@@ -117,7 +117,16 @@ public class ServicioProductos implements IServicioProductos {
 
 	@Override
 	public Producto recuperarProducto(String idProducto) throws RepositorioException, EntidadNoEncontrada {
-		return repositorioProductos.getById(idProducto);
+		if (repositorioProductos.getIds().stream().anyMatch(id -> id.equals(idProducto))) {
+			Producto producto = repositorioProductos.getById(idProducto);
+			if (producto == null) {
+				System.err.println("No se puede recuperar el producto con id " + idProducto
+						+ " porque no se encuentra en el repositorio");
+				return null;
+			}
+			return producto;
+		}
+		return null;
 	}
 
 }

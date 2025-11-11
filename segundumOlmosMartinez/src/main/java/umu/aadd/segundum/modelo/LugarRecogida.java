@@ -7,37 +7,37 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class LugarRecogida {
-	
+
 	/**
 	 * Constante de longitud mínima válida.
 	 */
 	public static final double LONGITUD_MINIMA = -180.0;
-	
+
 	/**
 	 * Constante de longitud máxima válida.
 	 */
 	public static final double LONGITUD_MAXIMA = 180.0;
-	
+
 	/**
 	 * Constante de latitud mínima válida.
 	 */
 	public static final double LATITUD_MINIMA = -90.0;
-	
+
 	/**
 	 * Constante de latitud máxima válida.
 	 */
 	public static final double LATITUD_MAXIMA = 90.0;
-	
+
 	/**
 	 * Descripcion del lugar de recogida.
 	 */
 	private String descripcion;
-	
+
 	/**
 	 * Longitud del lugar de recogida.
 	 */
 	private double longitud;
-	
+
 	/**
 	 * Latitud del lugar de recogida.
 	 */

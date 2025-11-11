@@ -5,20 +5,21 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- * Clase de utilidad para gestionar el EntityManager en una aplicación mediante JPA.
+ * Clase de utilidad para gestionar el EntityManager en una aplicación mediante
+ * JPA.
  */
 public class EntityManagerHelper {
-	
+
 	/**
 	 * Fábrica de EntityManager para la aplicación.
 	 */
 	private static EntityManagerFactory entityManagerFactory;
-	
+
 	/**
 	 * ThreadLocal para almacenar el EntityManager por hilo.
 	 */
 	private static final ThreadLocal<EntityManager> entityManagerHolder;
-	
+
 	/**
 	 * Inicializa la fábrica de EntityManager y el ThreadLocal.
 	 */
@@ -26,10 +27,10 @@ public class EntityManagerHelper {
 		entityManagerFactory = Persistence.createEntityManagerFactory("segundum");
 		entityManagerHolder = new ThreadLocal<EntityManager>();
 	}
-	
+
 	/**
-	 * Obtiene el EntityManager asociado al hilo actual.
-	 * Si no existe, crea uno nuevo y lo asocia al hilo.
+	 * Obtiene el EntityManager asociado al hilo actual. Si no existe, crea uno
+	 * nuevo y lo asocia al hilo.
 	 * 
 	 * @return El EntityManager asociado al hilo actual.
 	 */
@@ -41,7 +42,7 @@ public class EntityManagerHelper {
 		}
 		return entityManager;
 	}
-	
+
 	/**
 	 * Cierra el EntityManager asociado al hilo actual y lo elimina del ThreadLocal.
 	 */
@@ -51,5 +52,5 @@ public class EntityManagerHelper {
 			entityManagerHolder.set(null);
 			entityManager.close();
 		}
-	}	
+	}
 }

@@ -31,11 +31,9 @@ public abstract class RepositorioJPA<T extends Identificable> implements Reposit
 			em.getTransaction().begin();
 			em.persist(entity);
 			em.getTransaction().commit();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RepositorioException("Error al guardar la entidad", e);
-		}
-		finally {
+		} finally {
 			if (em.getTransaction().isActive()) {
 				em.getTransaction().rollback();
 			}
@@ -55,11 +53,9 @@ public abstract class RepositorioJPA<T extends Identificable> implements Reposit
 			}
 			entity = em.merge(entity);
 			em.getTransaction().commit();
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			throw new RepositorioException("Error al actualizar la entidad con id " + entity.getId(), e);
-		}
-		finally {
+		} finally {
 			if (em.getTransaction().isActive()) {
 				em.getTransaction().rollback();
 			}
@@ -78,11 +74,9 @@ public abstract class RepositorioJPA<T extends Identificable> implements Reposit
 			}
 			em.remove(instancia);
 			em.getTransaction().commit();
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			throw new RepositorioException("Error al borrar la entidad con id " + entity.getId(), e);
-		}
-		finally {
+		} finally {
 			if (em.getTransaction().isActive()) {
 				em.getTransaction().rollback();
 			}
@@ -97,20 +91,17 @@ public abstract class RepositorioJPA<T extends Identificable> implements Reposit
 			T instancia = em.find(getClase(), id);
 			if (instancia == null) {
 				throw new EntidadNoEncontrada(id + " no existe en el repositorio");
-			}
-			else {
+			} else {
 				em.refresh(instancia);
 			}
 			return instancia;
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			throw new RepositorioException("Error al recuperar la entidad con id " + id, e);
-		}
-		finally {
+		} finally {
 			EntityManagerHelper.closeEntityManager();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getAll() throws RepositorioException {
@@ -120,15 +111,13 @@ public abstract class RepositorioJPA<T extends Identificable> implements Reposit
 			Query query = em.createQuery(queryString);
 			query.setHint(QueryHints.REFRESH, HintValues.TRUE);
 			return query.getResultList();
-		}
-		catch (RuntimeException e) {
+		} catch (RuntimeException e) {
 			throw new RepositorioException("Error buscando todas las entidades de " + getClase().getSimpleName(), e);
-		}
-		finally {
+		} finally {
 			EntityManagerHelper.closeEntityManager();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> getIds() throws RepositorioException {
@@ -140,8 +129,7 @@ public abstract class RepositorioJPA<T extends Identificable> implements Reposit
 			return query.getResultList();
 		} catch (RuntimeException e) {
 			throw new RepositorioException("Error buscando todos los ids de " + getClase().getSimpleName(), e);
-		}
-		finally {
+		} finally {
 			EntityManagerHelper.closeEntityManager();
 		}
 	}

@@ -14,42 +14,40 @@ import utils.PropertiesReader;
  *
  */
 public class FactoriaServicios {
-	
+
 	/**
 	 * Fichero de propiedades con las implementaciones de los servicios.
 	 */
 	private static final String PROPERTIES = "servicios.properties";
-	
+
 	/**
 	 * Mapa con las instancias de los servicios.
 	 */
 	private static Map<Class<?>, Object> servicios = new HashMap<>();
-	
+
 	/**
 	 * Devuelve la implementación del servicio solicitado.
 	 * 
-	 * @param <T> Tipo del servicio.
+	 * @param <T>      Tipo del servicio.
 	 * @param servicio Interfaz del servicio.
 	 * @return Implementación del servicio.
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T getServicio(Class<T> servicio) {		
-			try {
-				if (servicios.containsKey(servicio)) {
-					return (T) servicios.get(servicio);
-				}
-				else {
-					PropertiesReader properties = new PropertiesReader(PROPERTIES);			
-					String clase = properties.getProperty(servicio.getName());
-					
-					T servicioInstancia = (T) Class.forName(clase).getConstructor().newInstance();
-					servicios.put(servicio, servicioInstancia);
-					return servicioInstancia;
-				}
+	public static <T> T getServicio(Class<T> servicio) {
+		try {
+			if (servicios.containsKey(servicio)) {
+				return (T) servicios.get(servicio);
+			} else {
+				PropertiesReader properties = new PropertiesReader(PROPERTIES);
+				String clase = properties.getProperty(servicio.getName());
+
+				T servicioInstancia = (T) Class.forName(clase).getConstructor().newInstance();
+				servicios.put(servicio, servicioInstancia);
+				return servicioInstancia;
 			}
-			catch (Exception e) {
-				e.printStackTrace();
-				throw new RuntimeException("No se ha podido obtener la implementación del servicio: " + servicio.getName());
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException("No se ha podido obtener la implementación del servicio: " + servicio.getName());
+		}
 	}
 }

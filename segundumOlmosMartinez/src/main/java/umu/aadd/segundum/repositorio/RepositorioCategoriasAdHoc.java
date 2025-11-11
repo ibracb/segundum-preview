@@ -10,7 +10,7 @@ import umu.aadd.segundum.modelo.Categoria;
  * Repositorio ad-hoc para categorías.
  */
 public interface RepositorioCategoriasAdHoc extends RepositorioString<Categoria> {
-	
+
 	/**
 	 * Obtiene las categorías raíz (sin categoría padre).
 	 * 
@@ -18,7 +18,7 @@ public interface RepositorioCategoriasAdHoc extends RepositorioString<Categoria>
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
 	public List<Categoria> getRaices() throws RepositorioException;
-	
+
 	/**
 	 * Obtiene los descendientes de una categoría dada.
 	 * 
@@ -27,5 +27,5 @@ public interface RepositorioCategoriasAdHoc extends RepositorioString<Categoria>
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
 	public List<Categoria> getDescendientes(String idCategoria) throws RepositorioException;
-	
+
 }

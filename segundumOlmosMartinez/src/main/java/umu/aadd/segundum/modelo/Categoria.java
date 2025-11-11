@@ -27,11 +27,7 @@ import repositorio.Identificable;
 @XmlRootElement
 @Entity
 @Table(name = "categorias")
-@NamedNativeQuery(
-		name = "Categoria.getRaices",
-		query = "SELECT * FROM categorias WHERE padre_id IS NULL",
-		resultClass = Categoria.class
-)
+@NamedNativeQuery(name = "Categoria.getRaices", query = "SELECT * FROM categorias WHERE padre_id IS NULL", resultClass = Categoria.class)
 public class Categoria implements Identificable {
 
 	/**
@@ -130,7 +126,7 @@ public class Categoria implements Identificable {
 	public List<Categoria> getSubcategorias() {
 		return Collections.unmodifiableList(subcategorias);
 	}
-	
+
 	/**
 	 * Recupera los nombres de las subcategorías de la categoría.
 	 * 
@@ -138,19 +134,19 @@ public class Categoria implements Identificable {
 	 */
 	private String getNombresSubCategorias() {
 		String nombres = "{";
-		for(Categoria subcategoria: subcategorias) {
+		for (Categoria subcategoria : subcategorias) {
 			nombres += subcategoria.getNombre();
-			if(!subcategoria.equals(subcategorias.getLast())){
+			if (!subcategoria.equals(subcategorias.get(subcategorias.size() - 1))) {
 				nombres += ", ";
 			}
 		}
 		nombres += "}";
 		return nombres;
 	}
-	
+
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", ruta=" + ruta
-				+ ", subcategorias=" + getNombresSubCategorias() + "]";
+		return getClass().getSimpleName() + " [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion
+				+ ", ruta=" + ruta + ", subcategorias=" + getNombresSubCategorias() + "]";
 	}
 }

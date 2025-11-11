@@ -235,9 +235,9 @@ public class Usuario implements Identificable {
 
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " [id=" + id + ", email=" + email + ", nombre=" + nombre + ", apellidos=" + apellidos + ", clave="
-				+ clave + ", fechaNacimiento=" + fechaNacimiento + ", telefono=" + telefono + ", administrador="
-				+ administrador + "]";
+		return getClass().getSimpleName() + " [id=" + id + ", email=" + email + ", nombre=" + nombre + ", apellidos="
+				+ apellidos + ", clave=" + clave + ", fechaNacimiento=" + fechaNacimiento + ", telefono=" + telefono
+				+ ", administrador=" + administrador + "]";
 	}
 
 }

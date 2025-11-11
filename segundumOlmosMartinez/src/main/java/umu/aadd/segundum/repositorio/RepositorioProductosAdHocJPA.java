@@ -28,7 +28,7 @@ public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implem
 	 */
 	@PersistenceContext
 	EntityManagerFactory emf = Persistence.createEntityManagerFactory("segundum");
-	
+
 	/**
 	 * EntityManager para interactuar con la base de datos.
 	 */
@@ -42,7 +42,10 @@ public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implem
 					"SELECT p FROM Producto p WHERE FUNCTION('MONTH', p.fechaPublicacion) = :mes AND FUNCTION('YEAR', p.fechaPublicacion) = :anio ORDER BY p.visualizaciones DESC",
 					Producto.class).setParameter("mes", mes.getValue()).setParameter("anio", anio).getResultList();
 			for (Producto p : productos) {
-				String texto = "ID: " + p.getId() + ", precio: " + p.getPrecio() + ", fecha: " + p.getFechaPublicacion().getDayOfMonth() + "/" + p.getFechaPublicacion().getMonth() + "/" + p.getFechaPublicacion().getYear() + ", categoría: " + p.getCategoria().getNombre() + ", número de visualizaciones: " + p.getVisualizaciones();
+				String texto = "ID: " + p.getId() + ", precio: " + p.getPrecio() + ", fecha: "
+						+ p.getFechaPublicacion().getDayOfMonth() + "/" + p.getFechaPublicacion().getMonth() + "/"
+						+ p.getFechaPublicacion().getYear() + ", categoría: " + p.getCategoria().getNombre()
+						+ ", número de visualizaciones: " + p.getVisualizaciones();
 				historial.put(p, texto);
 			}
 			return historial;
@@ -59,25 +62,18 @@ public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implem
 		String textoQuery = "SELECT p FROM Producto p WHERE 1=1";
 
 		if (categorias != null && !categorias.isEmpty()) {
-			System.out.println("HAY CATEGORIA");
 			textoQuery += " AND p.categoria IN :categorias";
-			for(Categoria c : categorias) {
-				System.out.println(c.getNombre());
-			}
 			params.put("categorias", categorias);
 		}
 		if ((descripcion != null && !descripcion.isEmpty()) || (descripcion != null && descripcion.equals(" "))) {
-			System.out.println("HAY DESCRIPCION");
 			textoQuery += " AND p.descripcion LIKE :descripcion";
 			params.put("descripcion", "%" + descripcion + "%");
 		}
 		if (estado != null) {
-			System.out.println("HAY ESTADO - Filtrando por estado mínimo: " + estado);
 			textoQuery += " AND p.estado IN :estadosPermitidos";
 			params.put("estadosPermitidos", getEstadosIgualesOMejores(estado));
 		}
 		if (precio >= Producto.PRECIO_GRATUITO) {
-			System.out.println("HAY PRECIO");
 			textoQuery += " AND p.precio <= :precio";
 			params.put("precio", precio);
 		}
@@ -88,21 +84,21 @@ public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implem
 			}
 			return query.getResultList();
 		} catch (Exception e) {
-	        throw new RepositorioException("Error al recuperar los productos en venta", e);
-	    }
-		
-		
+			throw new RepositorioException("Error al recuperar los productos en venta", e);
+		}
+
 	}
-	
+
 	/**
-	 * Obtiene la lista de estados que son iguales o mejores que el estado dado.
-	 * El orden de calidad es: NUEVO > COMO_NUEVO > BUEN_ESTADO > ACEPTABLE > PARA_PIEZAS > REPARAR
+	 * Obtiene la lista de estados que son iguales o mejores que el estado dado. El
+	 * orden de calidad es: NUEVO > COMO_NUEVO > BUEN_ESTADO > ACEPTABLE >
+	 * PARA_PIEZAS > REPARAR
 	 * 
 	 * @param estadoMinimo el estado mínimo requerido
 	 * @return lista de estados permitidos
 	 */
 	private List<EstadoProducto> getEstadosIgualesOMejores(EstadoProducto estadoMinimo) {
-		List<EstadoProducto> estadosPermitidos = new ArrayList<>();		
+		List<EstadoProducto> estadosPermitidos = new ArrayList<>();
 		EstadoProducto[] estados = EstadoProducto.values();
 		for (EstadoProducto estado : estados) {
 			estadosPermitidos.add(estado);

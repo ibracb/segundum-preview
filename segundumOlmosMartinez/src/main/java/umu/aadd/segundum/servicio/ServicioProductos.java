@@ -8,6 +8,7 @@ import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
+import umu.aadd.segundum.dto.ProductoDTO;
 import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.LugarRecogida;
@@ -114,7 +115,7 @@ public class ServicioProductos implements IServicioProductos {
 		List<Categoria> categorias = repositorioCategorias.getDescendientes(categoriaId);
 		return repositorioProductos.recuperarProductosVenta(categorias, descripcion, estado, precio);
 	}
-
+	
 	@Override
 	public Producto recuperarProducto(String idProducto) throws RepositorioException, EntidadNoEncontrada {
 		if (repositorioProductos.getIds().stream().anyMatch(id -> id.equals(idProducto))) {
@@ -127,6 +128,27 @@ public class ServicioProductos implements IServicioProductos {
 			return producto;
 		}
 		return null;
+	}
+	
+	@Override
+	public ProductoDTO recuperarProductoDTO(String idProducto) throws RepositorioException, EntidadNoEncontrada {
+		if (idProducto == null || idProducto.isEmpty()) {
+			throw new IllegalArgumentException("idProducto: no debe ser nulo ni vacio");
+		}
+		return convertirEnDTO(repositorioProductos.getById(idProducto));
+	}
+	
+	/**
+	 * Convierte un producto en su representación DTO.
+	 * 
+	 * @param producto Producto a convertir.
+	 * @return ProductoDTO correspondiente al producto especificado.
+	 */
+	private ProductoDTO convertirEnDTO(Producto producto) {
+		return new ProductoDTO(producto.getId(), producto.getTitulo(), producto.getDescripcion(), producto.getPrecio(),
+				producto.getEstadoFormateado(), producto.getFechaPublicacion(), producto.getNombreCategoria(),
+				producto.getVisualizaciones(), producto.isEnvioDisponible(), producto.getDescripcionLugarRecogida(),
+				producto.getNombreCompletoVendedor());
 	}
 
 }

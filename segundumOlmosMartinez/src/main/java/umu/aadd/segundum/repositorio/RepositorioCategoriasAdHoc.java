@@ -17,7 +17,7 @@ public interface RepositorioCategoriasAdHoc extends RepositorioString<Categoria>
 	 * @return Lista de categorías raíz.
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
-	public List<Categoria> getRaices() throws RepositorioException;
+	List<Categoria> getRaices() throws RepositorioException;
 
 	/**
 	 * Obtiene los descendientes de una categoría dada.
@@ -26,6 +26,6 @@ public interface RepositorioCategoriasAdHoc extends RepositorioString<Categoria>
 	 * @return Lista de categorías descendientes.
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
-	public List<Categoria> getDescendientes(String idCategoria) throws RepositorioException;
+	List<Categoria> getDescendientes(String idCategoria) throws RepositorioException;
 
 }

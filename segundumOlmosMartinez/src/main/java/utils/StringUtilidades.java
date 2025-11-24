@@ -7,7 +7,12 @@ import java.time.format.DateTimeParseException;
  * Clase con utilidades para el manejo de Strings.
  */
 public class StringUtilidades {
-
+	
+	/**
+	 * Constante de espacio en blanco.
+	 */
+	public static final String ESPACIO_EN_BLANCO = " ";
+	
 	/**
 	 * Expresión regular para validar un número de teléfono de nueve dígitos
 	 */
@@ -63,7 +68,14 @@ public class StringUtilidades {
 		}
 		return telefono.matches(NUEVE_DIGITOS);
 	}
-
+	
+	/**
+	 * Comprueba si una dirección de correo electrónico es válida.
+	 * 
+	 * @param email La dirección de correo electrónico a comprobar.
+	 * @return true si la dirección de correo electrónico es válida, false en caso
+	 *         contrario.
+	 */
 	public static boolean isEmailValido(String email) {
 		if (email == null) {
 			return false;

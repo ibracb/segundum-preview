@@ -2,6 +2,7 @@ package umu.aadd.segundum.servicio;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
+import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.Usuario;
 
 /**
@@ -21,7 +22,7 @@ public interface IServicioUsuarios {
 	 * @return Identificador único del usuario creado.
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
-	public String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento,
+	String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento,
 			String telefono) throws RepositorioException;
 
 	/**
@@ -38,7 +39,7 @@ public interface IServicioUsuarios {
 	 * @throws EntidadNoEncontrada  Si el usuario con el identificador especificado
 	 *                              no existe.
 	 */
-	public void modificarUsuario(String idUsuario, String nombre, String apellidos, String clave,
+	void modificarUsuario(String idUsuario, String nombre, String apellidos, String clave,
 			String fechaNacimiento, String telefono, Boolean administrador)
 			throws RepositorioException, EntidadNoEncontrada;
 
@@ -51,6 +52,27 @@ public interface IServicioUsuarios {
 	 * @throws EntidadNoEncontrada  Si el usuario con el identificador especificado
 	 *                              no existe.
 	 */
-	public Usuario recuperarUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
+	Usuario recuperarUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
+	
+	/**
+	 * Recupera un usuario por su email y clave.
+	 * 
+	 * @param email Correo electrónico del usuario.
+	 * @param clave Clave de acceso del usuario.
+	 * @return Usuario correspondiente al email y clave especificados.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 */
+	Usuario recuperarUsuario(String email, String clave) throws RepositorioException;
+	
+	/**
+	 * Recupera un usuario en su representación DTO por su identificador.
+	 * 
+	 * @param idUsuario Identificador del usuario a recuperar.
+	 * @return UsuarioDTO correspondiente al identificador especificado.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada  Si el usuario con el identificador especificado
+	 *                              no existe.
+	 */
+	UsuarioDTO recuperarUsuarioDTO(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
 
 }

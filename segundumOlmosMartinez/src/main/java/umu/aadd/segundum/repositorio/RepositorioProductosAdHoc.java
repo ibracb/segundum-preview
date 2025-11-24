@@ -23,7 +23,7 @@ public interface RepositorioProductosAdHoc extends RepositorioString<Producto> {
 	 * @return Mapa con los productos y su información en formato String.
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
-	public Map<Producto, String> recuperarHistorial(Month mes, int anio) throws RepositorioException;
+	Map<Producto, String> recuperarHistorial(Month mes, int anio) throws RepositorioException;
 
 	/**
 	 * Recupera productos en venta que coinciden con los criterios especificados.
@@ -35,6 +35,6 @@ public interface RepositorioProductosAdHoc extends RepositorioString<Producto> {
 	 * @return Lista de productos que cumplen con los criterios.
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
-	public List<Producto> recuperarProductosVenta(List<Categoria> categorias, String descripcion, EstadoProducto estado,
-			double precio) throws RepositorioException;
+	List<Producto> recuperarProductosVenta(List<Categoria> categorias, String descripcion, EstadoProducto estado, double precio)
+			throws RepositorioException;
 }

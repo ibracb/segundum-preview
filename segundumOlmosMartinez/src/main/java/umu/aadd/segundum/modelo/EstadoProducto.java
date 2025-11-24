@@ -34,4 +34,5 @@ public enum EstadoProducto {
 	 * Representa que el producto está "para reparar".
 	 */
 	REPARAR;
+	
 }

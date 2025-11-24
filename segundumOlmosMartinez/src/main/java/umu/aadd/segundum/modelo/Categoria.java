@@ -23,6 +23,9 @@ import javax.xml.bind.annotation.XmlTransient;
 
 import repositorio.Identificable;
 
+/**
+ * Clase que representa una categoría de SegundUM.
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 @Entity

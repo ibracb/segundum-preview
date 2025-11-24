@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import repositorio.Identificable;
+import utils.StringUtilidades;
 
 /**
  * Clase que modela un usuario de SegundUM.
@@ -231,6 +232,15 @@ public class Usuario implements Identificable {
 	 */
 	public void setAdministrador(boolean administrador) {
 		this.administrador = administrador;
+	}
+	
+	/**
+	 * Recupera el nombre completo del usuario (nombre y apellidos).
+	 * 
+	 * @return Nombre completo del usuario.
+	 */
+	public String getNombreCompleto() {
+		return nombre + StringUtilidades.ESPACIO_EN_BLANCO + apellidos;
 	}
 
 	@Override

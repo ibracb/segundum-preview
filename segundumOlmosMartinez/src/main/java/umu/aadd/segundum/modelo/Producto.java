@@ -81,7 +81,7 @@ public class Producto implements Identificable {
 	 * Categoría del producto.
 	 */
 	@OneToOne
-	@JoinColumn(name = "categoria_id")
+	@JoinColumn(name = "categoria_id", nullable = false, updatable = false)
 	private Categoria categoria;
 
 	/**
@@ -109,7 +109,7 @@ public class Producto implements Identificable {
 	 * Vendedor del producto.
 	 */
 	@OneToOne
-	@JoinColumn(name = "vendedor_id")
+	@JoinColumn(name = "vendedor_id", nullable = false, updatable = false)
 	private Usuario vendedor;
 
 	/**
@@ -245,7 +245,7 @@ public class Producto implements Identificable {
 	 * 
 	 * @return true si el envío esta disponible, false en caso contrario.
 	 */
-	public boolean getEnvioDisponible() {
+	public boolean isEnvioDisponible() {
 		return envioDisponible;
 	}
 
@@ -275,7 +275,43 @@ public class Producto implements Identificable {
 	public Usuario getVendedor() {
 		return vendedor;
 	}
+	
+	/**
+	 * Recupera una cadena formateada del estado del producto para su visualización.
+	 * 
+	 * @return Cadena formateada del estado del producto.
+	 */
+	public String getEstadoFormateado() {
+		return estado.toString().replace('_', ' ').toLowerCase();
+	}
+	
+	/**
+	 * Recupera el nombre de la categoría del producto.
+	 * 
+	 * @return Nombre de la categoría del producto.
+	 */
+	public String getNombreCategoria() {
+		return categoria.getNombre();
+	}
 
+	/**
+	 * Recupera la descripción del lugar de recogida del producto.
+	 * 
+	 * @return Descripción del lugar de recogida del producto.
+	 */
+	public String getDescripcionLugarRecogida() {
+		return recogida.getDescripcion();
+	}
+
+	/**
+	 * Recupera el nombre completo del vendedor del producto.
+	 * 
+	 * @return Nombre completo del vendedor del producto.
+	 */
+	public String getNombreCompletoVendedor() {
+		return vendedor.getNombreCompleto();
+	}
+	
 	@Override
 	public String toString() {
 		String infoRecogida = "";

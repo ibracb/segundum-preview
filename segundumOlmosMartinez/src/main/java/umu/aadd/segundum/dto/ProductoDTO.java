@@ -1,0 +1,224 @@
+package umu.aadd.segundum.dto;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+/**
+ * Clase que modela un Data Transfer Object (DTO) para un producto.
+ */
+@SuppressWarnings("serial")
+public class ProductoDTO implements Serializable {
+
+	/**
+	 * Identificador único del producto DTO.
+	 */
+	private String id;
+	
+	/**
+	 * Título del producto DTO.
+	 */
+	private String titulo;
+	
+	/**
+	 * Descripción del producto DTO.
+	 */
+	private String descripcion;
+	
+	/**
+	 * Precio del producto DTO.
+	 */
+	private double precio;
+	
+	/**
+	 * Estado del producto DTO.
+	 */
+	private String estado;
+	
+	/**
+	 * Fecha de publicación del producto DTO.
+	 */
+	private LocalDateTime fechaPublicacion;
+	
+	/**
+	 * Categoría del producto DTO.
+	 */
+	private String categoria;
+	
+	/**
+	 * Número de visualizaciones del producto DTO.
+	 */
+	private long visualizaciones;
+	
+	/**
+	 * Indica si el envío está disponible para el producto DTO.
+	 */
+	private boolean envioDisponible;
+	
+	/**
+	 * Descripción del lugar de recogida del producto DTO.
+	 */
+	private String descripcionLugarRecogida;
+	
+	/**
+	 * Vendedor del producto DTO.
+	 */
+	private String vendedor;
+
+	/**
+	 * Construye un ProductoDTO con los atributos especificados.
+	 * 
+	 * @param id                        Identificador único del producto DTO.
+	 * @param titulo                    Título del producto DTO.
+	 * @param descripcion               Descripción del producto DTO.
+	 * @param precio                    Precio del producto DTO.
+	 * @param estado                    Estado del producto DTO.
+	 * @param fechaPublicacion          Fecha de publicación del producto DTO.
+	 * @param categoria                 Categoría del producto DTO.
+	 * @param visualizaciones           Número de visualizaciones del producto DTO.
+	 * @param envioDisponible           Indica si el envío está disponible para el producto DTO.
+	 * @param descripcionLugarRecogida  Descripción del lugar de recogida del producto DTO.
+	 * @param vendedor                  Vendedor del producto DTO.
+	 */
+	public ProductoDTO(String id, String titulo, String descripcion, double precio, String estado,
+			LocalDateTime fechaPublicacion, String categoria, long visualizaciones, boolean envioDisponible,
+			String descripcionLugarRecogida, String vendedor) {
+		this.id = id;
+		this.titulo = titulo;
+		this.descripcion = descripcion;
+		this.precio = precio;
+		this.estado = estado;
+		this.fechaPublicacion = fechaPublicacion;
+		this.categoria = categoria;
+		this.visualizaciones = visualizaciones;
+		this.envioDisponible = envioDisponible;
+		this.descripcionLugarRecogida = descripcionLugarRecogida;
+		this.vendedor = vendedor;
+	}
+
+	/**
+	 * Recupera el identificador único del producto DTO.
+	 * 
+	 * @return Identificador único del producto DTO.
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * Recupera el título del producto DTO.
+	 * 
+	 * @return Título del producto DTO.
+	 */
+	public String getTitulo() {
+		return titulo;
+	}
+
+	/**
+	 * Recupera la descripción del producto DTO.
+	 * 
+	 * @return Descripción del producto DTO.
+	 */
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	/**
+	 * Establece la descripción del producto DTO.
+	 * 
+	 * @param descripcion Nueva descripción del producto DTO.
+	 */
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	/**
+	 * Recupera el precio del producto DTO.
+	 * 
+	 * @return Precio del producto DTO.
+	 */
+	public double getPrecio() {
+		return precio;
+	}
+
+	/**
+	 * Establece el precio del producto DTO.
+	 * 
+	 * @param precio Nuevo precio del producto DTO.
+	 */
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
+	/**
+	 * Recupera el estado del producto DTO.
+	 * 
+	 * @return Estado del producto DTO.
+	 */
+	public String getEstado() {
+		return estado;
+	}
+
+	/**
+	 * Recupera la fecha de publicación del producto DTO.
+	 * 
+	 * @return Fecha de publicación del producto DTO.
+	 */
+	public LocalDateTime getFechaPublicacion() {
+		return fechaPublicacion;
+	}
+
+	/**
+	 * Recupera la categoría del producto DTO.
+	 * 
+	 * @return Categoría del producto DTO.
+	 */
+	public String getCategoria() {
+		return categoria;
+	}
+
+	/**
+	 * Recupera el número de visualizaciones del producto DTO.
+	 * 
+	 * @return Número de visualizaciones del producto DTO.
+	 */
+	public long getVisualizaciones() {
+		return visualizaciones;
+	}
+
+	/**
+	 * Establece el número de visualizaciones del producto DTO.
+	 * 
+	 * @param visualizaciones Nuevo número de visualizaciones del producto DTO.
+	 */
+	public void setVisualizaciones(long visualizaciones) {
+		this.visualizaciones = visualizaciones;
+	}
+
+	/**
+	 * Indica si el envío está disponible para el producto DTO.
+	 * 
+	 * @return true si el envío está disponible, false en caso contrario.
+	 */
+	public boolean isEnvioDisponible() {
+		return envioDisponible;
+	}
+
+	/**
+	 * Recupera la descripción del lugar de recogida del producto DTO.
+	 * 
+	 * @return Descripción del lugar de recogida del producto DTO.
+	 */
+	public String getDescripcionLugarRecogida() {
+		return descripcionLugarRecogida;
+	}
+
+	/**
+	 * Recupera el vendedor del producto DTO.
+	 * 
+	 * @return Vendedor del producto DTO.
+	 */
+	public String getVendedor() {
+		return vendedor;
+	}
+	
+}

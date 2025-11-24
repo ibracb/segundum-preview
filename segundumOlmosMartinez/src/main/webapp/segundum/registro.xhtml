@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Regístrate en SegundUM</title>
+	</h:head>
+	<h:body>
+		<h1>Regístrate en SegundUM</h1>
+		<p:messages id="messages" showDetail="true" closable="true" />
+		<h:form>
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Nombre" for="nombre" />
+				<p:inputText id="nombre" value="#{registro.nombre}" />
+				<p:outputLabel value="Apellidos" for="apellidos" />
+				<p:inputText id="apellidos" value="#{registro.apellidos}" />
+				<p:outputLabel value="Email" for="email" />
+				<p:inputText id="email" value="#{registro.email}" />
+				<p:outputLabel value="Clave" for="clave" />
+				<p:password id="clave" value="#{registro.clave}" />
+				<p:outputLabel value="Fecha de nacimiento" for="fecha" />
+				<p:datePicker id="fecha" value="#{registro.fechaNacimiento}" />
+				<p:outputLabel value="Teléfono" for="telefono" />
+				<p:inputText id="telefono" value="#{registro.telefono}" />
+			</p:panelGrid>
+			<p:commandButton value="Registrar" icon="pi pi-check-circle" action="#{registro.registrar}" update="messages" />
+		</h:form>
+	</h:body>
+</html>

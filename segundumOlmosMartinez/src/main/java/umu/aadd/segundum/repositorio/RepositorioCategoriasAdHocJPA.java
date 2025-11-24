@@ -37,8 +37,7 @@ public class RepositorioCategoriasAdHocJPA extends RepositorioCategoriasJPA impl
 	public List<Categoria> getDescendientes(String idCategoria) throws RepositorioException {
 		try {
 			EntityManager em = EntityManagerHelper.getEntityManager();
-			String textoQuery;
-			textoQuery = "SELECT c FROM Categoria c WHERE c.ruta LIKE CONCAT('%|', :idCategoria, '|%')";
+			String textoQuery = "SELECT c FROM Categoria c WHERE c.ruta LIKE CONCAT('%|', :idCategoria, '|%')";
 			TypedQuery<Categoria> query = em.createQuery(textoQuery, Categoria.class);
 			query.setParameter("idCategoria", idCategoria);
 			return query.getResultList();

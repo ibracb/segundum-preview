@@ -6,6 +6,7 @@ import java.util.Map;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
+import umu.aadd.segundum.dto.ProductoDTO;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.Producto;
 
@@ -29,9 +30,8 @@ public interface IServicioProductos {
 	 * @throws EntidadNoEncontrada  Si no se encuentra la categoría o el usuario
 	 *                              vendedor.
 	 */
-	public String altaProducto(String titulo, String descripcion, double precio, EstadoProducto estado,
-			String idCategoria, boolean envioDisponible, String idUsuarioVendedor)
-			throws RepositorioException, EntidadNoEncontrada;
+	String altaProducto(String titulo, String descripcion, double precio, EstadoProducto estado, String idCategoria, boolean envioDisponible,
+			String idUsuarioVendedor) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * Asigna un lugar de recogida para un producto.
@@ -43,7 +43,7 @@ public interface IServicioProductos {
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 * @throws EntidadNoEncontrada  Si no se encuentra el producto.
 	 */
-	public void asignarLugarRecogida(String idProducto, double longitud, double latitud, String descripcion)
+	void asignarLugarRecogida(String idProducto, double longitud, double latitud, String descripcion)
 			throws RepositorioException, EntidadNoEncontrada;
 
 	/**
@@ -55,8 +55,7 @@ public interface IServicioProductos {
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 * @throws EntidadNoEncontrada  Si no se encuentra el producto.
 	 */
-	public void modificarDatosProducto(String idProducto, String descripcion, double precio)
-			throws RepositorioException, EntidadNoEncontrada;
+	void modificarDatosProducto(String idProducto, String descripcion, double precio) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * Añade una visualización al contador del producto.
@@ -65,7 +64,7 @@ public interface IServicioProductos {
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 * @throws EntidadNoEncontrada  Si no se encuentra el producto.
 	 */
-	public void anadirVisualizacion(String idProducto) throws RepositorioException, EntidadNoEncontrada;
+	void anadirVisualizacion(String idProducto) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * Recupera el historial de un producto para un mes y año específicos.
@@ -75,7 +74,7 @@ public interface IServicioProductos {
 	 * @return Mapa con los productos y sus respectivos historiales en forma de
 	 *         cadena.
 	 */
-	public Map<Producto, String> getHistorial(Month mes, int anio) throws RepositorioException, EntidadNoEncontrada;
+	Map<Producto, String> getHistorial(Month mes, int anio) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * Recupera los productos a la venta que cumplan con las caracteristicas
@@ -90,9 +89,9 @@ public interface IServicioProductos {
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 * @throws EntidadNoEncontrada  Si no se encuentra alguna entidad relacionada.
 	 */
-	public List<Producto> getProductosVenta(String categoriaId, String descripcion, EstadoProducto estado,
-			double precio) throws RepositorioException, EntidadNoEncontrada;
-
+	List<Producto> getProductosVenta(String categoriaId, String descripcion, EstadoProducto estado, double precio)
+			throws RepositorioException, EntidadNoEncontrada;
+	
 	/**
 	 * Recupera un usuario por su identificador.
 	 * 
@@ -102,5 +101,16 @@ public interface IServicioProductos {
 	 * @throws EntidadNoEncontrada  Si el producto con el identificador especificado
 	 *                              no existe.
 	 */
-	public Producto recuperarProducto(String idProducto) throws RepositorioException, EntidadNoEncontrada;
+	Producto recuperarProducto(String idProducto) throws RepositorioException, EntidadNoEncontrada;
+	
+	/**
+	 * Recupera un producto en formato DTO por su identificador.
+	 * 
+	 * @param id Identificador del producto a recuperar.
+	 * @return ProductoDTO correspondiente al identificador especificado.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada  Si el producto con el identificador especificado
+	 *                              no existe.
+	 */
+	ProductoDTO recuperarProductoDTO(String idProducto) throws RepositorioException, EntidadNoEncontrada;
 }

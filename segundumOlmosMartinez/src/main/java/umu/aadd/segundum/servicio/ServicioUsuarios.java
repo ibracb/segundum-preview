@@ -4,9 +4,10 @@ import java.time.LocalDate;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
-import repositorio.Repositorio;
 import repositorio.RepositorioException;
+import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.Usuario;
+import umu.aadd.segundum.repositorio.RepositorioUsuariosAdHoc;
 import utils.StringUtilidades;
 
 /**
@@ -14,7 +15,7 @@ import utils.StringUtilidades;
  */
 public class ServicioUsuarios implements IServicioUsuarios {
 
-	private Repositorio<Usuario, String> repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
+	private RepositorioUsuariosAdHoc repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
 
 	@Override
 	public String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento,
@@ -76,6 +77,30 @@ public class ServicioUsuarios implements IServicioUsuarios {
 			return usuario;
 		}
 		return null;
+	}
+
+	@Override
+	public Usuario recuperarUsuario(String email, String clave) throws RepositorioException {
+		return repositorioUsuarios.getByEmailAndClave(email, clave);
+	}
+	
+	@Override
+	public UsuarioDTO recuperarUsuarioDTO(String idUsuario) throws RepositorioException, EntidadNoEncontrada {
+		if (idUsuario == null || idUsuario.isEmpty()) {
+			throw new IllegalArgumentException("idUsuario: no debe ser nulo ni vacio");
+		}
+		return convertirEnDTO(repositorioUsuarios.getById(idUsuario));
+	}
+	
+	/**
+	 * Convierte un usuario en su representación DTO.
+	 * 
+	 * @param usuario Usuario a convertir.
+	 * @return UsuarioDTO correspondiente al usuario especificado.
+	 */
+	private UsuarioDTO convertirEnDTO(Usuario usuario) {
+		return new UsuarioDTO(usuario.getId(), usuario.getEmail(), usuario.getNombre(), usuario.getApellidos(),
+				usuario.getFechaNacimiento(), usuario.getTelefono(), usuario.isAdministrador());
 	}
 
 }

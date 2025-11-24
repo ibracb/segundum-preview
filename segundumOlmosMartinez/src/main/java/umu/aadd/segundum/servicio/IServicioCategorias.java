@@ -19,8 +19,7 @@ public interface IServicioCategorias {
 	 * @throws EntidadNoEncontrada Si no se encuentra el usuario con el
 	 *                             identificador proporcionado.
 	 */
-	public void cargarJerarquiaCategorias(String idUsuario, String ruta)
-			throws JAXBException, RepositorioException, EntidadNoEncontrada;
+	void cargarJerarquiaCategorias(String idUsuario, String ruta) throws JAXBException, RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * Modifica el texto de una categoría existente.
@@ -31,8 +30,7 @@ public interface IServicioCategorias {
 	 * @throws EntidadNoEncontrada  Si no se encuentra la categoría con el
 	 *                              identificador proporcionado.
 	 */
-	public void modificarCategoria(String idUsuario, String idCategoria, String descripcion)
-			throws RepositorioException, EntidadNoEncontrada;
+	void modificarCategoria(String idUsuario, String idCategoria, String descripcion) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * Recupera el conjunto de categorías raíz (sin categoría padre).
@@ -40,7 +38,7 @@ public interface IServicioCategorias {
 	 * @return Conjunto de categorías raíz.
 	 * @throws RepositorioException Si ocurre un error en el repositorio.
 	 */
-	public List<Categoria> recuperarCategoriasRaiz() throws RepositorioException;
+	List<Categoria> recuperarCategoriasRaiz() throws RepositorioException;
 
 	/**
 	 * Recupera los descendientes de una categoría específica.
@@ -49,7 +47,7 @@ public interface IServicioCategorias {
 	 * @return Conjunto de categorías descendientes.
 	 * @throws RepositorioException Si ocurre un error en el repositorio.
 	 */
-	public List<Categoria> recuperarDescendientesCategoria(String idCategoria) throws RepositorioException;
+	List<Categoria> recuperarDescendientesCategoria(String idCategoria) throws RepositorioException;
 
 	/**
 	 * Recupera una categoría por su identificador.
@@ -60,7 +58,7 @@ public interface IServicioCategorias {
 	 * @throws EntidadNoEncontrada  Si no se encuentra la categoría con el
 	 *                              identificador proporcionado.
 	 */
-	public Categoria recuperarCategoria(String idCategoria) throws RepositorioException, EntidadNoEncontrada;
+	Categoria recuperarCategoria(String idCategoria) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * Recupera todas las categorías disponibles.
@@ -68,6 +66,6 @@ public interface IServicioCategorias {
 	 * @return Lista de todas las categorías.
 	 * @throws RepositorioException Si ocurre un error en el repositorio.
 	 */
-	public List<Categoria> recuperarTodasCategorias() throws RepositorioException;
+	List<Categoria> recuperarTodasCategorias() throws RepositorioException;
 
 }

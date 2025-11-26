@@ -7,26 +7,59 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>Regístrate en SegundUM</title>
+		<style>
+	h1 {
+		text-align: center;
+	}
+	
+	.formulario {
+		display: flex;
+		justify-content: center;
+	}
+	
+	.botones {
+		display: flex;
+		justify-content: center;
+		margin-top: 40px;
+		gap: 20px; 
+	}
+	
+	.estilo-boton {
+		font-size: 20px;
+		padding: 10px 20px;
+		border-radius: 8px;
+		cursor: pointer;
+	}
+	</style>
 	</h:head>
 	<h:body>
 		<h1>Regístrate en SegundUM</h1>
 		<p:messages id="messages" showDetail="true" closable="true" />
-		<h:form>
-			<p:panelGrid columns="2">
-				<p:outputLabel value="Nombre" for="nombre" />
-				<p:inputText id="nombre" value="#{registro.nombre}" />
-				<p:outputLabel value="Apellidos" for="apellidos" />
-				<p:inputText id="apellidos" value="#{registro.apellidos}" />
-				<p:outputLabel value="Email" for="email" />
-				<p:inputText id="email" value="#{registro.email}" />
-				<p:outputLabel value="Clave" for="clave" />
-				<p:password id="clave" value="#{registro.clave}" />
-				<p:outputLabel value="Fecha de nacimiento" for="fecha" />
-				<p:datePicker id="fecha" value="#{registro.fechaNacimiento}" />
-				<p:outputLabel value="Teléfono" for="telefono" />
-				<p:inputText id="telefono" value="#{registro.telefono}" />
-			</p:panelGrid>
-			<p:commandButton value="Registrar" icon="pi pi-check-circle" action="#{registro.registrar}" update="messages" />
-		</h:form>
+		<div class="formulario">
+			<h:form>
+	
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Nombre" for="nombre" />
+					<p:inputText id="nombre" value="#{registro.nombre}" />
+					<p:outputLabel value="Apellidos" for="apellidos" />
+					<p:inputText id="apellidos" value="#{registro.apellidos}" />
+					<p:outputLabel value="Email" for="email" />
+					<p:inputText id="email" value="#{registro.email}" />
+					<p:outputLabel value="Clave" for="clave" />
+					<p:password id="clave" value="#{registro.clave}" />
+					<p:outputLabel value="Fecha de nacimiento" for="fecha" />
+					<p:datePicker id="fecha" value="#{registro.fechaNacimiento}" />
+					<p:outputLabel value="Teléfono" for="telefono" />
+					<p:inputText id="telefono" value="#{registro.telefono}" />
+				</p:panelGrid>
+				<div class="botones">
+					<p:commandButton value="Registrar" icon="pi pi-check-circle"
+						action="#{registro.registrar}" update="messages"
+						classStyle="estilo-boton" />
+					<p:button value="Cancelar" icon="pi pi-arrow-left"
+						outcome="inicio.xhtml" classStyle="estilo-boton" />
+				</div>
+			</h:form>
+		</div>
 	</h:body>
 </html>

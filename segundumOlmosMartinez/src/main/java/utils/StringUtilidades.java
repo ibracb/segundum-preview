@@ -55,6 +55,11 @@ public class StringUtilidades {
 			return null;
 		}
 	}
+	
+	
+	public static boolean fechaValida(LocalDate fecha) {
+		return fecha.isBefore(LocalDate.now());
+	}
 
 	/**
 	 * Comprueba si un número de teléfono es válido (nueve dígitos).

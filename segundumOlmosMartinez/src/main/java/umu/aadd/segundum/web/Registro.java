@@ -19,71 +19,68 @@ import utils.StringUtilidades;
 @Named("registro")
 @ViewScoped
 public class Registro implements Serializable {
-	
+
 	/**
 	 * Campo nombre del usuario.
 	 */
 	private String nombre;
-	
+
 	/**
 	 * Campo apellidos del usuario.
 	 */
 	private String apellidos;
-	
+
 	/**
 	 * Campo email del usuario.
 	 */
 	private String email;
-	
+
 	/**
 	 * Campo clave del usuario.
 	 */
 	private String clave;
-	
+
 	/**
 	 * Campo fecha de nacimiento del usuario.
 	 */
 	private LocalDate fechaNacimiento;
-	
+
 	/**
 	 * Campo teléfono del usuario.
 	 */
 	private String telefono;
-	
+
 	/**
 	 * Servicio de usuarios.
 	 */
 	private IServicioUsuarios servicioUsuarios;
-	
+
 	/**
 	 * Indica si ha habido un error en el registro.
 	 */
 	private boolean error;
-	
+
 	/**
 	 * ID del usuario registrado.
 	 */
 	private String idUsuario;
-	
+
 	/**
 	 * Constructor del bean de registro.
 	 */
 	public Registro() {
 		this.servicioUsuarios = FactoriaServicios.getServicio(IServicioUsuarios.class);
 	}
-	
+
 	/**
 	 * Método para registrar un nuevo usuario.
 	 */
 	public void registrar() {
-		if (!StringUtilidades.isDatoValido(nombre)) {
+		if (!StringUtilidades.isDatoValido(nombre) || !StringUtilidades.isDatoValido(apellidos)
+				|| !StringUtilidades.isDatoValido(clave)) {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Nombre inválido"));
-			return;
-		}
-		if (!StringUtilidades.isDatoValido(apellidos)) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Apellidos inválidos"));
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Debe rellenar todos los datos"));
 			return;
 		}
 		if (!StringUtilidades.isEmailValido(email)) {
@@ -91,37 +88,36 @@ public class Registro implements Serializable {
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Email inválido"));
 			return;
 		}
-		if (!StringUtilidades.isDatoValido(clave)) {
+		LocalDate fecha;
+		if ((fecha = StringUtilidades.fechaParseada(fechaNacimiento.toString())) == null || !(StringUtilidades.fechaValida(fecha))) {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Clave inválida"));
-			return;
-		}
-		if (StringUtilidades.fechaParseada(fechaNacimiento.toString()) == null) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Fecha de nacimiento inválida"));
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Fecha de nacimiento inválida"));
 			return;
 		}
 		if (!StringUtilidades.isTelefonoValido(telefono)) {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Teléfono inválido"));
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Teléfono inválido"));
 			return;
 		}
 		try {
-			idUsuario = servicioUsuarios.altaUsuario(nombre, apellidos, email, clave, fechaNacimiento.toString(), telefono);
+			idUsuario = servicioUsuarios.altaUsuario(nombre, apellidos, email, clave, fechaNacimiento.toString(),
+					telefono);
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.getExternalContext().redirect("principal.xhtml");
 			error = false;
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			error = true;
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
-	                new FacesMessage(FacesMessage.SEVERITY_ERROR, "USUARIO NO REGISTRADO", e.getMessage()));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "USUARIO NO REGISTRADO", e.getMessage()));
 		}
 	}
 
 	/**
 	 * Recupera el nombre del usuario.
+	 * 
 	 * @return Nombre del usuario.
 	 */
 	public String getNombre() {
@@ -130,6 +126,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Establece el nombre del usuario.
+	 * 
 	 * @param nombre Nombre del usuario.
 	 */
 	public void setNombre(String nombre) {
@@ -138,6 +135,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Recupera los apellidos del usuario.
+	 * 
 	 * @return Apellidos del usuario.
 	 */
 	public String getApellidos() {
@@ -146,6 +144,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Establece los apellidos del usuario.
+	 * 
 	 * @param apellidos Apellidos del usuario.
 	 */
 	public void setApellidos(String apellidos) {
@@ -154,6 +153,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Recupera el email del usuario.
+	 * 
 	 * @return Email del usuario.
 	 */
 	public String getEmail() {
@@ -162,6 +162,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Establece el email del usuario.
+	 * 
 	 * @param email Email del usuario.
 	 */
 	public void setEmail(String email) {
@@ -170,6 +171,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Recupera la clave del usuario.
+	 * 
 	 * @return Clave del usuario.
 	 */
 	public String getClave() {
@@ -178,6 +180,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Establece la clave del usuario.
+	 * 
 	 * @param clave Clave del usuario.
 	 */
 	public void setClave(String clave) {
@@ -186,6 +189,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Recupera la fecha de nacimiento del usuario.
+	 * 
 	 * @return Fecha de nacimiento del usuario.
 	 */
 	public LocalDate getFechaNacimiento() {
@@ -194,6 +198,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Establece la fecha de nacimiento del usuario.
+	 * 
 	 * @param fechaNacimiento Fecha de nacimiento del usuario.
 	 */
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
@@ -202,6 +207,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Recupera el teléfono del usuario.
+	 * 
 	 * @return Teléfono del usuario.
 	 */
 	public String getTelefono() {
@@ -210,6 +216,7 @@ public class Registro implements Serializable {
 
 	/**
 	 * Establece el teléfono del usuario.
+	 * 
 	 * @param telefono Teléfono del usuario.
 	 */
 	public void setTelefono(String telefono) {
@@ -218,18 +225,20 @@ public class Registro implements Serializable {
 
 	/**
 	 * Indica si ha habido un error en el registro.
+	 * 
 	 * @return true si ha habido un error, false en caso contrario.
 	 */
 	public boolean isError() {
 		return error;
 	}
-	
+
 	/**
 	 * Recupera el ID del usuario registrado.
+	 * 
 	 * @return ID del usuario registrado.
 	 */
 	public String getIdUsuario() {
 		return idUsuario;
 	}
-	
+
 }

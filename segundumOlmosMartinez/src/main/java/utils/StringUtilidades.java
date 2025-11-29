@@ -14,6 +14,11 @@ public class StringUtilidades {
 	public static final String ESPACIO_EN_BLANCO = " ";
 	
 	/**
+	 * Constante de cadena vacía.
+	 */
+	public static final String CADENA_VACIA = "";
+	
+	/**
 	 * Expresión regular para validar un número de teléfono de nueve dígitos
 	 */
 	private static final String NUEVE_DIGITOS = "\\d{9}";

@@ -8,8 +8,14 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>Inicia sesión en SegundUM</title>
 		<style>
-			h1{text-align: center;}
-			.formulario{
+			.encabezado {
+				display: block;
+				text-align: center;
+				font-size: 24px;
+				font-weight: bold;
+				margin: 20px 0;
+			}
+			.formulario {
 				display: flex;
 				justify-content: center;
 			}
@@ -19,7 +25,6 @@
 				margin-top: 40px;
 				gap: 20px; 
 			}
-		
 			.estilo-boton {
 				font-size: 20px;
 				padding: 10px 20px;
@@ -29,23 +34,21 @@
 		</style>
 	</h:head>
 	<h:body>
-		<h1>Inicia sesión en SegundUM</h1>
+		<h:outputText value="Inicia sesión en SegundUM" styleClass="encabezado" />
 		<p:messages id="messages" showDetail="true" closable="true" />
 		<div class="formulario">
 			<h:form>
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Email" />
-					<p:inputText value="#{login.email}" />
+					<p:inputText value="#{controladorLogin.email}" />
 					<p:outputLabel value="Clave" />
-					<p:password value="#{login.clave}" />
+					<p:password value="#{controladorLogin.clave}" />
 				</p:panelGrid>
 				<div class="botones">
-					<p:commandButton value="Login" icon="pi pi-check-circle" action="#{login.loguear}" update="messages" styleClass="estilo-boton" />
+					<p:commandButton value="Login" icon="pi pi-check-circle" action="#{controladorLogin.loguear}" update="messages" styleClass="estilo-boton" />
 					<p:button value="Cancelar" icon="pi pi-arrow-left" outcome="inicio.xhtml" styleClass="estilo-boton"/>
 				</div>
-				
 			</h:form>
 		</div>
-		
 	</h:body>
 </html>

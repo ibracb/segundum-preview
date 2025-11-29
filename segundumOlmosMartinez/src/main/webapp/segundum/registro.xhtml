@@ -8,53 +8,53 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>Regístrate en SegundUM</title>
 		<style>
-	h1 {
-		text-align: center;
-	}
-	
-	.formulario {
-		display: flex;
-		justify-content: center;
-	}
-	
-	.botones {
-		display: flex;
-		justify-content: center;
-		margin-top: 40px;
-		gap: 20px; 
-	}
-	
-	.estilo-boton {
-		font-size: 20px;
-		padding: 10px 20px;
-		border-radius: 8px;
-		cursor: pointer;
-	}
-	</style>
+			.encabezado {
+				display: block;
+				text-align: center;
+				font-size: 24px;
+				font-weight: bold;
+				margin: 20px 0;
+			}
+			.formulario {
+				display: flex;
+				justify-content: center;
+			}
+			.botones {
+				display: flex;
+				justify-content: center;
+				margin-top: 40px;
+				gap: 20px; 
+			}
+			.estilo-boton {
+				font-size: 20px;
+				padding: 10px 20px;
+				border-radius: 8px;
+				cursor: pointer;
+			}
+		</style>
 	</h:head>
 	<h:body>
-		<h1>Regístrate en SegundUM</h1>
+		<h:outputText value="Regístrate en SegundUM" styleClass="encabezado"/>
 		<p:messages id="messages" showDetail="true" closable="true" />
 		<div class="formulario">
 			<h:form>
-	
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Nombre" for="nombre" />
-					<p:inputText id="nombre" value="#{registro.nombre}" />
+					<p:inputText id="nombre" value="#{controladorRegistro.nombre}" />
 					<p:outputLabel value="Apellidos" for="apellidos" />
-					<p:inputText id="apellidos" value="#{registro.apellidos}" />
+					<p:inputText id="apellidos" value="#{controladorRegistro.apellidos}" />
 					<p:outputLabel value="Email" for="email" />
-					<p:inputText id="email" value="#{registro.email}" />
+					<p:inputText id="email" value="#{controladorRegistro.email}" />
 					<p:outputLabel value="Clave" for="clave" />
-					<p:password id="clave" value="#{registro.clave}" />
+					<p:password id="clave" value="#{controladorRegistro.clave}" />
 					<p:outputLabel value="Fecha de nacimiento" for="fecha" />
-					<p:datePicker id="fecha" value="#{registro.fechaNacimiento}" />
+					<p:datePicker id="fecha" value="#{controladorRegistro.fechaNacimiento}" />
 					<p:outputLabel value="Teléfono" for="telefono" />
-					<p:inputText id="telefono" value="#{registro.telefono}" />
+					<p:inputText id="telefono" value="#{controladorRegistro.telefono}" />
 				</p:panelGrid>
 				<div class="botones">
 					<p:commandButton value="Registrar" icon="pi pi-check-circle"
-						action="#{registro.registrar}" update="messages"
+						action="#{controladorRegistro.registrar}" update="messages"
 						classStyle="estilo-boton" />
 					<p:button value="Cancelar" icon="pi pi-arrow-left"
 						outcome="inicio.xhtml" classStyle="estilo-boton" />

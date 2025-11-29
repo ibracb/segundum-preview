@@ -8,7 +8,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>Bienvenid@ a SegundUM</title>
 		<style>
-			h1{text-align: center;}
+			.encabezado {
+				display: block;
+				text-align: center;
+				font-size: 24px;
+				font-weight: bold;
+				margin: 20px 0;
+			}
 			.botones{
 				display: flex;
 	            justify-content: center;
@@ -24,11 +30,11 @@
 		</style>
 	</h:head>
 	<h:body>
-		<h1>Bienvenid@ a SegundUM</h1>
+		<h:outputText value="Bienvenid@ a SegundUM" styleClass="encabezado" />
 		<h:form>
 			<div class="botones">
-				<h:button value="Registro" outcome="registro.xhtml" styleClass="estilo-boton"/>
-				<h:button value="Login" outcome="login.xhtml" styleClass="estilo-boton"/>
+				<h:button value="Registro" outcome="registro.xhtml" styleClass="estilo-boton" />
+				<h:button value="Login" outcome="login.xhtml" styleClass="estilo-boton" />
 			</div>
 		</h:form>
 	</h:body>

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import servicio.FactoriaServicios;
@@ -17,9 +18,9 @@ import utils.StringUtilidades;
  * Bean de gestión del login de usuarios.
  */
 @SuppressWarnings("serial")
-@Named("login")
+@Named
 @ViewScoped
-public class Login implements Serializable {
+public class ControladorLogin implements Serializable {
 	
 	/**
 	 * Campo email del usuario.
@@ -42,14 +43,15 @@ public class Login implements Serializable {
 	private boolean error;
 	
 	/**
-	 * DTO del usuario autenticado.
+	 * Bean de sesión del usuario autenticado.
 	 */
-	private UsuarioDTO usuarioDTO;
+	@Inject
+	private SesionUsuario sesionUsuario;
 	
 	/**
-	 * Constructor del bean de login.
+	 * Constructor del bean controlador de login.
 	 */
-	public Login() {
+	public ControladorLogin() {
 		this.servicioUsuarios = FactoriaServicios.getServicio(IServicioUsuarios.class);
 	}
 	
@@ -66,7 +68,8 @@ public class Login implements Serializable {
 		}
 		try {
 			Usuario usuario = servicioUsuarios.recuperarUsuario(email, clave);
-			usuarioDTO = servicioUsuarios.recuperarUsuarioDTO(usuario.getId());
+			UsuarioDTO usuarioDTO = servicioUsuarios.recuperarUsuarioDTO(usuario.getId());
+			sesionUsuario.setUsuarioDTO(usuarioDTO);
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.getExternalContext().redirect("principal.xhtml");
 			error = false;
@@ -117,14 +120,6 @@ public class Login implements Serializable {
 	 */
 	public boolean isError() {
 		return error;
-	}
-
-	/**
-	 * Recupera el DTO del usuario autenticado.
-	 * @return DTO del usuario autenticado.
-	 */
-	public UsuarioDTO getUsuarioDTO() {
-		return usuarioDTO;
 	}
 	
 }

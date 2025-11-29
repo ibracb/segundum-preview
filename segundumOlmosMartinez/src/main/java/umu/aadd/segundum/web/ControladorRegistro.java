@@ -6,9 +6,11 @@ import java.time.LocalDate;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import servicio.FactoriaServicios;
+import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.servicio.IServicioUsuarios;
 import utils.StringUtilidades;
 
@@ -16,9 +18,9 @@ import utils.StringUtilidades;
  * Bean de gestión del registro de usuarios.
  */
 @SuppressWarnings("serial")
-@Named("registro")
+@Named
 @ViewScoped
-public class Registro implements Serializable {
+public class ControladorRegistro implements Serializable {
 
 	/**
 	 * Campo nombre del usuario.
@@ -59,16 +61,17 @@ public class Registro implements Serializable {
 	 * Indica si ha habido un error en el registro.
 	 */
 	private boolean error;
+	
+	/**
+	 * Bean de sesión del usuario autenticado.
+	 */
+	@Inject
+	private SesionUsuario sesionUsuario;
 
 	/**
-	 * ID del usuario registrado.
+	 * Constructor del bean controlador de registro.
 	 */
-	private String idUsuario;
-
-	/**
-	 * Constructor del bean de registro.
-	 */
-	public Registro() {
+	public ControladorRegistro() {
 		this.servicioUsuarios = FactoriaServicios.getServicio(IServicioUsuarios.class);
 	}
 
@@ -102,8 +105,9 @@ public class Registro implements Serializable {
 			return;
 		}
 		try {
-			idUsuario = servicioUsuarios.altaUsuario(nombre, apellidos, email, clave, fechaNacimiento.toString(),
-					telefono);
+			String idUsuario = servicioUsuarios.altaUsuario(nombre, apellidos, email, clave, fechaNacimiento.toString(), telefono);
+			UsuarioDTO usuarioDTO = servicioUsuarios.recuperarUsuarioDTO(idUsuario);
+			sesionUsuario.setUsuarioDTO(usuarioDTO);
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.getExternalContext().redirect("principal.xhtml");
 			error = false;
@@ -111,7 +115,7 @@ public class Registro implements Serializable {
 			error = true;
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "USUARIO NO REGISTRADO", e.getMessage()));
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "USUARIO NO PUDO SER REGISTRADO", e.getMessage()));
 		}
 	}
 
@@ -230,15 +234,6 @@ public class Registro implements Serializable {
 	 */
 	public boolean isError() {
 		return error;
-	}
-
-	/**
-	 * Recupera el ID del usuario registrado.
-	 * 
-	 * @return ID del usuario registrado.
-	 */
-	public String getIdUsuario() {
-		return idUsuario;
 	}
 
 }

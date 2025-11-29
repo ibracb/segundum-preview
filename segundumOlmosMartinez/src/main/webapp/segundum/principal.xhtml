@@ -7,8 +7,26 @@
 		<meta charset="utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>Principal</title>
+		<style>
+			.encabezado {
+				display: block;
+				text-align: center;
+				font-size: 24px;
+				font-weight: bold;
+				margin: 20px 0;
+			}
+			.estilo-boton {
+				font-size: 20px;
+				padding: 10px 20px;
+				border-radius: 8px;
+				cursor: pointer;
+			}
+		</style>
 	</h:head>
 	<h:body>
-		<h1>Principal</h1>
+		<h:outputText value="Principal" styleClass="encabezado"/>
+		<h:outputText value="¡Hola, #{sesionUsuario.getNombreCompleto()}!" />
+		<p:messages id="messages" showDetail="true" closable="true" />
+		<p:commandButton value="Cerrar sesión" icon="pi pi-times" action="#{controladorPrincipal.logout}" update="messages" styleClass="estilo-boton" />
 	</h:body>
 </html>

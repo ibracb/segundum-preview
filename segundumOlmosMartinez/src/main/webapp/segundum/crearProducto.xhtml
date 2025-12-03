@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Principal</title>
+		<style>
+	.encabezado {
+		display: block;
+		text-align: center;
+		font-size: 30px;
+		font-weight: bold;
+		margin: 20px 0;
+	}
+	.formulario {
+		display: flex;
+		justify-content: center;
+	}
+	.texto {
+		display: flex;
+		justify-content: center;
+		text-align: center;
+		font-size: 24px;
+		margin: 20px 0;
+	}
+	.botones {
+		display: flex;
+		justify-content: center;
+		gap: 20px; 
+	}
+	.estilo-boton {
+		font-size: 16px;
+		padding: 5px 8px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	</style>
+	</h:head>
+	<h:body>
+		<header>
+			<section>
+				<h:form>
+					<div class="botones">
+						<p:commandButton value="Producto nuevo" update="messages" styleClass="estilo-boton" />
+						<p:commandButton value="Cerrar sesión" icon="pi pi-times" action="#{controladorPrincipal.logout}" update="messages" styleClass="estilo-boton" />
+					</div>
+				</h:form>
+			</section>
+		</header>
+		<h:outputText value="Crear un nuevo producto" styleClass="encabezado" />
+		<p:messages id="messages" showDetail="true" closable="true" />
+		<div class="formulario">
+			<h:form>
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Título" for="titulo" />
+					<p:inputText id="titulo" value="#{controladorCrearProducto.titulo}" />
+					<p:outputLabel value="Descripción" for="descripcion" />
+					<p:inputText id="descripcion" value="#{controladorCrearProducto.descripcion}" />
+					<p:outputLabel value="Precio" for="precio" />
+					<p:inputText id="precio" value="#{controladorCrearProducto.precio}" />
+					<p:outputLabel value="Estado" for="estado" />
+					<p:selectOneMenu id="estado" value="#{controladorCrearProducto.estado}" > 
+						<f:selectItems value="#{controladorCrearProducto.estados}" var="e" itemValue="#{e}" itemLabel="#{e}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Categoría" for="categoria" />
+					<p:selectOneMenu id="categoria" value="#{controladorCrearProducto.categoria}" > 
+						<f:selectItems value="#{controladorCrearProducto.categorias}" var="c" itemValue="#{c.id}" itemLabel="#{c.nombre}" />
+					</p:selectOneMenu>
+					<p:outputLabel value="Envío disponible" for="envioDisponible" />
+					<p:selectBooleanButton id="envioDisponible" onLabel="Sí" offLabel="No" value="#{controladorCrearProducto.envioDisponible}" />
+				</p:panelGrid>
+				<div class="botones">
+					<p:commandButton value="Crear" icon="pi pi-check-circle"
+						action="#{controladorRegistro.registrar}" update="messages"
+						classStyle="estilo-boton" />
+					<p:button value="Cancelar" icon="pi pi-arrow-left"
+						outcome="principal.xhtml" classStyle="estilo-boton" />
+				</div>
+			</h:form>
+		</div>
+	</h:body>
+</html>

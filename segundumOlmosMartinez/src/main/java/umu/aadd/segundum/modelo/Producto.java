@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -80,7 +81,7 @@ public class Producto implements Identificable {
 	/**
 	 * Categoría del producto.
 	 */
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "categoria_id", nullable = false, updatable = false)
 	private Categoria categoria;
 
@@ -108,7 +109,7 @@ public class Producto implements Identificable {
 	/**
 	 * Vendedor del producto.
 	 */
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "vendedor_id", nullable = false, updatable = false)
 	private Usuario vendedor;
 

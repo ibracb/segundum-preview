@@ -8,25 +8,46 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>Principal</title>
 		<style>
-			.encabezado {
-				display: block;
-				text-align: center;
-				font-size: 24px;
-				font-weight: bold;
-				margin: 20px 0;
-			}
-			.estilo-boton {
-				font-size: 20px;
-				padding: 10px 20px;
-				border-radius: 8px;
-				cursor: pointer;
-			}
-		</style>
+	.encabezado {
+		display: block;
+		text-align: center;
+		font-size: 30px;
+		font-weight: bold;
+		margin: 20px 0;
+	}
+	.texto {
+		display: flex;
+		justify-content: center;
+		text-align: center;
+		font-size: 24px;
+		margin: 20px 0;
+	}
+	.botones {
+		display: flex;
+		justify-content: center;
+		gap: 20px; 
+	}
+	.estilo-boton {
+		font-size: 16px;
+		padding: 5px 8px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	</style>	
 	</h:head>
 	<h:body>
-		<h:outputText value="Principal" styleClass="encabezado"/>
-		<h:outputText value="¡Hola, #{sesionUsuario.getNombreCompleto()}!" />
+		<header>
+			<section>
+				<h:form>
+					<div class="botones">
+						<p:button value="Producto nuevo" outcome="crearProducto.xhtml" styleClass="estilo-boton" />
+						<p:commandButton value="Cerrar sesión" icon="pi pi-times" action="#{controladorPrincipal.logout}" update="messages" styleClass="estilo-boton" />
+					</div>
+				</h:form>
+			</section>
+		</header>
+		<h:outputText value="Principal" styleClass="encabezado" />
+		<h:outputText value="¡Hola, #{sesionUsuario.getNombreCompleto()}!" styleClass="texto" />
 		<p:messages id="messages" showDetail="true" closable="true" />
-		<p:commandButton value="Cerrar sesión" icon="pi pi-times" action="#{controladorPrincipal.logout}" update="messages" styleClass="estilo-boton" />
 	</h:body>
 </html>

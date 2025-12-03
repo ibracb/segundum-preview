@@ -60,7 +60,8 @@ public class Categoria implements Identificable {
 	 * Ruta de la categoría.
 	 */
 	@XmlAttribute
-	@Column(name = "ruta", nullable = false, unique = true, updatable = false)
+	@Lob
+	@Column(name = "ruta", nullable = false,/* unique = true,*/ updatable = false)
 	private String ruta;
 
 	/**

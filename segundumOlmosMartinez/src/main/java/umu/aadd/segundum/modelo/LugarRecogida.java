@@ -31,6 +31,7 @@ public class LugarRecogida {
 	/**
 	 * Descripcion del lugar de recogida.
 	 */
+	//@Lob
 	private String descripcion;
 
 	/**

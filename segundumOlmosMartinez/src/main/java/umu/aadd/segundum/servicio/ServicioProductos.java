@@ -57,6 +57,7 @@ public class ServicioProductos implements IServicioProductos {
 		return producto.getId();
 	}
 
+	//desde el usuario en sí?
 	@Override
 	public void asignarLugarRecogida(String idProducto, double longitud, double latitud, String descripcion)
 			throws RepositorioException, EntidadNoEncontrada {
@@ -105,7 +106,7 @@ public class ServicioProductos implements IServicioProductos {
 
 	@Override
 	public Map<Producto, String> getHistorial(Month mes, int anio) throws RepositorioException, EntidadNoEncontrada {
-
+//recuperar historial tiene que devolver un DTO
 		return repositorioProductos.recuperarHistorial(mes, anio);
 	}
 

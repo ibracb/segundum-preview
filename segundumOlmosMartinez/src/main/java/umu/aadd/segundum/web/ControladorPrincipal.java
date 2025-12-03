@@ -35,9 +35,9 @@ public class ControladorPrincipal implements Serializable {
 	 */
 	public void logout() {
 		try {
-			sesionUsuario.cerrarSesion();
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.getExternalContext().invalidateSession();
+			sesionUsuario.cerrarSesion();
 			facesContext.getExternalContext().redirect("inicio.xhtml");
 		}
 		catch (IOException e) {

@@ -2,6 +2,8 @@ package umu.aadd.segundum.servicio;
 
 import java.time.LocalDate;
 
+import javax.annotation.PostConstruct;
+
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
 import repositorio.RepositorioException;
@@ -17,6 +19,21 @@ public class ServicioUsuarios implements IServicioUsuarios {
 
 	private RepositorioUsuariosAdHoc repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
 
+	@PostConstruct
+	public void crearAdminPorDefecto() {
+		System.out.println("SE CREA EL ADMIN");
+	    try {
+	        if (repositorioUsuarios.getById("admin") == null) {
+	            Usuario u = new Usuario("admin","admin","admin@segundum.es","admin",LocalDate.of(2025, 11, 12));
+	            u.setAdministrador(true);
+	            // otros campos según tu modelo
+	            repositorioUsuarios.add(u);
+	        }
+	    } catch (Exception e) {
+	        System.err.println("Error creando admin por defecto: " + e.getMessage());
+	    }
+	}
+	
 	@Override
 	public String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento,
 			String telefono) throws RepositorioException {
@@ -26,6 +43,9 @@ public class ServicioUsuarios implements IServicioUsuarios {
 			return null;
 		}
 		Usuario usuario;
+		if(repositorioUsuarios.getAll().stream().anyMatch(u -> u.getEmail().equals(email))) {
+			return null;
+		}
 		if (StringUtilidades.isTelefonoValido(telefono)) {
 			usuario = new Usuario(email, nombre, apellidos, clave, telefono, LocalDate.parse(fechaNacimiento));
 		} else {
@@ -41,28 +61,23 @@ public class ServicioUsuarios implements IServicioUsuarios {
 		Usuario usuario = repositorioUsuarios.getById(idUsuario);
 		if (usuario != null && StringUtilidades.isDatoValido(nombre)) {
 			usuario.setNombre(nombre);
-			repositorioUsuarios.update(usuario);
 		}
 		if (usuario != null && StringUtilidades.isDatoValido(apellidos)) {
 			usuario.setApellidos(apellidos);
-			repositorioUsuarios.update(usuario);
 		}
 		if (usuario != null && StringUtilidades.isDatoValido(clave)) {
 			usuario.setClave(clave);
-			repositorioUsuarios.update(usuario);
 		}
 		if (usuario != null && StringUtilidades.fechaParseada(fechaNacimiento) != null) {
 			usuario.setFechaNacimiento(LocalDate.parse(fechaNacimiento));
-			repositorioUsuarios.update(usuario);
 		}
 		if (usuario != null && StringUtilidades.isDatoValido(telefono)) {
 			usuario.setTelefono(telefono);
-			repositorioUsuarios.update(usuario);
 		}
 		if (usuario != null && administrador != null) {
 			usuario.setAdministrador(administrador);
-			repositorioUsuarios.update(usuario);
 		}
+		repositorioUsuarios.update(usuario);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package umu.aadd.segundum.servicio;
 import java.io.File;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -28,6 +29,19 @@ public class ServicioCategorias implements IServicioCategorias {
 
 	private Repositorio<Usuario, String> repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
 
+	@PostConstruct
+	public void init() {
+		try {
+			System.out.println("Cargando categorías iniciales al arrancar...");
+
+			// Ruta del XML dentro del proyecto
+			String ruta = getClass().getResource("/categoriasXML/Multimedia.xml").getPath();
+			cargarJerarquiaCategorias("admin", ruta);
+		} catch (Exception e) {
+			System.err.println("Error cargando categorías iniciales: " + e.getMessage());
+		}
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -44,7 +58,9 @@ public class ServicioCategorias implements IServicioCategorias {
 			JAXBContext contexto = JAXBContext.newInstance(Categoria.class);
 			Unmarshaller unmarshaller = contexto.createUnmarshaller();
 			Categoria categoria = (Categoria) unmarshaller.unmarshal(new File(ruta));
-			repositorioCategorias.add(categoria);
+			if (!repositorioCategorias.getAll().contains(categoria)) {
+				repositorioCategorias.add(categoria);
+			}
 		}
 	}
 

@@ -1,8 +1,8 @@
 package umu.aadd.segundum.servicio;
 
 import java.time.Month;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
@@ -39,19 +39,19 @@ public class ServicioProductos implements IServicioProductos {
 	private Repositorio<Usuario, String> repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
 
 	@Override
-	public String altaProducto(String titulo, String descripcion, double precio, EstadoProducto estado,
+	public String altaProducto(String titulo, String descripcion, String precio, EstadoProducto estado,
 			String idCategoria, boolean envioDisponible, String idUsuarioVendedor)
 			throws RepositorioException, EntidadNoEncontrada {
-
+		
 		Categoria categoria = repositorioCategorias.getById(idCategoria);
 		Usuario usuario = repositorioUsuarios.getById(idUsuarioVendedor);
-
-		if (!StringUtilidades.isDatoValido(titulo) || precio < Producto.PRECIO_GRATUITO || estado == null
+		
+		if (!StringUtilidades.isDatoValido(titulo) || !StringUtilidades.isPrecioValido(precio) || estado == null
 				|| categoria == null || usuario == null) {
 			return null;
 		}
 
-		Producto producto = new Producto(titulo, descripcion, precio, estado, categoria, envioDisponible, usuario);
+		Producto producto = new Producto(titulo, descripcion, Double.parseDouble(precio), estado, categoria, envioDisponible, usuario);
 		repositorioProductos.add(producto);
 
 		return producto.getId();
@@ -67,8 +67,7 @@ public class ServicioProductos implements IServicioProductos {
 		if (producto != null && longitud >= LugarRecogida.LONGITUD_MINIMA && longitud <= LugarRecogida.LONGITUD_MAXIMA
 				&& latitud >= LugarRecogida.LATITUD_MINIMA && latitud <= LugarRecogida.LATITUD_MAXIMA
 				&& StringUtilidades.isDatoValido(descripcion)) {
-			LugarRecogida recogida = new LugarRecogida(descripcion, longitud, latitud);
-			producto.setRecogida(recogida);
+			producto.setRecogida(descripcion, longitud, latitud);
 			repositorioProductos.update(producto);
 		}
 
@@ -105,9 +104,13 @@ public class ServicioProductos implements IServicioProductos {
 	}
 
 	@Override
-	public Map<Producto, String> getHistorial(Month mes, int anio) throws RepositorioException, EntidadNoEncontrada {
-//recuperar historial tiene que devolver un DTO
-		return repositorioProductos.recuperarHistorial(mes, anio);
+	public List<ProductoDTO> getHistorial(Month mes, int anio) throws RepositorioException, EntidadNoEncontrada {
+		List<Producto> productos = repositorioProductos.recuperarHistorial(mes, anio);
+		List<ProductoDTO> productosDTO = new LinkedList<>();
+		productos.forEach(producto -> {
+			productosDTO.add(convertirEnDTO(producto));
+		});
+		return productosDTO;
 	}
 
 	@Override

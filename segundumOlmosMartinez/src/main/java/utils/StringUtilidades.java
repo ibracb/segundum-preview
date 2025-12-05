@@ -3,6 +3,8 @@ package utils;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+import umu.aadd.segundum.modelo.Producto;
+
 /**
  * Clase con utilidades para el manejo de Strings.
  */
@@ -91,6 +93,19 @@ public class StringUtilidades {
 			return false;
 		}
 		return email.matches(EMAIL);
+	}
+	
+	public static boolean isPrecioValido(String precio) {
+		if(precio == null) {
+			return false;
+		}
+		try {
+			double precioFormateado = Double.parseDouble(precio);
+			return precioFormateado >= Producto.PRECIO_GRATUITO;
+		}
+		catch(NumberFormatException e) {
+			return false;
+		}
 	}
 
 }

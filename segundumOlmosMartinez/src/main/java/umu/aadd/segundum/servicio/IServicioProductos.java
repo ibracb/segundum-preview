@@ -2,7 +2,6 @@ package umu.aadd.segundum.servicio;
 
 import java.time.Month;
 import java.util.List;
-import java.util.Map;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
@@ -30,7 +29,7 @@ public interface IServicioProductos {
 	 * @throws EntidadNoEncontrada  Si no se encuentra la categoría o el usuario
 	 *                              vendedor.
 	 */
-	String altaProducto(String titulo, String descripcion, double precio, EstadoProducto estado, String idCategoria, boolean envioDisponible,
+	String altaProducto(String titulo, String descripcion, String precio, EstadoProducto estado, String idCategoria, boolean envioDisponible,
 			String idUsuarioVendedor) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
@@ -67,14 +66,14 @@ public interface IServicioProductos {
 	void anadirVisualizacion(String idProducto) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
-	 * Recupera el historial de un producto para un mes y año específicos.
+	 * Recupera el historial de productos para un mes y año específicos.
 	 * 
 	 * @param mes  Mes del historial.
 	 * @param anio Año del historial.
 	 * @return Mapa con los productos y sus respectivos historiales en forma de
 	 *         cadena.
 	 */
-	Map<Producto, String> getHistorial(Month mes, int anio) throws RepositorioException, EntidadNoEncontrada;
+	List<ProductoDTO> getHistorial(Month mes, int anio) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * Recupera los productos a la venta que cumplan con las caracteristicas

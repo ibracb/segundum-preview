@@ -16,10 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import repositorio.Identificable;
+import utils.StringUtilidades;
 
 /**
  * Clase que modela un producto de SegundUM.
@@ -267,6 +267,11 @@ public class Producto implements Identificable {
 	public void setRecogida(LugarRecogida recogida) {
 		this.recogida = recogida;
 	}
+	
+	public void setRecogida(String descripcion, double longitud, double latitud) {
+		LugarRecogida recogida = new LugarRecogida(descripcion, longitud, latitud);
+		this.recogida = recogida;
+	}
 
 	/**
 	 * Recupera el vendedor del producto.
@@ -301,6 +306,9 @@ public class Producto implements Identificable {
 	 * @return Descripción del lugar de recogida del producto.
 	 */
 	public String getDescripcionLugarRecogida() {
+		if(recogida == null) {
+			return StringUtilidades.CADENA_VACIA;
+		}
 		return recogida.getDescripcion();
 	}
 

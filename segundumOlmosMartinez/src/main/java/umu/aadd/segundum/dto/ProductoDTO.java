@@ -221,4 +221,12 @@ public class ProductoDTO implements Serializable {
 		return vendedor;
 	}
 	
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + " [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", precio=" + precio
+				+ ", estado=" + estado + ", fechaPublicacion=" + fechaPublicacion.toString() + ", categoria=" + categoria
+				+ ", visualizaciones=" + visualizaciones + ", envioDisponible=" + envioDisponible
+				+ ", descripcionLugarRecogida=" + descripcionLugarRecogida + ", vendedor=" + vendedor + "]";
+	}
+	
 }

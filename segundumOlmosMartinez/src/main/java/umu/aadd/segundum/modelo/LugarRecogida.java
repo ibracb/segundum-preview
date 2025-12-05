@@ -1,6 +1,7 @@
 package umu.aadd.segundum.modelo;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Lob;
 
 /**
  * Clase que modela un lugar de recogida de un producto en SegundUM.
@@ -31,7 +32,7 @@ public class LugarRecogida {
 	/**
 	 * Descripcion del lugar de recogida.
 	 */
-	//@Lob
+	@Lob
 	private String descripcion;
 
 	/**

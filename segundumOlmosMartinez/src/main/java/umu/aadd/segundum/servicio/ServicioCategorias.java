@@ -58,7 +58,7 @@ public class ServicioCategorias implements IServicioCategorias {
 			JAXBContext contexto = JAXBContext.newInstance(Categoria.class);
 			Unmarshaller unmarshaller = contexto.createUnmarshaller();
 			Categoria categoria = (Categoria) unmarshaller.unmarshal(new File(ruta));
-			if (!repositorioCategorias.getAll().contains(categoria)) {
+			if (!repositorioCategorias.getIds().contains(categoria.getId())) {
 				repositorioCategorias.add(categoria);
 			}
 		}

@@ -3,7 +3,6 @@ package umu.aadd.segundum.repositorio;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,20 +34,12 @@ public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implem
 	EntityManager em = emf.createEntityManager();
 
 	@Override
-	public Map<Producto, String> recuperarHistorial(Month mes, int anio) throws RepositorioException {
-		Map<Producto, String> historial = new LinkedHashMap<>();
+	public List<Producto> recuperarHistorial(Month mes, int anio) throws RepositorioException {
 		try {
-			List<Producto> productos = em.createQuery(
+			return em.createQuery(
 					"SELECT p FROM Producto p WHERE FUNCTION('MONTH', p.fechaPublicacion) = :mes AND FUNCTION('YEAR', p.fechaPublicacion) = :anio ORDER BY p.visualizaciones DESC",
 					Producto.class).setParameter("mes", mes.getValue()).setParameter("anio", anio).getResultList();
-			for (Producto p : productos) {
-				String texto = "ID: " + p.getId() + ", precio: " + p.getPrecio() + ", fecha: "
-						+ p.getFechaPublicacion().getDayOfMonth() + "/" + p.getFechaPublicacion().getMonth() + "/"
-						+ p.getFechaPublicacion().getYear() + ", categoría: " + p.getCategoria().getNombre()
-						+ ", número de visualizaciones: " + p.getVisualizaciones();
-				historial.put(p, texto);
-			}
-			return historial;
+			
 		} catch (Exception e) {
 			throw new RepositorioException("Error al recuperar el historial", e);
 		}

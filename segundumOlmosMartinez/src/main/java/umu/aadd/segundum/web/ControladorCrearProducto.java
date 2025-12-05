@@ -4,17 +4,20 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 
-import repositorio.FactoriaRepositorios;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
+import umu.aadd.segundum.dto.ProductoDTO;
+import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
-import umu.aadd.segundum.modelo.Usuario;
-import umu.aadd.segundum.repositorio.RepositorioCategoriasAdHoc;
 import umu.aadd.segundum.servicio.IServicioCategorias;
 import umu.aadd.segundum.servicio.IServicioProductos;
+import utils.StringUtilidades;
 
 @SuppressWarnings("serial")
 @Named
@@ -25,7 +28,7 @@ public class ControladorCrearProducto implements Serializable {
 
 	private String descripcion;
 
-	private double precio;
+	private String precio;
 
 	private EstadoProducto estado;
 
@@ -41,6 +44,9 @@ public class ControladorCrearProducto implements Serializable {
 
 	private boolean error;
 	
+	@Inject
+	private SesionUsuario sesionUsuario;
+	
 	
 	public ControladorCrearProducto() {
 		this.servicioProductos = FactoriaServicios.getServicio(IServicioProductos.class);
@@ -48,7 +54,40 @@ public class ControladorCrearProducto implements Serializable {
 	}
 	
 	public void crearProducto() {
-		
+		if (!StringUtilidades.isDatoValido(titulo) || !StringUtilidades.isDatoValido(descripcion)) {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Debe rellenar todos los datos"));
+			return;
+		}
+		if (!StringUtilidades.isPrecioValido(precio)) {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Precio inválido"));
+			return;
+		}
+		try {
+			UsuarioDTO usuarioDTO = sesionUsuario.getUsuarioDTO();
+			String idProducto = servicioProductos.altaProducto(titulo, descripcion, precio, estado, categoria, envioDisponible, usuarioDTO.getId());
+			ProductoDTO productoDTO = servicioProductos.recuperarProductoDTO(idProducto);
+			error = false;
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Validación", "Producto satisfactoriamente creado!!"
+							+ "\nTítulo: " + productoDTO.getTitulo()
+							+ "\nDescripción: " + productoDTO.getDescripcion()
+							+ "\nPrecio: " + productoDTO.getPrecio()
+							+ "\nEstado: " + productoDTO.getEstado()
+							+ "\nFecha de publicación: " + productoDTO.getFechaPublicacion().toString()
+							+ "\nCategoría: " + productoDTO.getCategoria()
+							+ "\nEnvío disponible: " + productoDTO.isEnvioDisponible()
+							+ "\nVendedor: " + productoDTO.getVendedor()));
+		}
+		catch(Exception e) {
+			error = true;
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "PRODUCTO NO PUDO SER CREADO", e.getMessage()));
+		}
 	}
 	
 	public EstadoProducto[] getEstados() {
@@ -75,11 +114,11 @@ public class ControladorCrearProducto implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public double getPrecio() {
+	public String getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(double precio) {
+	public void setPrecio(String precio) {
 		this.precio = precio;
 	}
 

@@ -61,7 +61,7 @@ public class Categoria implements Identificable {
 	 */
 	@XmlAttribute
 	@Lob
-	@Column(name = "ruta", nullable = false,/* unique = true,*/ updatable = false)
+	@Column(name = "ruta", nullable = false, updatable = false)
 	private String ruta;
 
 	/**

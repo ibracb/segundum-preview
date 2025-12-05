@@ -2,13 +2,13 @@ package umu.aadd.segundum.servicio.test;
 
 import java.time.Month;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.bind.JAXBException;
 
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
+import umu.aadd.segundum.dto.ProductoDTO;
 import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.Producto;
@@ -158,7 +158,7 @@ public class Programa {
 		// COMO USUARIO, QUIERO DAR DE ALTA UN PRODUCTO PARA PONERLO A LA VENTA
 		// Probamos a crear un producto, con categoria "Sillas para salón comedor y
 		// cocina", id: 5886
-		String prodSillaId = servicioProductos.altaProducto("Silla", "Silla de madera resistente", 30.50,
+		String prodSillaId = servicioProductos.altaProducto("Silla", "Silla de madera resistente", "30.50",
 				EstadoProducto.NUEVO, "5886", true, idUsuario);
 
 		// Recuperar producto a través del ID
@@ -175,9 +175,9 @@ public class Programa {
 
 		// Creamos otros productos
 		servicioCategorias.cargarJerarquiaCategorias(idUsuario, "categoriasXML/Equipamiento_deportivo.xml");
-		String prodSillaId2 = servicioProductos.altaProducto("Tabla de surf", "Tabla de surf para niños", 100.0,
+		String prodSillaId2 = servicioProductos.altaProducto("Tabla de surf", "Tabla de surf para niños", "100.0",
 				EstadoProducto.ACEPTABLE, "3320", true, idUsuario);
-		String prodSillaId3 = servicioProductos.altaProducto("Guantes", "Guantes de golf históricos", 100.0,
+		String prodSillaId3 = servicioProductos.altaProducto("Guantes", "Guantes de golf históricos", "100.0",
 				EstadoProducto.COMO_NUEVO, "4466", true, idUsuario);
 
 		// COMO USUARIO QUIERO ASOCIAR UN LUGAR DE RECOGIDA A UN PRODUCTO QUE HE PUESTO
@@ -203,11 +203,11 @@ public class Programa {
 		// COMO USUARIO, QUIERO OBTENER UN RESUMEN MENSUAL DE MIS PRODUCTOS EN VENTA Y
 		// SUS VISUALIZACIONES
 		// Tratamos de recuperar el historial
-		Map<Producto, String> historial = servicioProductos.getHistorial(Month.NOVEMBER, 2025);
+		List<ProductoDTO> historial = servicioProductos.getHistorial(Month.NOVEMBER, 2025);
 		System.out.println("\n\nHISTORIAL:");
-		for (Producto p : historial.keySet()) {
-			System.out.println(historial.get(p));
-		}
+		historial.forEach(productoDTO -> {
+			System.out.println(productoDTO.toString());
+		});
 		System.out.println();
 
 		// COMO USUARIO, QUIERO CONSULTAR LOS PRODUCTOS A LA VENTA FILTRANDO POR

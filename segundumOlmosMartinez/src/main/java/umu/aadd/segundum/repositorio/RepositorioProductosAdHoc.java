@@ -2,7 +2,6 @@ package umu.aadd.segundum.repositorio;
 
 import java.time.Month;
 import java.util.List;
-import java.util.Map;
 
 import repositorio.RepositorioException;
 import repositorio.RepositorioString;
@@ -23,7 +22,7 @@ public interface RepositorioProductosAdHoc extends RepositorioString<Producto> {
 	 * @return Mapa con los productos y su información en formato String.
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
-	Map<Producto, String> recuperarHistorial(Month mes, int anio) throws RepositorioException;
+	List<Producto> recuperarHistorial(Month mes, int anio) throws RepositorioException;
 
 	/**
 	 * Recupera productos en venta que coinciden con los criterios especificados.

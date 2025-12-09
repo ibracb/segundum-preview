@@ -9,6 +9,7 @@ import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
 import umu.aadd.segundum.dto.ProductoDTO;
+import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.LugarRecogida;
@@ -154,5 +155,23 @@ public class ServicioProductos implements IServicioProductos {
 				producto.getVisualizaciones(), producto.isEnvioDisponible(), producto.getDescripcionLugarRecogida(),
 				producto.getNombreCompletoVendedor());
 	}
-
+	
+	public List<ProductoDTO> mostrarProductosDTOVenta() throws RepositorioException, EntidadNoEncontrada{
+		List<Producto> productos = getProductosVenta(null, null, null, -1);
+		List<ProductoDTO> prodsDTO = new LinkedList<>();
+		for(Producto p : productos) {
+			prodsDTO.add(recuperarProductoDTO(p.getId()));
+		}
+		return prodsDTO;
+	}
+	
+	public List<ProductoDTO> recuperarProductosDTOPropios(UsuarioDTO usuario) throws RepositorioException, EntidadNoEncontrada{
+		List<Producto> productos = repositorioProductos.recuperarProductosVentaPropios(usuario);
+		List<ProductoDTO> prodsDTO = new LinkedList<>();
+		for(Producto p : productos) {
+			prodsDTO.add(recuperarProductoDTO(p.getId()));
+		}
+		return prodsDTO;
+	}
+ 
 }

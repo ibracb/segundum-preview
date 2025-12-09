@@ -2,8 +2,6 @@ package umu.aadd.segundum.servicio;
 
 import java.time.LocalDate;
 
-import javax.annotation.PostConstruct;
-
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
 import repositorio.RepositorioException;
@@ -15,24 +13,10 @@ import utils.StringUtilidades;
 /**
  * Implementación del servicio de usuarios.
  */
+
 public class ServicioUsuarios implements IServicioUsuarios {
 
 	private RepositorioUsuariosAdHoc repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
-
-	@PostConstruct
-	public void crearAdminPorDefecto() {
-		System.out.println("SE CREA EL ADMIN");
-	    try {
-	        if (repositorioUsuarios.getById("admin") == null) {
-	            Usuario u = new Usuario("admin","admin","admin@segundum.es","admin",LocalDate.of(2025, 11, 12));
-	            u.setAdministrador(true);
-	            // otros campos según tu modelo
-	            repositorioUsuarios.add(u);
-	        }
-	    } catch (Exception e) {
-	        System.err.println("Error creando admin por defecto: " + e.getMessage());
-	    }
-	}
 	
 	@Override
 	public String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento,

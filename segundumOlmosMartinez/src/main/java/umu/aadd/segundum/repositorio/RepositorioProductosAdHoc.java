@@ -5,6 +5,7 @@ import java.util.List;
 
 import repositorio.RepositorioException;
 import repositorio.RepositorioString;
+import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.Producto;
@@ -36,4 +37,6 @@ public interface RepositorioProductosAdHoc extends RepositorioString<Producto> {
 	 */
 	List<Producto> recuperarProductosVenta(List<Categoria> categorias, String descripcion, EstadoProducto estado, double precio)
 			throws RepositorioException;
+
+	List<Producto> recuperarProductosVentaPropios(UsuarioDTO usuario) throws RepositorioException;
 }

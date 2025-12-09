@@ -9,7 +9,7 @@ import umu.aadd.segundum.modelo.Usuario;
  * Interfaz del servicio de gestión de usuarios.
  */
 public interface IServicioUsuarios {
-
+	
 	/**
 	 * Da de alta un nuevo usuario en el sistema.
 	 * 

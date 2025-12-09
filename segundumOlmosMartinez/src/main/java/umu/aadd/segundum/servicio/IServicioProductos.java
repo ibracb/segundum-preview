@@ -6,6 +6,7 @@ import java.util.List;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 import umu.aadd.segundum.dto.ProductoDTO;
+import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.Producto;
 
@@ -112,4 +113,8 @@ public interface IServicioProductos {
 	 *                              no existe.
 	 */
 	ProductoDTO recuperarProductoDTO(String idProducto) throws RepositorioException, EntidadNoEncontrada;
+	
+	List<ProductoDTO> mostrarProductosDTOVenta() throws RepositorioException, EntidadNoEncontrada;
+	
+	List<ProductoDTO> recuperarProductosDTOPropios(UsuarioDTO usuario) throws RepositorioException, EntidadNoEncontrada;
 }

@@ -2,6 +2,7 @@ package umu.aadd.segundum.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Clase que modela un Data Transfer Object (DTO) para un producto.
@@ -165,6 +166,13 @@ public class ProductoDTO implements Serializable {
 	 */
 	public LocalDateTime getFechaPublicacion() {
 		return fechaPublicacion;
+	}
+	
+	public String getFechaFormateada() {
+	    if (fechaPublicacion != null) {
+	        return fechaPublicacion.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+	    }
+	    return "";
 	}
 
 	/**

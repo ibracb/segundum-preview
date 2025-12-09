@@ -41,8 +41,8 @@
 
 .productos-grid {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
-	gap: 20px;
+	grid-template-columns: repeat(4, 1fr); /* 3 columnas */
+	gap: 20px; /* separación entre tarjetas */
 	padding: 20px;
 }
 
@@ -88,7 +88,7 @@
 		</div>
 	</h:form> </section> </header>
 
-	<h:outputText value="Principal" styleClass="encabezado" />
+	<h:outputText value="Mis productos" styleClass="encabezado" />
 	<h:outputText value="¡Hola, #{sesionUsuario.getNombreCompleto()}!"
 		styleClass="texto" />
 	<p:messages id="messages" showDetail="true" closable="true" />
@@ -96,22 +96,28 @@
 		<div class="sidebar">
 			<h3>Buscar productos</h3>
 			<p:commandButton value="Buscar por filtros" icon="pi pi-search"
-				update=" formProductosGrid" /><br/>
-			<p:outputLabel value="Título" /><br/>
+				update=" formProductosGrid" />
+			<br />
+			<p:outputLabel value="Título" />
+			<br />
 			<p:inputText placeholder="Título" />
-			<p:outputLabel value="Descripción" /><br/>
+			<p:outputLabel value="Descripción" />
+			<br />
 			<p:inputText placeholder="Descripción" />
-			<p:outputLabel value="Precio máximo" /><br/>
-			<p:inputText placeholder="Precio" />
-			<p:outputLabel value="Estado" for="estado" /><br/>
+			<p:outputLabel value="Estado" for="estado" />
+			<br />
 			<p:selectOneMenu id="estado"
-				value="#{controladorCrearProducto.estado}" style="width:200px;font-size:12px;">
+				value="#{controladorCrearProducto.estado}"
+				style="width:200px;font-size:12px;">
 				<f:selectItems value="#{controladorCrearProducto.estados}" var="e"
 					itemValue="#{e}" itemLabel="#{e}" />
-			</p:selectOneMenu><br/>
-			<p:outputLabel value="Categoría" for="categoria" /><br/>
+			</p:selectOneMenu>
+			<br />
+			<p:outputLabel value="Categoría" for="categoria" />
+			<br />
 			<p:selectOneMenu id="categoria"
-				value="#{controladorCrearProducto.categoria}" style="width:200px;font-size:12px;">
+				value="#{controladorCrearProducto.categoria}"
+				style="width:200px;font-size:12px;">
 				<f:selectItems value="#{controladorCrearProducto.categorias}"
 					var="c" itemValue="#{c.id}" itemLabel="#{c.nombre}" />
 			</p:selectOneMenu>
@@ -121,12 +127,12 @@
 		<div class="main-content">
 			<h:form id="formProductosGrid">
 				<div class="productos-grid">
-					<ui:repeat value="#{controladorPrincipal.productosVenta}" var="p">
+					<ui:repeat value="#{controladorMisProductos.productosVenta}" var="p">
 						<div class="producto-card">
 							<h3>#{p.titulo}</h3>
 							<p>#{p.descripcion}</p>
 							<p>
-								<strong>Categoría:</strong> #{p.categoria}
+								<strong>Fecha:</strong> #{p.fechaFormateada}
 							</p>
 							<p>
 								<strong>Precio:</strong> #{p.precio} €
@@ -134,10 +140,11 @@
 							<p>
 								<strong>Estado:</strong> #{p.estado}
 							</p>
+							<p>
+								<strong>Visualizaciones:</strong> #{p.visualizaciones}
+							</p>
 							<div class="botones">
-								<p:commandButton value="Ver más" action="#{controladorPrincipal.verProducto}" styleClass="estilo-boton" >
-									<f:setPropertyActionListener target="#{productoActual.productoDTO}" value="#{p}" />
-								</p:commandButton>
+								<p:button value="Modificar" outcome="modificarProducto.xhtml" styleClass="estilo-boton" />
 							</div>
 						</div>
 					</ui:repeat>

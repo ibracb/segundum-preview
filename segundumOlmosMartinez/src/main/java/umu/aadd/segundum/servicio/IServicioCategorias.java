@@ -10,6 +10,7 @@ import umu.aadd.segundum.modelo.Categoria;
 
 public interface IServicioCategorias {
 
+	
 	/**
 	 * Carga la jerarquía de categorías a partir de la ruta especificada.
 	 * 

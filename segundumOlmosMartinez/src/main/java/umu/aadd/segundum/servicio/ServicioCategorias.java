@@ -3,7 +3,6 @@ package umu.aadd.segundum.servicio;
 import java.io.File;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -20,6 +19,7 @@ import utils.StringUtilidades;
 /**
  * Implementación del servicio de categorías.
  */
+
 public class ServicioCategorias implements IServicioCategorias {
 
 	/**
@@ -28,19 +28,6 @@ public class ServicioCategorias implements IServicioCategorias {
 	private RepositorioCategoriasAdHoc repositorioCategorias = FactoriaRepositorios.getRepositorio(Categoria.class);
 
 	private Repositorio<Usuario, String> repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
-
-	@PostConstruct
-	public void init() {
-		try {
-			System.out.println("Cargando categorías iniciales al arrancar...");
-
-			// Ruta del XML dentro del proyecto
-			String ruta = getClass().getResource("/categoriasXML/Multimedia.xml").getPath();
-			cargarJerarquiaCategorias("admin", ruta);
-		} catch (Exception e) {
-			System.err.println("Error cargando categorías iniciales: " + e.getMessage());
-		}
-	}
 
 	/**
 	 * {@inheritDoc}

@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import repositorio.RepositorioException;
+import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.Producto;
@@ -100,4 +101,14 @@ public class RepositorioProductosAdHocJPA extends RepositorioProductosJPA implem
 		return estadosPermitidos;
 	}
 
+	@Override
+	public List<Producto> recuperarProductosVentaPropios(UsuarioDTO usuario) throws RepositorioException {
+		try {
+			return em.createQuery(
+					"SELECT p FROM Producto p WHERE p.vendedor.id = :idUsuario",Producto.class).setParameter("idUsuario",usuario.getId()).getResultList();
+		} catch (Exception e) {
+			throw new RepositorioException("Error al recuperar el historial", e);
+		}
+	}
+	
 }

@@ -81,6 +81,12 @@ public class ControladorCrearProducto implements Serializable {
 							+ "\nCategoría: " + productoDTO.getCategoria()
 							+ "\nEnvío disponible: " + productoDTO.isEnvioDisponible()
 							+ "\nVendedor: " + productoDTO.getVendedor()));
+			this.titulo = null;
+	        this.descripcion = null;
+	        this.precio = null;
+	        this.estado = null;
+	        this.categoria = null;
+	        this.envioDisponible = false;
 		}
 		catch(Exception e) {
 			error = true;

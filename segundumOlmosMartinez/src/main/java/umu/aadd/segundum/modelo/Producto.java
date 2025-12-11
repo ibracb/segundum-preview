@@ -305,7 +305,7 @@ public class Producto implements Identificable {
 	 * 
 	 * @return Descripción del lugar de recogida del producto.
 	 */
-	public String getDescripcionLugarRecogida() {
+	public String getLugarRecogida() {
 		if(recogida == null) {
 			return StringUtilidades.CADENA_VACIA;
 		}

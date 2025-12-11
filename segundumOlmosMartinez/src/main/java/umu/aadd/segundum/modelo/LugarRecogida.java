@@ -38,12 +38,12 @@ public class LugarRecogida {
 	/**
 	 * Longitud del lugar de recogida.
 	 */
-	private double longitud;
+	private Double longitud;
 
 	/**
 	 * Latitud del lugar de recogida.
 	 */
-	private double latitud;
+	private Double latitud;
 
 	/**
 	 * Construye un producto.
@@ -52,7 +52,7 @@ public class LugarRecogida {
 	 * @param longitud    Longitud del lugar de recodiga.
 	 * @param latitud     Latitud del lugar de recodiga.
 	 */
-	public LugarRecogida(String descripcion, double longitud, double latitud) {
+	public LugarRecogida(String descripcion, Double longitud, Double latitud) {
 		this.descripcion = descripcion;
 		this.longitud = longitud;
 		this.latitud = latitud;
@@ -73,13 +73,21 @@ public class LugarRecogida {
 		return descripcion;
 	}
 
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 	/**
 	 * Recupera la longitud del lugar de recogida
 	 * 
 	 * @return Longitud del lugar de recogida.
 	 */
-	public double getLongitud() {
+	public Double getLongitud() {
 		return longitud;
+	}
+
+	public void setLongitud(Double longitud) {
+		this.longitud = longitud;
 	}
 
 	/**
@@ -87,7 +95,11 @@ public class LugarRecogida {
 	 * 
 	 * @return Latitud del lugar de recogida.
 	 */
-	public double getLatitud() {
+	public Double getLatitud() {
 		return latitud;
+	}
+
+	public void setLatitud(Double latitud) {
+		this.latitud = latitud;
 	}
 }

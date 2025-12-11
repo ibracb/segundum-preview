@@ -15,6 +15,7 @@ import umu.aadd.segundum.dto.ProductoDTO;
 import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
+import umu.aadd.segundum.modelo.LugarRecogida;
 import umu.aadd.segundum.servicio.IServicioCategorias;
 import umu.aadd.segundum.servicio.IServicioProductos;
 import utils.StringUtilidades;
@@ -33,26 +34,31 @@ public class ControladorCrearProducto implements Serializable {
 	private EstadoProducto estado;
 
 	private String categoria;
-	
+
 	private boolean envioDisponible;
+
+	private String descripcionLugarRecogida;
 	
+	private Double longitudLugarRecogida;
+	
+	private Double latitudLugarRecogida;
+
 	private String vendedor;
 
 	private IServicioProductos servicioProductos;
-	
+
 	private IServicioCategorias servicioCategorias;
 
 	private boolean error;
-	
+
 	@Inject
 	private SesionUsuario sesionUsuario;
-	
-	
+
 	public ControladorCrearProducto() {
 		this.servicioProductos = FactoriaServicios.getServicio(IServicioProductos.class);
 		this.servicioCategorias = FactoriaServicios.getServicio(IServicioCategorias.class);
 	}
-	
+
 	public void crearProducto() {
 		if (!StringUtilidades.isDatoValido(titulo) || !StringUtilidades.isDatoValido(descripcion)) {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -62,46 +68,49 @@ public class ControladorCrearProducto implements Serializable {
 		}
 		if (!StringUtilidades.isPrecioValido(precio)) {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Precio inválido"));
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Precio inválido"));
 			return;
 		}
 		try {
 			UsuarioDTO usuarioDTO = sesionUsuario.getUsuarioDTO();
-			String idProducto = servicioProductos.altaProducto(titulo, descripcion, precio, estado, categoria, envioDisponible, usuarioDTO.getId());
+			String idProducto = servicioProductos.altaProducto(titulo, descripcion, precio, estado, categoria,
+					envioDisponible, usuarioDTO.getId());
+			if(descripcionLugarRecogida != null && longitudLugarRecogida != 0.0 && latitudLugarRecogida != 0.0) {
+				servicioProductos.asignarLugarRecogida(idProducto, longitudLugarRecogida, latitudLugarRecogida, descripcionLugarRecogida);
+			}
+			
 			ProductoDTO productoDTO = servicioProductos.recuperarProductoDTO(idProducto);
 			error = false;
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Validación", "Producto satisfactoriamente creado!!"
-							+ "\nTítulo: " + productoDTO.getTitulo()
-							+ "\nDescripción: " + productoDTO.getDescripcion()
-							+ "\nPrecio: " + productoDTO.getPrecio()
-							+ "\nEstado: " + productoDTO.getEstado()
-							+ "\nFecha de publicación: " + productoDTO.getFechaPublicacion().toString()
-							+ "\nCategoría: " + productoDTO.getCategoria()
-							+ "\nEnvío disponible: " + productoDTO.isEnvioDisponible()
-							+ "\nVendedor: " + productoDTO.getVendedor()));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Validación",
+							"Producto satisfactoriamente creado!!" + "\nTítulo: " + productoDTO.getTitulo()
+									+ "\nDescripción: " + productoDTO.getDescripcion() + "\nPrecio: "
+									+ productoDTO.getPrecio() + "\nEstado: " + productoDTO.getEstado()
+									+ "\nFecha de publicación: " + productoDTO.getFechaPublicacion().toString()
+									+ "\nCategoría: " + productoDTO.getCategoria() + "\nEnvío disponible: "
+									+ productoDTO.isEnvioDisponible() + "\nVendedor: " + productoDTO.getVendedor()));
 			this.titulo = null;
-	        this.descripcion = null;
-	        this.precio = null;
-	        this.estado = null;
-	        this.categoria = null;
-	        this.envioDisponible = false;
-		}
-		catch(Exception e) {
+			this.descripcion = null;
+			this.precio = null;
+			this.estado = null;
+			this.categoria = null;
+			this.envioDisponible = false;
+		} catch (Exception e) {
 			error = true;
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "PRODUCTO NO PUDO SER CREADO", e.getMessage()));
 		}
 	}
-	
+
 	public EstadoProducto[] getEstados() {
-	    return EstadoProducto.values();
+		return EstadoProducto.values();
 	}
-	
+
 	public List<Categoria> getCategorias() throws RepositorioException {
-	    return servicioCategorias.recuperarTodasCategorias();
+		return servicioCategorias.recuperarTodasCategorias();
 	}
 
 	public String getTitulo() {
@@ -158,6 +167,30 @@ public class ControladorCrearProducto implements Serializable {
 
 	public void setVendedor(String vendedor) {
 		this.vendedor = vendedor;
+	}
+
+	public String getDescripcionLugarRecogida() {
+		return descripcionLugarRecogida;
+	}
+
+	public void setDescripcionLugarRecogida(String descripcion) {
+		this.descripcionLugarRecogida = descripcion;
+	}
+
+	public Double getLongitudLugarRecogida() {
+		return longitudLugarRecogida;
+	}
+
+	public void setLongitudLugarRecogida(Double longitud) {
+		this.longitudLugarRecogida = longitud;
+	}
+	
+	public Double getLatitudLugarRecogida() {
+		return latitudLugarRecogida;
+	}
+
+	public void setLatitudLugarRecogida(Double latitud) {
+		this.latitudLugarRecogida = latitud;
 	}
 
 	public IServicioProductos getServicioProductos() {

@@ -60,7 +60,7 @@ public class ServicioProductos implements IServicioProductos {
 
 	//desde el usuario en sí?
 	@Override
-	public void asignarLugarRecogida(String idProducto, double longitud, double latitud, String descripcion)
+	public void asignarLugarRecogida(String idProducto, Double longitud, Double latitud, String descripcion)
 			throws RepositorioException, EntidadNoEncontrada {
 
 		Producto producto = repositorioProductos.getById(idProducto);
@@ -152,7 +152,7 @@ public class ServicioProductos implements IServicioProductos {
 	private ProductoDTO convertirEnDTO(Producto producto) {
 		return new ProductoDTO(producto.getId(), producto.getTitulo(), producto.getDescripcion(), producto.getPrecio(),
 				producto.getEstadoFormateado(), producto.getFechaPublicacion(), producto.getNombreCategoria(),
-				producto.getVisualizaciones(), producto.isEnvioDisponible(), producto.getDescripcionLugarRecogida(),
+				producto.getVisualizaciones(), producto.isEnvioDisponible(), producto.getRecogida(),
 				producto.getNombreCompletoVendedor());
 	}
 	

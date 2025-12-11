@@ -68,7 +68,9 @@ public class ControladorPrincipal implements Serializable {
         return productosVenta;
     }
 	
-	public void verProducto() throws RepositorioException, EntidadNoEncontrada {
+	public void verProducto() throws RepositorioException, EntidadNoEncontrada, IOException {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		facesContext.getExternalContext().redirect("detallesProducto.xhtml");
 		servicioProductos.anadirVisualizacion(productoActual.getProductoDTO().getId());
 	}
 

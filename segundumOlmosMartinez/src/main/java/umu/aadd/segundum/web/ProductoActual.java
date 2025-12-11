@@ -2,14 +2,14 @@ package umu.aadd.segundum.web;
 
 import java.io.Serializable;
 
-import javax.faces.view.ViewScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import umu.aadd.segundum.dto.ProductoDTO;
 
 @SuppressWarnings("serial")
 @Named
-@ViewScoped
+@SessionScoped
 public class ProductoActual implements Serializable {
 	private ProductoDTO productoDTO;
 	

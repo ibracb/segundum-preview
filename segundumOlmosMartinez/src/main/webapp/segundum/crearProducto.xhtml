@@ -8,6 +8,20 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Principal</title>
 	<style>
+	
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    z-index: 1000;
+}
+
+body {
+    padding-top: 50px;
+}
+
 .encabezado {
 	display: block;
 	text-align: center;
@@ -41,6 +55,7 @@
 	border-radius: 5px;
 	cursor: pointer;
 }
+
 </style>
 </h:head>
 <h:body>
@@ -50,6 +65,8 @@
 				styleClass="estilo-boton" />
 			<p:commandButton value="Producto nuevo" update="messages"
 				outcome="crearProducto.xhtml" styleClass="estilo-boton" />
+			<p:button value="Mis productos" outcome="misProductos.xhtml"
+				styleClass="estilo-boton" />
 			<p:commandButton value="Cerrar sesión" icon="pi pi-times"
 				action="#{controladorPrincipal.logout}" update="messages"
 				styleClass="estilo-boton" />
@@ -81,7 +98,15 @@
 				</p:selectOneMenu>
 				<p:outputLabel value="Envío disponible" for="envioDisponible" />
 				<p:selectBooleanButton id="envioDisponible" onLabel="Sí"
-					offLabel="No" value="#{controladorCrearProducto.envioDisponible}" />
+					offLabel="No" value="#{controladorCrearProducto.envioDisponible}" >
+					<p:ajax update="descripcionLugarRecogida longitudLugarRecogida latitudLugarRecogida" />
+				</p:selectBooleanButton>
+				<p:outputLabel value="Descripción del sitio de recogida" />
+				<p:inputText id="descripcionLugarRecogida" value="#{controladorCrearProducto.descripcionLugarRecogida}" disabled="#{controladorCrearProducto.envioDisponible}" />
+				<p:outputLabel value="Longitud del lugar de recogida" />
+				<p:inputText id="longitudLugarRecogida" value="#{controladorCrearProducto.longitudLugarRecogida}" disabled="#{controladorCrearProducto.envioDisponible}" />
+				<p:outputLabel value="Latitud del lugar de recogida" />
+				<p:inputText id="latitudLugarRecogida" value="#{controladorCrearProducto.latitudLugarRecogida}" disabled="#{controladorCrearProducto.envioDisponible}" />
 			</p:panelGrid>
 			<div class="botones">
 				<p:commandButton value="Crear" icon="pi pi-check-circle"

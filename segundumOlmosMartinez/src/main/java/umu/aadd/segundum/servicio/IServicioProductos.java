@@ -8,6 +8,7 @@ import repositorio.RepositorioException;
 import umu.aadd.segundum.dto.ProductoDTO;
 import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.EstadoProducto;
+import umu.aadd.segundum.modelo.LugarRecogida;
 import umu.aadd.segundum.modelo.Producto;
 
 /**
@@ -43,7 +44,7 @@ public interface IServicioProductos {
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 * @throws EntidadNoEncontrada  Si no se encuentra el producto.
 	 */
-	void asignarLugarRecogida(String idProducto, double longitud, double latitud, String descripcion)
+	void asignarLugarRecogida(String idProducto, Double longitud, Double latitud, String descripcion)
 			throws RepositorioException, EntidadNoEncontrada;
 
 	/**

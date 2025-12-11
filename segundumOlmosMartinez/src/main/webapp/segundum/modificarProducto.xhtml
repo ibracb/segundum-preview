@@ -8,6 +8,19 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Principal</title>
 	<style>
+header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: white;
+	z-index: 1000;
+}
+
+body {
+	padding-top: 50px;
+}
+
 .encabezado {
 	display: block;
 	text-align: center;
@@ -50,45 +63,51 @@
 				styleClass="estilo-boton" />
 			<p:commandButton value="Producto nuevo" update="messages"
 				outcome="crearProducto.xhtml" styleClass="estilo-boton" />
+			<p:button value="Mis productos" outcome="misProductos.xhtml"
+				styleClass="estilo-boton" />
 			<p:commandButton value="Cerrar sesión" icon="pi pi-times"
 				action="#{controladorPrincipal.logout}" update="messages"
 				styleClass="estilo-boton" />
 		</div>
 	</h:form> </section> </header>
-	<h:outputText value="Crear un nuevo producto" styleClass="encabezado" />
+	<h:outputText value="Modificar producto" styleClass="encabezado" />
 	<p:messages id="messages" showDetail="true" closable="true" />
 	<div class="formulario">
 		<h:form id="crearProducto">
 			<p:panelGrid columns="2">
 				<p:outputLabel value="Título" for="titulo" />
-				<p:inputText id="titulo" value="#{controladorCrearProducto.titulo}" />
+				<p:outputLabel id="titulo"
+					value="#{productoActual.productoDTO.titulo}" />
 				<p:outputLabel value="Descripción" for="descripcion" />
 				<p:inputText id="descripcion"
 					value="#{controladorCrearProducto.descripcion}" />
 				<p:outputLabel value="Precio" for="precio" />
 				<p:inputText id="precio" value="#{controladorCrearProducto.precio}" />
 				<p:outputLabel value="Estado" for="estado" />
-				<p:selectOneMenu id="estado"
-					value="#{controladorCrearProducto.estado}">
-					<f:selectItems value="#{controladorCrearProducto.estados}" var="e"
-						itemValue="#{e}" itemLabel="#{e}" />
-				</p:selectOneMenu>
+				<p:outputLabel id="estado"
+					value="#{productoActual.productoDTO.estado}" />
 				<p:outputLabel value="Categoría" for="categoria" />
-				<p:selectOneMenu id="categoria"
-					value="#{controladorCrearProducto.categoria}">
-					<f:selectItems value="#{controladorCrearProducto.categorias}"
-						var="c" itemValue="#{c.id}" itemLabel="#{c.nombre}" />
-				</p:selectOneMenu>
+				<p:outputLabel id="categoria"
+					value="#{productoActual.productoDTO.categoria}" />
 				<p:outputLabel value="Envío disponible" for="envioDisponible" />
-				<p:selectBooleanButton id="envioDisponible" onLabel="Sí"
-					offLabel="No" value="#{controladorCrearProducto.envioDisponible}" />
+				<p:outputLabel id="envioDisponible"
+					value="#{productoActual.productoDTO.envioDisponible ? 'Sí' : 'No'}" />
+				<p:outputLabel value="Descripción del sitio de recogida" />
+				<p:outputLabel id="descripcionLugarRecogida"
+					value="#{productoActual.productoDTO.lugarRecogida.descripcion}" />
+				<p:outputLabel value="Longitud del lugar de recogida" />
+				<p:outputLabel id="longitudLugarRecogida"
+					value="#{productoActual.productoDTO.lugarRecogida.longitud}" />
+				<p:outputLabel value="Latitud del lugar de recogida" />
+				<p:outputLabel id="latitudLugarRecogida"
+					value="#{productoActual.productoDTO.lugarRecogida.latitud}" />
 			</p:panelGrid>
 			<div class="botones">
 				<p:commandButton value="Modificar" icon="pi pi-check-circle"
 					action="#{controladorCrearProducto.crearProducto}"
 					update=":crearProducto messages" styleClass="estilo-boton" />
 				<p:button value="Cancelar" icon="pi pi-arrow-left"
-					outcome="principal.xhtml" styleClass="estilo-boton" />
+					outcome="misProductos.xhtml" styleClass="estilo-boton" />
 			</div>
 		</h:form>
 	</div>

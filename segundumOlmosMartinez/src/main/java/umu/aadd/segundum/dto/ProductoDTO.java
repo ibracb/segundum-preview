@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import umu.aadd.segundum.modelo.LugarRecogida;
+
 /**
  * Clase que modela un Data Transfer Object (DTO) para un producto.
  */
@@ -58,7 +60,7 @@ public class ProductoDTO implements Serializable {
 	/**
 	 * Descripción del lugar de recogida del producto DTO.
 	 */
-	private String descripcionLugarRecogida;
+	private LugarRecogida lugarRecogida;
 	
 	/**
 	 * Vendedor del producto DTO.
@@ -77,12 +79,12 @@ public class ProductoDTO implements Serializable {
 	 * @param categoria                 Categoría del producto DTO.
 	 * @param visualizaciones           Número de visualizaciones del producto DTO.
 	 * @param envioDisponible           Indica si el envío está disponible para el producto DTO.
-	 * @param descripcionLugarRecogida  Descripción del lugar de recogida del producto DTO.
+	 * @param lugarRecogida  			Lugar de recogida del producto DTO.
 	 * @param vendedor                  Vendedor del producto DTO.
 	 */
 	public ProductoDTO(String id, String titulo, String descripcion, double precio, String estado,
 			LocalDateTime fechaPublicacion, String categoria, long visualizaciones, boolean envioDisponible,
-			String descripcionLugarRecogida, String vendedor) {
+			LugarRecogida lugarRecogida, String vendedor) {
 		this.id = id;
 		this.titulo = titulo;
 		this.descripcion = descripcion;
@@ -92,7 +94,7 @@ public class ProductoDTO implements Serializable {
 		this.categoria = categoria;
 		this.visualizaciones = visualizaciones;
 		this.envioDisponible = envioDisponible;
-		this.descripcionLugarRecogida = descripcionLugarRecogida;
+		this.lugarRecogida = lugarRecogida;
 		this.vendedor = vendedor;
 	}
 
@@ -216,8 +218,12 @@ public class ProductoDTO implements Serializable {
 	 * 
 	 * @return Descripción del lugar de recogida del producto DTO.
 	 */
-	public String getDescripcionLugarRecogida() {
-		return descripcionLugarRecogida;
+	public LugarRecogida getLugarRecogida() {
+		return lugarRecogida;
+	}
+	
+	public void setLugarRecogida(LugarRecogida lugarRecodiga) {
+		lugarRecogida = lugarRecodiga;
 	}
 
 	/**
@@ -234,7 +240,7 @@ public class ProductoDTO implements Serializable {
 		return getClass().getSimpleName() + " [id=" + id + ", titulo=" + titulo + ", descripcion=" + descripcion + ", precio=" + precio
 				+ ", estado=" + estado + ", fechaPublicacion=" + fechaPublicacion.toString() + ", categoria=" + categoria
 				+ ", visualizaciones=" + visualizaciones + ", envioDisponible=" + envioDisponible
-				+ ", descripcionLugarRecogida=" + descripcionLugarRecogida + ", vendedor=" + vendedor + "]";
+				+ ", descripcionLugarRecogida=" + lugarRecogida.getDescripcion() + ", vendedor=" + vendedor + "]";
 	}
 	
 }

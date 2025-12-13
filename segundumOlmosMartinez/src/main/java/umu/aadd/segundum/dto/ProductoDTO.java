@@ -226,6 +226,31 @@ public class ProductoDTO implements Serializable {
 		lugarRecogida = lugarRecodiga;
 	}
 
+	public String getDescripcionLugarRecogida() {
+		return lugarRecogida.getDescripcion();
+	}
+	
+	public void setDescripcionLugarRecogida(String descripcionLugarRecodiga) {
+		lugarRecogida.setDescripcion(descripcionLugarRecodiga);;
+	}
+	
+	public Double getLongitudLugarRecogida() {
+		return lugarRecogida.getLongitud();
+	}
+	
+	public void setLongitudLugarRecogida(Double longitudLugarRecodiga) {
+		lugarRecogida.setLongitud(longitudLugarRecodiga);
+	}
+	
+	public Double getLatitudLugarRecogida() {
+		return lugarRecogida.getLatitud();
+	}
+	
+	public void setLatitudLugarRecogida(Double latitudLugarRecodiga) {
+		lugarRecogida.setLatitud(latitudLugarRecodiga);
+	}
+	
+	
 	/**
 	 * Recupera el vendedor del producto DTO.
 	 * 

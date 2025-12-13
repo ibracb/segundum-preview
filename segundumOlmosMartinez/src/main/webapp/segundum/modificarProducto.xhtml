@@ -80,9 +80,9 @@ body {
 					value="#{productoActual.productoDTO.titulo}" />
 				<p:outputLabel value="Descripción" for="descripcion" />
 				<p:inputText id="descripcion"
-					value="#{controladorCrearProducto.descripcion}" />
+					value="#{controladorModificarProducto.descripcion}" />
 				<p:outputLabel value="Precio" for="precio" />
-				<p:inputText id="precio" value="#{controladorCrearProducto.precio}" />
+				<p:inputText id="precio" value="#{controladorModificarProducto.precio}" />
 				<p:outputLabel value="Estado" for="estado" />
 				<p:outputLabel id="estado"
 					value="#{productoActual.productoDTO.estado}" />
@@ -94,17 +94,17 @@ body {
 					value="#{productoActual.productoDTO.envioDisponible ? 'Sí' : 'No'}" />
 				<p:outputLabel value="Descripción del sitio de recogida" />
 				<p:outputLabel id="descripcionLugarRecogida"
-					value="#{productoActual.productoDTO.lugarRecogida.descripcion}" />
+					value="#{productoActual.productoDTO.lugarRecogida == null ? ' ' : productoActual.productoDTO.descripcionLugarRecogida}" />
 				<p:outputLabel value="Longitud del lugar de recogida" />
 				<p:outputLabel id="longitudLugarRecogida"
-					value="#{productoActual.productoDTO.lugarRecogida.longitud}" />
+					value="#{productoActual.productoDTO.lugarRecogida == null ? 0.0 : productoActual.productoDTO.longitudLugarRecogida}" />
 				<p:outputLabel value="Latitud del lugar de recogida" />
 				<p:outputLabel id="latitudLugarRecogida"
-					value="#{productoActual.productoDTO.lugarRecogida.latitud}" />
+					value="#{productoActual.productoDTO.lugarRecogida == null ? 0.0 : productoActual.productoDTO.latitudLugarRecogida}" />
 			</p:panelGrid>
 			<div class="botones">
 				<p:commandButton value="Modificar" icon="pi pi-check-circle"
-					action="#{controladorCrearProducto.crearProducto}"
+					action="#{controladorModificarProducto.modificarProducto}"
 					update=":crearProducto messages" styleClass="estilo-boton" />
 				<p:button value="Cancelar" icon="pi pi-arrow-left"
 					outcome="misProductos.xhtml" styleClass="estilo-boton" />

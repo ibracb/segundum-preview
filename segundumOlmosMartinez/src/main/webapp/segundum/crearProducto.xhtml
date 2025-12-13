@@ -103,9 +103,9 @@ body {
 				</p:selectBooleanButton>
 				<p:outputLabel value="Descripción del sitio de recogida" />
 				<p:inputText id="descripcionLugarRecogida" value="#{controladorCrearProducto.descripcionLugarRecogida}" disabled="#{controladorCrearProducto.envioDisponible}" />
-				<p:outputLabel value="Longitud del lugar de recogida" />
+				<p:outputLabel value="Longitud del lugar de recogida (-180 - 180)" />
 				<p:inputText id="longitudLugarRecogida" value="#{controladorCrearProducto.longitudLugarRecogida}" disabled="#{controladorCrearProducto.envioDisponible}" />
-				<p:outputLabel value="Latitud del lugar de recogida" />
+				<p:outputLabel value="Latitud del lugar de recogida (-90 - 90)" />
 				<p:inputText id="latitudLugarRecogida" value="#{controladorCrearProducto.latitudLugarRecogida}" disabled="#{controladorCrearProducto.envioDisponible}" />
 			</p:panelGrid>
 			<div class="botones">

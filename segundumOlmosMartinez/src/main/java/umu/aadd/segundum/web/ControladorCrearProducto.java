@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import repositorio.FactoriaRepositorios;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
 import umu.aadd.segundum.dto.ProductoDTO;
@@ -16,6 +17,8 @@ import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
 import umu.aadd.segundum.modelo.LugarRecogida;
+import umu.aadd.segundum.modelo.Producto;
+import umu.aadd.segundum.repositorio.RepositorioProductosJPA;
 import umu.aadd.segundum.servicio.IServicioCategorias;
 import umu.aadd.segundum.servicio.IServicioProductos;
 import utils.StringUtilidades;
@@ -38,9 +41,9 @@ public class ControladorCrearProducto implements Serializable {
 	private boolean envioDisponible;
 
 	private String descripcionLugarRecogida;
-	
+
 	private Double longitudLugarRecogida;
-	
+
 	private Double latitudLugarRecogida;
 
 	private String vendedor;
@@ -48,6 +51,8 @@ public class ControladorCrearProducto implements Serializable {
 	private IServicioProductos servicioProductos;
 
 	private IServicioCategorias servicioCategorias;
+
+	private RepositorioProductosJPA repositorioProductos;
 
 	private boolean error;
 
@@ -57,6 +62,7 @@ public class ControladorCrearProducto implements Serializable {
 	public ControladorCrearProducto() {
 		this.servicioProductos = FactoriaServicios.getServicio(IServicioProductos.class);
 		this.servicioCategorias = FactoriaServicios.getServicio(IServicioCategorias.class);
+		this.repositorioProductos = FactoriaRepositorios.getRepositorio(Producto.class);
 	}
 
 	public void crearProducto() {
@@ -76,11 +82,23 @@ public class ControladorCrearProducto implements Serializable {
 			UsuarioDTO usuarioDTO = sesionUsuario.getUsuarioDTO();
 			String idProducto = servicioProductos.altaProducto(titulo, descripcion, precio, estado, categoria,
 					envioDisponible, usuarioDTO.getId());
-			if(descripcionLugarRecogida != null && longitudLugarRecogida != 0.0 && latitudLugarRecogida != 0.0) {
-				servicioProductos.asignarLugarRecogida(idProducto, longitudLugarRecogida, latitudLugarRecogida, descripcionLugarRecogida);
+			if (descripcionLugarRecogida != null && longitudLugarRecogida != 0.0 && latitudLugarRecogida != 0.0) {
+				servicioProductos.asignarLugarRecogida(idProducto, longitudLugarRecogida, latitudLugarRecogida,
+						descripcionLugarRecogida);
 			}
-			
+
 			ProductoDTO productoDTO = servicioProductos.recuperarProductoDTO(idProducto);
+			if (envioDisponible == false && productoDTO.getLugarRecogida() == null) {
+				error = true;
+				FacesContext facesContext = FacesContext.getCurrentInstance();
+				facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+						"PRODUCTO NO PUDO SER CREADO",
+						"Si el envío no está disponible, entonces debe indicar la descripción del lugar de recogida, la longitud a la que se encuentra, que debe estar entre -180 y 180; y la latitud, entre -90 y 90"));
+				Producto p = repositorioProductos.getById(idProducto);
+				repositorioProductos.delete(p);
+				return;
+			}
+
 			error = false;
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
@@ -97,6 +115,9 @@ public class ControladorCrearProducto implements Serializable {
 			this.estado = null;
 			this.categoria = null;
 			this.envioDisponible = false;
+			this.descripcionLugarRecogida = "";
+			this.longitudLugarRecogida = 0.0;
+			this.latitudLugarRecogida = 0.0;
 		} catch (Exception e) {
 			error = true;
 			FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -184,7 +205,7 @@ public class ControladorCrearProducto implements Serializable {
 	public void setLongitudLugarRecogida(Double longitud) {
 		this.longitudLugarRecogida = longitud;
 	}
-	
+
 	public Double getLatitudLugarRecogida() {
 		return latitudLugarRecogida;
 	}

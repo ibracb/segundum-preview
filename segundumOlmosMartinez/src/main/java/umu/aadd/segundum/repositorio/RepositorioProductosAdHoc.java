@@ -38,5 +38,11 @@ public interface RepositorioProductosAdHoc extends RepositorioString<Producto> {
 	List<Producto> recuperarProductosVenta(List<Categoria> categorias, String descripcion, EstadoProducto estado, double precio)
 			throws RepositorioException;
 
+	/**
+	 * Recupera los productos en venta propios de un usuario específico.
+	 * @param usuario
+	 * @return	 Lista de productos en venta del usuario.
+	 * @throws RepositorioException	Si ocurre un error al acceder al repositorio.
+	 */
 	List<Producto> recuperarProductosVentaPropios(UsuarioDTO usuario) throws RepositorioException;
 }

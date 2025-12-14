@@ -222,26 +222,56 @@ public class ProductoDTO implements Serializable {
 		return lugarRecogida;
 	}
 	
+	/**
+	 * Establece el lugar de recogida del producto DTO.
+	 * 
+	 * @param lugarRecodiga Nuevo lugar de recogida del producto DTO.
+	 */
 	public void setLugarRecogida(LugarRecogida lugarRecodiga) {
 		lugarRecogida = lugarRecodiga;
 	}
 
+	/**
+	 * Recupera la descripción del lugar de recogida del producto DTO.
+	 * 
+	 * @return Descripción del lugar de recogida del producto DTO.
+	 */
 	public String getDescripcionLugarRecogida() {
 		return lugarRecogida.getDescripcion();
 	}
 	
+	/**
+	 * Establece la descripción del lugar de recogida del producto DTO.
+	 * 
+	 * @param descripcionLugarRecodiga Nueva descripción del lugar de recogida del producto DTO.
+	 */
 	public void setDescripcionLugarRecogida(String descripcionLugarRecodiga) {
 		lugarRecogida.setDescripcion(descripcionLugarRecodiga);;
 	}
 	
+	/**
+	 * Recupera la longitud del lugar de recogida del producto DTO.
+	 * 
+	 * @return Longitud del lugar de recogida del producto DTO.
+	 */
 	public Double getLongitudLugarRecogida() {
 		return lugarRecogida.getLongitud();
 	}
 	
+	/**
+	 * Establece la longitud del lugar de recogida del producto DTO.
+	 * 
+	 * @param longitudLugarRecodiga Nueva longitud del lugar de recogida del producto DTO.
+	 */
 	public void setLongitudLugarRecogida(Double longitudLugarRecodiga) {
 		lugarRecogida.setLongitud(longitudLugarRecodiga);
 	}
 	
+	/**
+	 * Recupera la latitud del lugar de recogida del producto DTO.
+	 * 
+	 * @return Latitud del lugar de recogida del producto DTO.
+	 */
 	public Double getLatitudLugarRecogida() {
 		return lugarRecogida.getLatitud();
 	}

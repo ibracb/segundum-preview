@@ -95,6 +95,12 @@ public class StringUtilidades {
 		return email.matches(EMAIL);
 	}
 	
+	/**
+	 * Comprueba si un precio es válido (número mayor o igual que PRECIO_GRATUITO).
+	 * 
+	 * @param precio El precio a comprobar.
+	 * @return true si el precio es válido, false en caso contrario.
+	 */
 	public static boolean isPrecioValido(String precio) {
 		if(precio == null) {
 			return false;

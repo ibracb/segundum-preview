@@ -11,9 +11,20 @@ import umu.aadd.segundum.modelo.Usuario;
 import umu.aadd.segundum.servicio.IServicioCategorias;
 import umu.aadd.segundum.servicio.IServicioUsuarios;
 
+/**
+ * Listener para cargar datos iniciales al arrancar la aplicación.
+ */
 @WebListener
 public class DataLoader implements ServletContextListener {
+	
+	/**
+	 * Servicio de usuarios.
+	 */
 	private IServicioUsuarios servicioUsuarios = FactoriaServicios.getServicio(IServicioUsuarios.class);
+	
+	/**
+	 * Servicio de categorías.
+	 */
 	private IServicioCategorias servicioCategorias = FactoriaServicios.getServicio(IServicioCategorias.class);
 	
 	@Override

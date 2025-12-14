@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	<h:head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Detalles del producto</title>
+		<style>
+			header {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				background: white;
+				z-index: 1000;
+			}
+			body {
+				padding-top: 50px;
+			}
+			.encabezado {
+				display: block;
+				text-align: center;
+				font-size: 30px;
+				font-weight: bold;
+				margin: 20px 0;
+			}
+			.botones {
+				display: flex;
+				justify-content: center;
+				gap: 20px;
+			}
+			.estilo-boton {
+				font-size: 16px;
+				padding: 5px 8px;
+				border-radius: 5px;
+				cursor: pointer;
+			}
+			.detalles {
+				display: flex;
+				justify-content: center;
+			}
+		</style>
+	</h:head>
+	<h:body>
+		<header>
+			<section>
+				<div class="botones">
+					<p:button value="Principal" outcome="principal.xhtml" styleClass="estilo-boton" />
+					<p:commandButton value="Producto nuevo" update="messages" outcome="crearProducto.xhtml"
+					styleClass="estilo-boton" />
+					<p:button value="Mis productos" outcome="misProductos.xhtml" styleClass="estilo-boton" />
+					<p:commandButton value="Cerrar sesión" icon="pi pi-times" action="#{controladorPrincipal.logout}"
+					update="messages" styleClass="estilo-boton" />
+					</div>
+			</section>
+		</header>
+		<h:outputText value="Detalles del producto" styleClass="encabezado" />
+		<p:messages id="messages" showDetail="true" closable="true" />
+		<div class="detalles">
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Título"/>
+				<p:outputLabel id="titulo" value="#{productoActual.productoDTO.titulo}"/>
+				<p:outputLabel value="Descripción"/>
+				<p:outputLabel id="descripcion" value="#{productoActual.productoDTO.descripcion}"/>
+				<p:outputLabel value="Precio"/>
+				<p:outputLabel id="precio" value="#{productoActual.productoDTO.precio}"/>
+				<p:outputLabel value="Estado"/>
+				<p:outputLabel id="estado" value="#{productoActual.productoDTO.estado}"/>
+				<p:outputLabel value="Categoría"/>
+				<p:outputLabel id="categoria" value="#{productoActual.productoDTO.categoria}"/>
+				<p:outputLabel value="Envío disponible"/>
+				<p:outputLabel id="envioDisponible" value="#{productoActual.productoDTO.envioDisponible ? 'Sí' : 'No'}"/>
+				<p:outputLabel value="Descripción del sitio de recogida" />
+				<p:outputLabel id="descripcionLugarRecogida"
+					value="#{productoActual.productoDTO.lugarRecogida == null ? 'NO EXISTE' : productoActual.productoDTO.descripcionLugarRecogida}"/>
+				<p:outputLabel value="Vendedor" />
+				<p:outputLabel id="vendedor" value="#{productoActual.productoDTO.vendedor}" />
+			</p:panelGrid>
+		</div>
+		<div class="botones">
+			<p:button value="Cancelar" icon="pi pi-arrow-left" outcome="principal.xhtml" styleClass="estilo-boton" />
+		</div>
+	</h:body>
+</html>

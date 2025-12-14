@@ -57,8 +57,7 @@ public class ServicioProductos implements IServicioProductos {
 
 		return producto.getId();
 	}
-
-	//desde el usuario en sí?
+	
 	@Override
 	public void asignarLugarRecogida(String idProducto, Double longitud, Double latitud, String descripcion)
 			throws RepositorioException, EntidadNoEncontrada {
@@ -156,6 +155,7 @@ public class ServicioProductos implements IServicioProductos {
 				producto.getNombreCompletoVendedor());
 	}
 	
+	@Override
 	public List<ProductoDTO> mostrarProductosDTOVenta() throws RepositorioException, EntidadNoEncontrada{
 		List<Producto> productos = getProductosVenta(null, null, null, -1);
 		List<ProductoDTO> prodsDTO = new LinkedList<>();
@@ -165,6 +165,7 @@ public class ServicioProductos implements IServicioProductos {
 		return prodsDTO;
 	}
 	
+	@Override
 	public List<ProductoDTO> recuperarProductosDTOPropios(UsuarioDTO usuario) throws RepositorioException, EntidadNoEncontrada{
 		List<Producto> productos = repositorioProductos.recuperarProductosVentaPropios(usuario);
 		List<ProductoDTO> prodsDTO = new LinkedList<>();
@@ -172,6 +173,23 @@ public class ServicioProductos implements IServicioProductos {
 			prodsDTO.add(recuperarProductoDTO(p.getId()));
 		}
 		return prodsDTO;
+	}
+	
+	@Override
+	public List<ProductoDTO> buscarProductosDTOVenta(String categoriaId, String descripcion, 
+	        EstadoProducto estado, Double precioMaximo) throws RepositorioException, EntidadNoEncontrada {
+	    List<Categoria> categorias = null;
+	    if (categoriaId != null && !categoriaId.isEmpty()) {
+	        categorias = repositorioCategorias.getDescendientes(categoriaId);
+	    }
+	    double precio = precioMaximo != null ? precioMaximo : Double.MAX_VALUE;
+	    List<Producto> productos = repositorioProductos.recuperarProductosVenta(categorias, descripcion, estado, precio);
+	    List<ProductoDTO> productosDTO = new LinkedList<>();
+	    for (Producto p : productos) {
+	        ProductoDTO dto = convertirEnDTO(p);
+	        productosDTO.add(dto);
+	    }
+	    return productosDTO;
 	}
  
 }

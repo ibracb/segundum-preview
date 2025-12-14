@@ -8,7 +8,6 @@ import repositorio.RepositorioException;
 import umu.aadd.segundum.dto.ProductoDTO;
 import umu.aadd.segundum.dto.UsuarioDTO;
 import umu.aadd.segundum.modelo.EstadoProducto;
-import umu.aadd.segundum.modelo.LugarRecogida;
 import umu.aadd.segundum.modelo.Producto;
 
 /**
@@ -115,7 +114,40 @@ public interface IServicioProductos {
 	 */
 	ProductoDTO recuperarProductoDTO(String idProducto) throws RepositorioException, EntidadNoEncontrada;
 	
+	/**
+	 * Muestra todos los productos en formato DTO que están a la venta.
+	 * 
+	 * @return Lista de ProductoDTO que están a la venta.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada  Si no se encuentran productos a la venta.
+	 */
 	List<ProductoDTO> mostrarProductosDTOVenta() throws RepositorioException, EntidadNoEncontrada;
 	
+	/**
+	 * Recupera los productos en formato DTO que son propiedad de un usuario
+	 * específico.
+	 * 
+	 * @param usuario UsuarioDTO del cual se desean recuperar los productos.
+	 * @return Lista de ProductoDTO que son propiedad del usuario especificado.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada  Si no se encuentran productos para el usuario
+	 *                              especificado.
+	 */
 	List<ProductoDTO> recuperarProductosDTOPropios(UsuarioDTO usuario) throws RepositorioException, EntidadNoEncontrada;
+	
+	/**
+	 * Busca productos en formato DTO que cumplen con las características
+	 * especificadas.
+	 * 
+	 * @param categoriaId Identificador de la categoría del producto.
+	 * @param descripcion Descripción del producto.
+	 * @param estado      Estado del producto.
+	 * @param precioMaximo Precio máximo del producto.
+	 * @return Lista de ProductoDTO que cumplen con los requisitos especificados.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 * @throws EntidadNoEncontrada  Si no se encuentran productos que cumplan con
+	 *                              los requisitos especificados.
+	 */
+	public List<ProductoDTO> buscarProductosDTOVenta(String categoriaId, String descripcion, 
+	        EstadoProducto estado, Double precioMaximo) throws RepositorioException, EntidadNoEncontrada;
 }

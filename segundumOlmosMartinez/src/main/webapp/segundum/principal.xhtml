@@ -10,18 +10,17 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Principal</title>
 	<style>
-	
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: white;
-    z-index: 1000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background: white;
+	z-index: 1000;
 }
 
 body {
-    padding-top: 50px;
+	padding-top: 50px;
 }
 
 .encabezado {
@@ -84,6 +83,16 @@ body {
 .main-content {
 	flex: 1;
 }
+
+.filtro-campo {
+	margin-bottom: 15px;
+}
+
+.filtro-campo label {
+	display: block;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
 </style>
 </h:head>
 
@@ -108,27 +117,55 @@ body {
 	<p:messages id="messages" showDetail="true" closable="true" />
 	<div class="container">
 		<div class="sidebar">
-			<h3>Buscar productos</h3>
-			<p:commandButton value="Buscar por filtros" icon="pi pi-search"
-				update=" formProductosGrid" /><br/>
-			<p:outputLabel value="Título" /><br/>
-			<p:inputText placeholder="Título" />
-			<p:outputLabel value="Descripción" /><br/>
-			<p:inputText placeholder="Descripción" />
-			<p:outputLabel value="Precio máximo" /><br/>
-			<p:inputText placeholder="Precio" />
-			<p:outputLabel value="Estado" for="estado" /><br/>
-			<p:selectOneMenu id="estado"
-				value="#{controladorCrearProducto.estado}" style="width:200px;font-size:12px;">
-				<f:selectItems value="#{controladorCrearProducto.estados}" var="e"
-					itemValue="#{e}" itemLabel="#{e}" />
-			</p:selectOneMenu><br/>
-			<p:outputLabel value="Categoría" for="categoria" /><br/>
-			<p:selectOneMenu id="categoria"
-				value="#{controladorCrearProducto.categoria}" style="width:200px;font-size:12px;">
-				<f:selectItems value="#{controladorCrearProducto.categorias}"
-					var="c" itemValue="#{c.id}" itemLabel="#{c.nombre}" />
-			</p:selectOneMenu>
+			<h:form id="formFiltros">
+				<h3>Buscar productos</h3>
+
+				<div class="filtro-campo">
+					<p:outputLabel value="Descripción" for="filtroDescripcion" />
+					<p:inputText id="filtroDescripcion"
+						value="#{controladorPrincipal.filtroDescripcion}"
+						placeholder="Descripción" style="width:100%;" />
+				</div>
+
+				<div class="filtro-campo">
+					<p:outputLabel value="Precio máximo" for="filtroPrecio" />
+					<p:inputText id="filtroPrecio"
+						value="#{controladorPrincipal.filtroPrecioMaximo}"
+						placeholder="Precio" style="width:100%;" />
+				</div>
+
+				<div class="filtro-campo">
+					<p:outputLabel value="Estado" for="filtroEstado" />
+					<p:selectOneMenu id="filtroEstado"
+						value="#{controladorPrincipal.filtroEstado}"
+						style="width:100%;font-size:12px;">
+						<f:selectItem itemLabel="-- Todos --" itemValue="#{null}" />
+						<f:selectItems value="#{controladorCrearProducto.estados}" var="e"
+							itemValue="#{e}" itemLabel="#{e}" />
+					</p:selectOneMenu>
+				</div>
+
+				<div class="filtro-campo">
+					<p:outputLabel value="Categoría" for="filtroCategoria" />
+					<p:selectOneMenu id="filtroCategoria"
+						value="#{controladorPrincipal.filtroCategoria}"
+						style="width:100%;font-size:12px;">
+						<f:selectItem itemLabel="-- Todas --" itemValue="#{null}" />
+						<f:selectItems value="#{controladorCrearProducto.categorias}"
+							var="c" itemValue="#{c.id}" itemLabel="#{c.nombre}" />
+					</p:selectOneMenu>
+				</div>
+
+				<p:commandButton value="Buscar por filtros" icon="pi pi-search"
+					action="#{controladorPrincipal.buscarPorFiltros}"
+					update="formProductosGrid messages" styleClass="estilo-boton"
+					style="width:100%; margin-bottom:10px;" />
+
+				<p:commandButton value="Limpiar filtros" icon="pi pi-times"
+					action="#{controladorPrincipal.limpiarFiltros}"
+					update="formProductosGrid messages formFiltros"
+					styleClass="estilo-boton" style="width:100%;" />
+			</h:form>
 
 
 		</div>
@@ -149,8 +186,11 @@ body {
 								<strong>Estado:</strong> #{p.estado}
 							</p>
 							<div class="botones">
-								<p:commandButton value="Ver más" action="#{controladorPrincipal.verProducto}" styleClass="estilo-boton" >
-									<f:setPropertyActionListener target="#{productoActual.productoDTO}" value="#{p}" />
+								<p:commandButton value="Ver más"
+									action="#{controladorPrincipal.verProducto}"
+									styleClass="estilo-boton">
+									<f:setPropertyActionListener
+										target="#{productoActual.productoDTO}" value="#{p}" />
 								</p:commandButton>
 							</div>
 						</div>

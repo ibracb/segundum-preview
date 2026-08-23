@@ -1,4 +1,4 @@
-# SegundUM
+# SegundUM: preview version
 
 > A second-hand marketplace: browse products and publish and manage your own.
 
@@ -22,7 +22,7 @@ SegundUM is a second-hand marketplace that lets you publish, search for and mana
 ## Demo
 
 <p align="center">
-  <video src="HERE_YOUR_GITHUB_LINK_USER_ATTACHMENTS" controls width="800"></video>
+  <video src="https://github.com/user-attachments/assets/a4630b4e-f2b3-46c9-87e3-33bd5e3a8d37" controls width="800"></video>
 </p>
 
 ## Project structure

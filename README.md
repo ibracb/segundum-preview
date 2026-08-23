@@ -17,12 +17,12 @@ SegundUM is a second-hand marketplace that lets you publish, search for and mana
 ## Project status
 
 > [!NOTE]
-> This is an initial version of SegundUM. The full version is developed at [ibracb/segundum](https://github.com/ibracb/segundum).
+> This is an initial version of SegundUM. The full version will be developed at [ibracb/segundum](https://github.com/ibracb/segundum).
 
 ## Demo
 
 <p align="center">
-  <video src="AQUÍ_TU_ENLACE_GITHUB_USER_ATTACHMENTS" controls width="800"></video>
+  <video src="HERE_YOUR_GITHUB_LINK_USER_ATTACHMENTS" controls width="800"></video>
 </p>
 
 ## Project structure

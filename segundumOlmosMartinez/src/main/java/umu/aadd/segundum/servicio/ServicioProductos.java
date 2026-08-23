@@ -40,7 +40,7 @@ public class ServicioProductos implements IServicioProductos {
 	private Repositorio<Usuario, String> repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
 
 	@Override
-	public String altaProducto(String titulo, String descripcion, String precio, EstadoProducto estado,
+	public ProductoDTO altaProducto(String titulo, String descripcion, String precio, EstadoProducto estado,
 			String idCategoria, boolean envioDisponible, String idUsuarioVendedor)
 			throws RepositorioException, EntidadNoEncontrada {
 		
@@ -55,7 +55,7 @@ public class ServicioProductos implements IServicioProductos {
 		Producto producto = new Producto(titulo, descripcion, Double.parseDouble(precio), estado, categoria, envioDisponible, usuario);
 		repositorioProductos.add(producto);
 
-		return producto.getId();
+		return convertirEnDTO(producto);
 	}
 	
 	@Override

@@ -25,12 +25,14 @@ public interface IServicioProductos {
 	 * @param idCategoria       Identificador de la categoría del producto.
 	 * @param envioDisponible   Indica si el envío está disponible para el producto.
 	 * @param idUsuarioVendedor Identificador del usuario vendedor.
-	 * @return Identificador único del producto creado.
+	 * 
+	 * @return ProductoDTO correspondiente al producto dado de alta.
+	 * 
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
-	 * @throws EntidadNoEncontrada  Si no se encuentra la categoría o el usuario
-	 *                              vendedor.
+	 * @throws EntidadNoEncontrada  Si no se encuentra la categoría o el usuario vendedor.
+	 * 
 	 */
-	String altaProducto(String titulo, String descripcion, String precio, EstadoProducto estado, String idCategoria, boolean envioDisponible,
+	ProductoDTO altaProducto(String titulo, String descripcion, String precio, EstadoProducto estado, String idCategoria, boolean envioDisponible,
 			String idUsuarioVendedor) throws RepositorioException, EntidadNoEncontrada;
 
 	/**

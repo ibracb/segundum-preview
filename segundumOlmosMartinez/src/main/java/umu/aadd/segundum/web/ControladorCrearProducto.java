@@ -1,11 +1,12 @@
 package umu.aadd.segundum.web;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -20,6 +21,7 @@ import umu.aadd.segundum.modelo.Producto;
 import umu.aadd.segundum.repositorio.RepositorioProductosJPA;
 import umu.aadd.segundum.servicio.IServicioCategorias;
 import umu.aadd.segundum.servicio.IServicioProductos;
+import umu.aadd.segundum.web.CategoriaOption;
 import utils.StringUtilidades;
 
 /**
@@ -27,7 +29,7 @@ import utils.StringUtilidades;
  */
 @SuppressWarnings("serial")
 @Named
-@SessionScoped
+@ViewScoped
 public class ControladorCrearProducto implements Serializable {
 
 	/**
@@ -119,41 +121,60 @@ public class ControladorCrearProducto implements Serializable {
 	 * Crea un nuevo producto.
 	 */
 	public void crearProducto() {
+		this.error = false;
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		
+		System.out.println("=== crearProducto() ===");
+	    System.out.println("envioDisponible=" + envioDisponible);
+	    System.out.println("descripcionLugarRecogida=[" + descripcionLugarRecogida + "]");
+	    System.out.println("longitudLugarRecogida=" + longitudLugarRecogida);
+	    System.out.println("latitudLugarRecogida=" + latitudLugarRecogida);
+		
 		if (!StringUtilidades.isDatoValido(titulo) || !StringUtilidades.isDatoValido(descripcion)) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
+			this.error = true;
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Debe rellenar todos los datos"));
 			return;
 		}
 		if (!StringUtilidades.isPrecioValido(precio)) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
+			this.error = true;
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Precio inválido"));
 			return;
 		}
+		
+		boolean tieneLugarRecogidaValido = (descripcionLugarRecogida != null && !descripcionLugarRecogida.trim().isEmpty())
+				&& (longitudLugarRecogida != null && longitudLugarRecogida != 0.0)
+				&& (latitudLugarRecogida != null && latitudLugarRecogida != 0.0);
+
+		if (!envioDisponible && !tieneLugarRecogidaValido) {
+			this.error = true;
+			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"PRODUCTO NO PUDO SER CREADO",
+					"Si el envío no está disponible, entonces debe indicar la descripción del lugar de recogida, la longitud a la que se encuentra, que debe estar entre -180 y 180; y la latitud, entre -90 y 90"));
+			return;
+		}
+		
 		try {
 			UsuarioDTO usuarioDTO = sesionUsuario.getUsuarioDTO();
-			String idProducto = servicioProductos.altaProducto(titulo, descripcion, precio, estado, categoria,
+			ProductoDTO productoDTO = servicioProductos.altaProducto(titulo, descripcion, precio, estado, categoria,
 					envioDisponible, usuarioDTO.getId());
 			if (descripcionLugarRecogida != null && longitudLugarRecogida != 0.0 && latitudLugarRecogida != 0.0) {
-				servicioProductos.asignarLugarRecogida(idProducto, longitudLugarRecogida, latitudLugarRecogida,
+				servicioProductos.asignarLugarRecogida(productoDTO.getId(), longitudLugarRecogida, latitudLugarRecogida,
 						descripcionLugarRecogida);
+				productoDTO = servicioProductos.recuperarProductoDTO(productoDTO.getId());
 			}
-
-			ProductoDTO productoDTO = servicioProductos.recuperarProductoDTO(idProducto);
-			if (envioDisponible == false && productoDTO.getLugarRecogida() == null) {
+			if (!envioDisponible && productoDTO.getLugarRecogida() == null) {
 				error = true;
-				FacesContext facesContext = FacesContext.getCurrentInstance();
 				facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
 						"PRODUCTO NO PUDO SER CREADO",
 						"Si el envío no está disponible, entonces debe indicar la descripción del lugar de recogida, la longitud a la que se encuentra, que debe estar entre -180 y 180; y la latitud, entre -90 y 90"));
-				Producto p = repositorioProductos.getById(idProducto);
+				Producto p = repositorioProductos.getById(productoDTO.getId());
 				repositorioProductos.delete(p);
 				return;
 			}
 
 			error = false;
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Validación",
 							"Producto satisfactoriamente creado!!" + "\nTítulo: " + productoDTO.getTitulo()
@@ -173,7 +194,6 @@ public class ControladorCrearProducto implements Serializable {
 			this.latitudLugarRecogida = 0.0;
 		} catch (Exception e) {
 			error = true;
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "PRODUCTO NO PUDO SER CREADO", e.getMessage()));
 		}
@@ -189,13 +209,20 @@ public class ControladorCrearProducto implements Serializable {
 	}
 
 	/**
-	 * Recupera todas las categorías disponibles.
+	 * Recupera todas las categorías disponibles ordenadas jerárquicamente
+	 * con indentación para mostrar en el desplegable.
 	 * 
-	 * @return Lista de categorías.
+	 * @return Lista de opciones de categoría con nombre indentado.
 	 * @throws RepositorioException Si ocurre un error al recuperar las categorías.
 	 */
-	public List<Categoria> getCategorias() throws RepositorioException {
-		return servicioCategorias.recuperarTodasCategorias();
+	public List<CategoriaOption> getCategorias() throws RepositorioException {
+		List<Categoria> categorias = servicioCategorias.recuperarCategoriasOrdenadasJerarquicamente();
+		List<CategoriaOption> opciones = new ArrayList<>();
+		for (Categoria c : categorias) {
+			String indentacion = "－ ".repeat(c.getNivel());
+			opciones.add(new CategoriaOption(c.getId(), indentacion + c.getNombre()));
+		}
+		return opciones;
 	}
 
 	/**

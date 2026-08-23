@@ -3,13 +3,14 @@ package umu.aadd.segundum.web;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import servicio.FactoriaServicios;
+import umu.aadd.segundum.dto.ProductoDTO;
 import umu.aadd.segundum.servicio.IServicioCategorias;
 import umu.aadd.segundum.servicio.IServicioProductos;
 import utils.StringUtilidades;
@@ -19,7 +20,7 @@ import utils.StringUtilidades;
  */
 @SuppressWarnings("serial")
 @Named
-@SessionScoped
+@ViewScoped
 public class ControladorModificarProducto implements Serializable {
 
 	/**
@@ -44,6 +45,11 @@ public class ControladorModificarProducto implements Serializable {
 	private String precio;
 	
 	/**
+	 * Producto que se está modificando en esta vista.
+	 */
+	private ProductoDTO producto;
+	
+	/**
 	 * Sesión del usuario.
 	 */
 	@SuppressWarnings("unused")
@@ -61,8 +67,9 @@ public class ControladorModificarProducto implements Serializable {
 	 */
 	@PostConstruct
     public void init() {
-		this.descripcion = productoActual.getProductoDTO().getDescripcion();
-		this.precio = String.valueOf(productoActual.getProductoDTO().getPrecio());
+		this.producto = productoActual.getProductoDTO();
+	    this.descripcion = producto.getDescripcion();
+	    this.precio = String.valueOf(producto.getPrecio());
     }
 	
 	/**
@@ -109,17 +116,29 @@ public class ControladorModificarProducto implements Serializable {
 	 * Modifica el producto con los nuevos datos.
 	 */
 	public void modificarProducto() {
-		if (!StringUtilidades.isPrecioValido(precio)) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			facesContext.addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Precio inválido"));
-			return;
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		double precioAEnviar;
+		if (precio != null && !precio.trim().isEmpty()) {
+		    if (!StringUtilidades.isPrecioValido(precio)) {
+		        facesContext.addMessage(null,
+		                new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Precio inválido"));
+		        return;
+		    }
+		    precioAEnviar = Double.parseDouble(precio);
+		} else {
+		    precioAEnviar = producto.getPrecio();
 		}
+
 		try {
-			servicioProductos.modificarDatosProducto(productoActual.getProductoDTO().getId(), descripcion, Double.parseDouble(precio));
+		    servicioProductos.modificarDatosProducto(
+		        producto.getId(),
+		        descripcion,
+		        precioAEnviar
+		    );
+			facesContext.addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "PRODUCTO MODIFICADO", "El producto ha sido modificado correctamente"));
 		} catch (Exception e) {
 			error = true;
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "PRODUCTO NO PUDO SER MODIFICADO", e.getMessage()));
 		}

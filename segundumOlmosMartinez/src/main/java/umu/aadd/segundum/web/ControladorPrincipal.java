@@ -2,6 +2,7 @@ package umu.aadd.segundum.web;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
 import umu.aadd.segundum.dto.ProductoDTO;
+import umu.aadd.segundum.modelo.Categoria;
 import umu.aadd.segundum.modelo.EstadoProducto;
+import umu.aadd.segundum.servicio.IServicioCategorias;
 import umu.aadd.segundum.servicio.IServicioProductos;
 
 /**
@@ -33,15 +36,14 @@ public class ControladorPrincipal implements Serializable {
 	private SesionUsuario sesionUsuario;
 	
 	/**
-	 * Bean de producto actual.
-	 */
-	@Inject
-	private ProductoActual productoActual;
-	
-	/**
 	 * Servicio de gestión de productos.
 	 */
 	private IServicioProductos servicioProductos;
+	
+	/**
+	 * Servicio de gestión de categorías.
+	 */
+	private IServicioCategorias servicioCategorias;
 	
 	/**
 	 * Lista de productos en venta.
@@ -78,6 +80,7 @@ public class ControladorPrincipal implements Serializable {
 	 */
 	public ControladorPrincipal() {
 		servicioProductos = FactoriaServicios.getServicio(IServicioProductos.class);
+		servicioCategorias = FactoriaServicios.getServicio(IServicioCategorias.class);
 		productosVenta = new LinkedList<>();
 		todosLosProductos = new LinkedList<>();
 	}
@@ -121,10 +124,10 @@ public class ControladorPrincipal implements Serializable {
 	 * @throws EntidadNoEncontrada     Si el producto no se encuentra.
 	 * @throws IOException             Si ocurre un error de E/S al redirigir.
 	 */
-	public void verProducto() throws RepositorioException, EntidadNoEncontrada, IOException {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		facesContext.getExternalContext().redirect("detallesProducto.xhtml");
-		servicioProductos.anadirVisualizacion(productoActual.getProductoDTO().getId());
+	public void verProducto(ProductoDTO producto) throws RepositorioException, EntidadNoEncontrada, IOException {
+	    FacesContext facesContext = FacesContext.getCurrentInstance();
+	    facesContext.getExternalContext().redirect("detallesProducto.xhtml?id=" + producto.getId());
+	    servicioProductos.anadirVisualizacion(producto.getId());
 	}
 	
 	/**
@@ -155,6 +158,39 @@ public class ControladorPrincipal implements Serializable {
 			facesContext.addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR EN LA BÚSQUEDA", e.getMessage()));
 		}
+	}
+	
+	/**
+	 * Recupera las opciones de categoría para el desplegable de filtros,
+	 * ya formateadas con indentación según su nivel jerárquico.
+	 * 
+	 * @return Lista de opciones de categoría.
+	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
+	 */
+	public List<CategoriaOption> getOpcionesCategorias() throws RepositorioException {
+		List<Categoria> categorias = servicioCategorias.recuperarCategoriasOrdenadasJerarquicamente();
+		List<CategoriaOption> opciones = new ArrayList<>();
+		for (Categoria c : categorias) {
+			String indentacion = "－ ".repeat(c.getNivel());
+			opciones.add(new CategoriaOption(c.getId(), indentacion + c.getNombre()));
+		}
+		return opciones;
+	}
+
+	/**
+	 * Genera el nombre de una categoría indentado según su nivel jerárquico,
+	 * para mostrarlo visualmente anidado en el desplegable.
+	 * 
+	 * @param c Categoría a mostrar.
+	 * @return Nombre indentado según su profundidad.
+	 */
+	public String getNombreIndentado(Categoria c) {
+		int nivel = (int) c.getRuta().chars().filter(ch -> ch == '|').count() - 2;
+		StringBuilder indentacion = new StringBuilder();
+		for (int i = 0; i < nivel; i++) {
+			indentacion.append("－ ");
+		}
+		return indentacion + c.getNombre();
 	}
 	
 	/**

@@ -68,5 +68,14 @@ public interface IServicioCategorias {
 	 * @throws RepositorioException Si ocurre un error en el repositorio.
 	 */
 	List<Categoria> recuperarTodasCategorias() throws RepositorioException;
+	
+	/**
+	 * Recupera todas las categorías ordenadas jerárquicamente (recorrido en profundidad),
+	 * respetando la estructura del árbol a partir de sus rutas.
+	 * 
+	 * @return Lista de categorías en orden jerárquico.
+	 * @throws RepositorioException Si ocurre un error en el repositorio.
+	 */
+	List<Categoria> recuperarCategoriasOrdenadasJerarquicamente() throws RepositorioException;
 
 }

@@ -79,41 +79,35 @@ public class ControladorRegistro implements Serializable {
 	 * Método para registrar un nuevo usuario.
 	 */
 	public void registrar() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
 		if (!StringUtilidades.isDatoValido(nombre) || !StringUtilidades.isDatoValido(apellidos)
 				|| !StringUtilidades.isDatoValido(clave)) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Debe rellenar todos los datos"));
 			return;
 		}
 		if (!StringUtilidades.isEmailValido(email)) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Email inválido"));
 			return;
 		}
 		LocalDate fecha;
 		if ((fecha = StringUtilidades.fechaParseada(fechaNacimiento.toString())) == null || !(StringUtilidades.fechaValida(fecha))) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Fecha de nacimiento inválida"));
 			return;
 		}
 		if (!StringUtilidades.isTelefonoValido(telefono)) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", "Teléfono inválido"));
 			return;
 		}
 		try {
-			String idUsuario = servicioUsuarios.altaUsuario(nombre, apellidos, email, clave, fechaNacimiento.toString(), telefono);
-			UsuarioDTO usuarioDTO = servicioUsuarios.recuperarUsuarioDTO(idUsuario);
+			UsuarioDTO usuarioDTO = servicioUsuarios.altaUsuario(nombre, apellidos, email, clave, fechaNacimiento.toString(), telefono);
 			sesionUsuario.setUsuarioDTO(usuarioDTO);
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.getExternalContext().redirect("principal.xhtml");
 			error = false;
 		} catch (Exception e) {
 			error = true;
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "USUARIO NO PUDO SER REGISTRADO", e.getMessage()));
 		}

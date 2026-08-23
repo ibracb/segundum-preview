@@ -44,13 +44,17 @@
 					<p:outputLabel value="Apellidos" for="apellidos" />
 					<p:inputText id="apellidos" value="#{controladorRegistro.apellidos}" />
 					<p:outputLabel value="Email" for="email" />
-					<p:inputText id="email" value="#{controladorRegistro.email}" />
+					<p:inputText id="email" value="#{controladorRegistro.email}"
+						placeholder="nombre@ejemplo.com" />
 					<p:outputLabel value="Clave" for="clave" />
 					<p:password id="clave" value="#{controladorRegistro.clave}" />
 					<p:outputLabel value="Fecha de nacimiento" for="fecha" />
-					<p:datePicker id="fecha" value="#{controladorRegistro.fechaNacimiento}" />
+					<p:datePicker id="fecha" value="#{controladorRegistro.fechaNacimiento}"
+						showIcon="true" pattern="dd/MM/yyyy" showOnFocus="false"
+						mask="true" placeholder="dd/mm/aaaa" />
 					<p:outputLabel value="Teléfono" for="telefono" />
-					<p:inputText id="telefono" value="#{controladorRegistro.telefono}" />
+					<p:inputText id="telefono" value="#{controladorRegistro.telefono}"
+						placeholder="123456789"/>
 				</p:panelGrid>
 				<div class="botones">
 					<p:commandButton value="Registrar" icon="pi pi-check-circle"

@@ -147,6 +147,16 @@ public class Categoria implements Identificable {
 		nombres += "}";
 		return nombres;
 	}
+	
+	/**
+	 * Calcula el nivel de profundidad de la categoría dentro de la jerarquía,
+	 * a partir del número de identificadores en su ruta.
+	 * 
+	 * @return Nivel de profundidad (0 para categorías raíz).
+	 */
+	public int getNivel() {
+		return (int) ruta.chars().filter(ch -> ch == '|').count() - 2;
+	}
 
 	@Override
 	public String toString() {

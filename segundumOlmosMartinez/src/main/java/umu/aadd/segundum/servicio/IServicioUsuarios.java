@@ -19,10 +19,12 @@ public interface IServicioUsuarios {
 	 * @param clave           Clave de acceso del usuario.
 	 * @param fechaNacimiento Fecha de nacimiento del usuario.
 	 * @param telefono        Teléfono de contacto del usuario.
-	 * @return Identificador único del usuario creado.
+	 * 
+	 * @return UsuarioDTO correspondiente al usuario dado de alta.
+	 * 
 	 * @throws RepositorioException Si ocurre un error al acceder al repositorio.
 	 */
-	String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento,
+	UsuarioDTO altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento,
 			String telefono) throws RepositorioException;
 
 	/**

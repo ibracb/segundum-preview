@@ -19,7 +19,7 @@ public class ServicioUsuarios implements IServicioUsuarios {
 	private RepositorioUsuariosAdHoc repositorioUsuarios = FactoriaRepositorios.getRepositorio(Usuario.class);
 	
 	@Override
-	public String altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento,
+	public UsuarioDTO altaUsuario(String nombre, String apellidos, String email, String clave, String fechaNacimiento,
 			String telefono) throws RepositorioException {
 		if (!StringUtilidades.isDatoValido(nombre) || !StringUtilidades.isDatoValido(apellidos)
 				|| !StringUtilidades.isEmailValido(email) || !StringUtilidades.isDatoValido(clave)
@@ -35,7 +35,8 @@ public class ServicioUsuarios implements IServicioUsuarios {
 		} else {
 			usuario = new Usuario(email, nombre, apellidos, clave, LocalDate.parse(fechaNacimiento));
 		}
-		return repositorioUsuarios.add(usuario);
+		repositorioUsuarios.add(usuario);
+		return convertirEnDTO(usuario);
 	}
 
 	@Override

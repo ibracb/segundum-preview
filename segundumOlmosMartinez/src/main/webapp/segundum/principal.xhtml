@@ -9,47 +9,16 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>Principal</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+	
 	<style>
-header {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	background: white;
-	z-index: 1000;
-}
-
-body {
-	padding-top: 50px;
-}
-
-.encabezado {
-	display: block;
-	text-align: center;
-	font-size: 30px;
-	font-weight: bold;
-	margin: 20px 0;
-}
-
+	
 .texto {
 	display: flex;
 	justify-content: center;
 	text-align: center;
 	font-size: 24px;
 	margin: 20px 0;
-}
-
-.botones {
-	display: flex;
-	justify-content: center;
-	gap: 20px;
-}
-
-.estilo-boton {
-	font-size: 16px;
-	padding: 5px 8px;
-	border-radius: 5px;
-	cursor: pointer;
 }
 
 .productos-grid {
@@ -97,20 +66,7 @@ body {
 </h:head>
 
 <h:body>
-	<header> <section> <h:form>
-		<div class="botones">
-			<p:button value="Principal" outcome="principal.xhtml"
-				styleClass="estilo-boton" />
-			<p:button value="Producto nuevo" outcome="crearProducto.xhtml"
-				styleClass="estilo-boton" />
-			<p:button value="Mis productos" outcome="misProductos.xhtml"
-				styleClass="estilo-boton" />
-			<p:commandButton value="Cerrar sesión" icon="pi pi-times"
-				action="#{controladorPrincipal.logout}" update="messages"
-				styleClass="estilo-boton" />
-		</div>
-	</h:form> </section> </header>
-
+	<ui:include src="/segundum/includes/header.xhtml" />
 	<h:outputText value="Principal" styleClass="encabezado" />
 	<h:outputText value="¡Hola, #{sesionUsuario.getNombreCompleto()}!"
 		styleClass="texto" />
@@ -149,10 +105,13 @@ body {
 					<p:outputLabel value="Categoría" for="filtroCategoria" />
 					<p:selectOneMenu id="filtroCategoria"
 						value="#{controladorPrincipal.filtroCategoria}"
-						style="width:100%;font-size:12px;">
-						<f:selectItem itemLabel="-- Todas --" itemValue="#{null}" />
-						<f:selectItems value="#{controladorCrearProducto.categorias}"
-							var="c" itemValue="#{c.id}" itemLabel="#{c.nombre}" />
+						style="width:100%;font-size:12px;"
+						filter="true"
+						filterMatchMode="contains">
+					<f:selectItem itemLabel="-- Todas --" itemValue="#{null}" />
+					<f:selectItems value="#{controladorPrincipal.opcionesCategorias}"
+							var="c" itemValue="#{c.id}"
+							itemLabel="#{c.nombreIndentado}" />
 					</p:selectOneMenu>
 				</div>
 
@@ -187,11 +146,8 @@ body {
 							</p>
 							<div class="botones">
 								<p:commandButton value="Ver más"
-									action="#{controladorPrincipal.verProducto}"
-									styleClass="estilo-boton">
-									<f:setPropertyActionListener
-										target="#{productoActual.productoDTO}" value="#{p}" />
-								</p:commandButton>
+									action="#{controladorPrincipal.verProducto(p)}"
+									styleClass="estilo-boton" />
 							</div>
 						</div>
 					</ui:repeat>

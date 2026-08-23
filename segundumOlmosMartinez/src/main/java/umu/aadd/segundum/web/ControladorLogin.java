@@ -59,8 +59,8 @@ public class ControladorLogin implements Serializable {
 	 * Método para loguear al usuario.
 	 */
 	public void loguear() {
+		FacesContext facesContext = FacesContext.getCurrentInstance();
 		if(!StringUtilidades.isEmailValido(email) || !StringUtilidades.isDatoValido(clave)) {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null, 
 		            new FacesMessage(FacesMessage.SEVERITY_WARN, "Validación", 
 		                "Email o clave no válidos. Email: " + email + ", Clave vacía: " + StringUtilidades.isDatoValido(clave)));
@@ -70,13 +70,11 @@ public class ControladorLogin implements Serializable {
 			Usuario usuario = servicioUsuarios.recuperarUsuario(email, clave);
 			UsuarioDTO usuarioDTO = servicioUsuarios.recuperarUsuarioDTO(usuario.getId());
 			sesionUsuario.setUsuarioDTO(usuarioDTO);
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.getExternalContext().redirect("principal.xhtml");
 			error = false;
 		}
 		catch(Exception e) {
 			error = true;
-			FacesContext facesContext = FacesContext.getCurrentInstance();
 			facesContext.addMessage(null,
 	                new FacesMessage(FacesMessage.SEVERITY_ERROR, "USUARIO NO AUTENTICADO", e.getMessage()));
 		}

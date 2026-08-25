@@ -45,8 +45,8 @@ segundum-preview/
 
 ## Requirements
 
-- **Java (JDK) 11+:** check with `java --version`
-- **Maven 3+:** check with `mvn --version`
+- **Java 11 or higher:** check with `java --version`
+- **Maven 3 or higher:** check with `mvn --version`
 - **Docker** and **Docker Compose:** check with `docker --version` and `docker compose version`
 
 ## Installation

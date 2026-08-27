@@ -59,17 +59,16 @@ cd segundum-preview
 
 ## Configuration
 
-Copy the example file and edit credentials:
+Copy the [example environment file](.env.example) and edit credentials as you want:
 ```bash
 cp .env.example .env
 ```
+Each variable in [`.env.example`](.env.example) is commented with its description and an example value.
 
-Create the JPA configuration from the example:
+Create the JPA configuration from the [persistence.xml.example](segundumOlmosMartinez/src/main/resources/META-INF/persistence.xml.example):
 ```bash
 cp segundumOlmosMartinez/src/main/resources/META-INF/persistence.xml.example segundumOlmosMartinez/src/main/resources/META-INF/persistence.xml
 ```
-
-Each variable in [`.env.example`](.env.example) is commented with its description and an example value.
 
 > **Note:** The credentials in `persistence.xml` (user, password, database name and port) must match those set in `.env`.
 

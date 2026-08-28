@@ -4,6 +4,7 @@
 
 ![Java](https://img.shields.io/badge/Java-11-orange?style=flat&logo=openjdk&logoColor=white)
 ![Maven](https://img.shields.io/badge/Maven-3-red?style=flat&logo=apachemaven&logoColor=white)
+![Jetty](https://img.shields.io/badge/Jetty-10.0.18-red?style=flat)
 ![JSF](https://img.shields.io/badge/JSF-2.3-green?style=flat)
 ![JPA](https://img.shields.io/badge/JPA-EclipseLink-blue?style=flat)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat&logo=mysql&logoColor=white)

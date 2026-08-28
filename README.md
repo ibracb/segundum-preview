@@ -13,7 +13,7 @@
 
 ## Overview
 
-SegundUM is a second-hand marketplace that lets you publish, search for and manage products, with advanced search by description, maximum price, condition and category. It also supports a pickup location with coordinates and a description. Each user has their own panel to create and edit their products.
+SegundUM is a second-hand marketplace that lets you publish, search for and manage products, with advanced search by description, maximum price, condition and category. It also supports a pickup location with coordinates and a description. Each user has their own panel to create and edit their own products.
 
 ## Project status
 

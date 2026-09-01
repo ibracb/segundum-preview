@@ -1,7 +1,6 @@
 # User guide
 
-> End-user guide for SegundUM.
-
+> End-user guide for SegundUM.  
 > **Note:** The screenshots show the Spanish interface; button names are quoted as they appear on screen.
 
 ## Home

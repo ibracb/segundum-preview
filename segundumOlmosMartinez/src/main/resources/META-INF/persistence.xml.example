@@ -11,7 +11,7 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
             <property name="javax.persistence.jdbc.user" value="user" />
             <property name="javax.persistence.jdbc.password" value="user" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:6033/segundum_dev?serverTimezone=CET" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:6033/segundum?serverTimezone=CET" />
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
             <property name="eclipselink.query-results-cache" value="false" />
             <property name="eclipselink.cache.shared.default" value="false" />

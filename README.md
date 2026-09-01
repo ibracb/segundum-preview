@@ -39,7 +39,8 @@ segundum-preview/
 │   └── pom.xml                        # Maven configuration
 ├── .env.example                       # Example environment variables
 ├── .gitignore                         # Files ignored by Git
-├── compose.yaml                       # Docker Compose file
+├── compose.dev.yaml                   # Docker Compose (development)
+├── compose.yaml                       # Docker Compose (production)
 └── README.md                          # Main documentation
 ```
 
@@ -59,10 +60,12 @@ cd segundum-preview
 
 ## Configuration
 
-Copy the example file and edit credentials:
+Copy the example environment file and edit credentials as you want:
 ```bash
 cp .env.example .env
 ```
+
+> **Note:** Change the placeholder values in `.env` before starting the containers, especially `MYSQL_ROOT_PASSWORD`.
 
 Create the JPA configuration from the example:
 ```bash
@@ -75,16 +78,25 @@ Each variable in [`.env.example`](.env.example) is commented with its descriptio
 
 **Exposed ports:**
 - **MySQL**: `localhost:6033` → container `3306`
-- **phpMyAdmin**: `localhost:8081`
+- **phpMyAdmin** (dev only): `localhost:8081`
 
 The JPA configuration is in `segundumOlmosMartinez/src/main/resources/META-INF/persistence.xml`. Tables are created automatically (`eclipselink.ddl-generation = create-or-extend-tables`).
 
 ## Compilation and execution
 
-Start the database (MySQL + phpMyAdmin):
+### Database
+
+**Production** (MySQL only):
 ```bash
 docker compose up -d
 ```
+
+**Development** (MySQL + phpMyAdmin):
+```bash
+docker compose -f compose.yaml -f compose.dev.yaml up -d
+```
+
+### Application
 
 Compile and start the application with Jetty:
 ```bash
@@ -97,7 +109,7 @@ mvn jetty:run
 ## Web access
 
 - **Application**: http://localhost:8080/segundum/
-- **phpMyAdmin**: http://localhost:8081
+- **phpMyAdmin** (dev only): http://localhost:8081
 
 ## Documentation
 

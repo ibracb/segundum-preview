@@ -4,6 +4,7 @@
 
 ![Java](https://img.shields.io/badge/Java-11-orange?style=flat&logo=openjdk&logoColor=white)
 ![Maven](https://img.shields.io/badge/Maven-3-red?style=flat&logo=apachemaven&logoColor=white)
+![Jetty](https://img.shields.io/badge/Jetty-10.0.18-red?style=flat)
 ![JSF](https://img.shields.io/badge/JSF-2.3-green?style=flat)
 ![JPA](https://img.shields.io/badge/JPA-EclipseLink-blue?style=flat)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat&logo=mysql&logoColor=white)
@@ -12,7 +13,7 @@
 
 ## Overview
 
-SegundUM is a second-hand marketplace that lets you publish, search for and manage products, with advanced search by description, maximum price, condition and category. It also supports a pickup location with coordinates and a description. Each user has their own panel to create and edit their products.
+SegundUM is a second-hand marketplace that lets you publish, search for and manage products, with advanced search by description, maximum price, condition and category. It also supports a pickup location with coordinates and a description. Each user has their own panel to create and edit their own products.
 
 ## Project status
 
@@ -46,8 +47,8 @@ segundum-preview/
 
 ## Requirements
 
-- **Java (JDK) 11+:** check with `java --version`
-- **Maven 3+:** check with `mvn --version`
+- **Java 11 or higher:** check with `java --version`
+- **Maven 3 or higher:** check with `mvn --version`
 - **Docker** and **Docker Compose:** check with `docker --version` and `docker compose version`
 
 ## Installation
@@ -60,19 +61,17 @@ cd segundum-preview
 
 ## Configuration
 
-Copy the example environment file and edit credentials as you want:
+Copy the [example environment file](.env.example) and edit credentials as you want:
 ```bash
 cp .env.example .env
 ```
 
 > **Note:** Change the placeholder values in `.env` before starting the containers, especially `MYSQL_ROOT_PASSWORD`.
 
-Create the JPA configuration from the example:
+Create the JPA configuration from the [persistence.xml.example](segundumOlmosMartinez/src/main/resources/META-INF/persistence.xml.example):
 ```bash
 cp segundumOlmosMartinez/src/main/resources/META-INF/persistence.xml.example segundumOlmosMartinez/src/main/resources/META-INF/persistence.xml
 ```
-
-Each variable in [`.env.example`](.env.example) is commented with its description and an example value.
 
 > **Note:** The credentials in `persistence.xml` (user, password, database name and port) must match those set in `.env`.
 

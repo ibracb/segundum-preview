@@ -21,7 +21,6 @@ import umu.aadd.segundum.modelo.Producto;
 import umu.aadd.segundum.repositorio.RepositorioProductosJPA;
 import umu.aadd.segundum.servicio.IServicioCategorias;
 import umu.aadd.segundum.servicio.IServicioProductos;
-import umu.aadd.segundum.web.CategoriaOption;
 import utils.StringUtilidades;
 
 /**
@@ -123,13 +122,6 @@ public class ControladorCrearProducto implements Serializable {
 	public void crearProducto() {
 		this.error = false;
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		
-		System.out.println("=== crearProducto() ===");
-	    System.out.println("envioDisponible=" + envioDisponible);
-	    System.out.println("descripcionLugarRecogida=[" + descripcionLugarRecogida + "]");
-	    System.out.println("longitudLugarRecogida=" + longitudLugarRecogida);
-	    System.out.println("latitudLugarRecogida=" + latitudLugarRecogida);
-		
 		if (!StringUtilidades.isDatoValido(titulo) || !StringUtilidades.isDatoValido(descripcion)) {
 			this.error = true;
 			facesContext.addMessage(null,

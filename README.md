@@ -20,12 +20,6 @@ SegundUM is a second-hand marketplace that lets you publish, search for and mana
 > [!NOTE]
 > This is an initial version of SegundUM. The full version will be developed at [ibracb/segundum](https://github.com/ibracb/segundum).
 
-## Demo
-
-<p align="center">
-  <video src="https://github.com/user-attachments/assets/a4630b4e-f2b3-46c9-87e3-33bd5e3a8d37" controls width="800"></video>
-</p>
-
 ## Project structure
 
 ```
